@@ -1,16 +1,18 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, FlatList, Alert } from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Header } from 'react-native-elements';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Header, Button } from 'react-native-elements';
 import AnimatedBar from "react-native-animated-bar";
+import { createBottomTabNavigator } from 'react-navigation';
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     progress: 0.5,
-
   }
+
   render() {
     return (
       /* Status Bar*/
@@ -20,7 +22,7 @@ export default class App extends React.Component {
           placement="left"
           backgroundColor = "#ff1900"
           leftComponent={{ icon: 'watch', color: '#fff' }}
-          centerComponent={{ text: 'PAL', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Gaia', style: { color: '#fff', fontSize: 20, height: 20 } }}
           rightComponent={{ icon: 'menu', color: '#fff' }}
           />
         <View>
@@ -42,7 +44,7 @@ export default class App extends React.Component {
         </View>
         </View>
         /* Details Section*/
-        <FlatList
+        <FlatList style={styles.flatListContainer}
           data={data}
           renderItem={({item}) => (
             <View style={styles.itemContainer}>
@@ -58,6 +60,55 @@ export default class App extends React.Component {
   }
 }
 
+class MyCircleScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>My Circle!</Text>
+      </View>
+    );
+  }
+}
+
+class ReportsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>ReportsScreen!</Text>
+      </View>
+    );
+  }
+}
+
+export default createBottomTabNavigator(
+  {
+    Home: App,
+    Report: ReportsScreen,
+    MyCircle: MyCircleScreen,
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === 'Home') {
+          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Report') {
+          iconName = `ios-options${focused ? '' : '-outline'}`;
+        }
+        else if (routeName === 'MyCircle') {
+          iconName = `ios-people${focused ? '' : '-outline'}`;
+        }
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
+  }
+);
+
 const data = [
   {id: 1, name: 'Message', icon: 'comments'},
   {id: 2, name: 'So Far Today', icon: 'bar-chart'},
@@ -69,6 +120,13 @@ const data = [
 const numColumns = 3;
 const size = Dimensions.get('window').width/numColumns;
 const styles = StyleSheet.create({
+  flatListContainer: {
+    top: 300,
+  },
+  ButtonContainer: {
+    top: 300,
+    backgroundColor: '#424242',
+  },
   itemContainer: {
     width: size,
     height: size,
@@ -77,7 +135,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    top: 20,
+    top: 10,
   },
   item: {
     flex: 1,
