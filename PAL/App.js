@@ -1,21 +1,59 @@
-import React from 'react';
+
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, FlatList } from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Header } from 'react-native-elements';
+import AnimatedBar from "react-native-animated-bar";
 
 export default class App extends React.Component {
+  state = {
+    progress: 0.5,
+
+  }
   render() {
     return (
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <View style={styles.itemContainer}>
-            <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
-            <Text style={styles.item}>{item.name}</Text>
+      /* Status Bar*/
+      <View>
+        <View>
+        <Header
+          placement="left"
+          backgroundColor = "#ff1900"
+          leftComponent={{ icon: 'watch', color: '#fff' }}
+          centerComponent={{ text: 'PAL', style: { color: '#fff' } }}
+          rightComponent={{ icon: 'menu', color: '#fff' }}
+          />
+        <View>
+          <AnimatedBar
+            progress={this.state.progress}
+            height={null}
+            borderColor="#DDD"
+            barColor="#f18400"
+            borderRadius={5}
+            borderWidth={5}
+            duration={500}
+            >
+          <View style={[styles.row, styles.center]}>
+            <Text style={[styles.barText, { fontSize: 30 }]}>
+              {Math.round(this.state.progress * 100)}%
+            </Text>
           </View>
-        )}
-        keyExtractor={item => item.id}
-        numColumns={numColumns} />
+          </AnimatedBar>
+        </View>
+        </View>
+        /* Details Section*/
+        <FlatList
+          data={data}
+          renderItem={({item}) => (
+            <View style={styles.itemContainer}>
+              <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
+              <Text style={styles.item}>{item.name}</Text>
+            </View>
+          )}
+          keyExtractor={item => item.id}
+          numColumns={numColumns}
+        />
+      </View>
     );
   }
 }
@@ -39,7 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    top: 400,
+    top: 20,
   },
   item: {
     flex: 1,
@@ -54,4 +92,18 @@ const styles = StyleSheet.create({
   searchIcon: {
     padding: 10,
   },
+  rowText: {
+    marginRight: 20,
+  },
+  row: {
+    flexDirection: "row",
+  },
+  center: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  barText: {
+    backgroundColor: "transparent",
+    color: "#FFF",
+  }
 });
