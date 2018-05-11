@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar, FlatList } from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Header } from 'react-native-elements';
+import { Button, Header } from 'react-native-elements';
 import AnimatedBar from "react-native-animated-bar";
 
 export default class App extends React.Component {
@@ -44,11 +44,14 @@ export default class App extends React.Component {
         /* Details Section*/
         <FlatList
           data={data}
+          style={styles.buttonList}
           renderItem={({item}) => (
-            <View style={styles.itemContainer}>
+            <Button
+              title={<View style={styles.itemContainer}>
               <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
               <Text style={styles.item}>{item.name}</Text>
-            </View>
+            </View>}
+            />
           )}
           keyExtractor={item => item.id}
           numColumns={numColumns}
@@ -68,10 +71,18 @@ const data = [
 ];
 const numColumns = 3;
 const size = Dimensions.get('window').width/numColumns;
+const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
+  buttonList: {
+    display: "flex",
+    width: windowWidth,
+    height: 100,
+    flexWrap: "wrap",
+
+  },
   itemContainer: {
-    width: size,
-    height: size,
+    width: 50,
+    height: 10,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
