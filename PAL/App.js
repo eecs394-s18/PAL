@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Header } from 'react-native-elements';
 import AnimatedBar from "react-native-animated-bar";
 import * as Progress from 'react-native-progress';
-
+import { AnimatedCircularProgress } from 'react-native-circular-progress'; 
 
 export default class App extends React.Component {
   state = {
@@ -24,15 +24,16 @@ export default class App extends React.Component {
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
           <View style = {styles.semiCircleContainer}>
-            <Progress.Circle
-              size= { Dimensions.get('window').width-30 } 
-              indeterminate={ false }
-              progress = { .7 }
-              animated = {true}
-              borderColor = {'#666'}
-              color = {'green'}
-              borderWidth = {2}
-              thickness = { 15 }
+            <AnimatedCircularProgress
+                   size={Dimensions.get('window').width-30}
+                   width={25}
+                   fill={90}
+                   arcSweepAngle={180}
+                   rotation={270}
+                   tintColor="green"
+                   backgroundColor="#666" 
+                   onAnimationComplete={() => console.log('onAnimationComplete')}
+                   
             />
           </View>
         </View>
