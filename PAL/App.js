@@ -4,41 +4,36 @@ import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Header } from 'react-native-elements';
 import AnimatedBar from "react-native-animated-bar";
+import * as Progress from 'react-native-progress';
+
 
 export default class App extends React.Component {
   state = {
     progress: 0.5,
-
   }
   render() {
     return (
-      /* Status Bar*/
       <View>
         <View>
-        <Header
-          placement="left"
-          backgroundColor = "#ff1900"
-          leftComponent={{ icon: 'watch', color: '#fff' }}
-          centerComponent={{ text: 'PAL', style: { color: '#fff' } }}
-          rightComponent={{ icon: 'menu', color: '#fff' }}
-          />
-        <View>
-          <AnimatedBar
-            progress={this.state.progress}
-            height={null}
-            borderColor="#DDD"
-            barColor="#f18400"
-            borderRadius={5}
-            borderWidth={5}
-            duration={500}
-            >
-          <View style={[styles.row, styles.center]}>
-            <Text style={[styles.barText, { fontSize: 30 }]}>
-              {Math.round(this.state.progress * 100)}%
-            </Text>
+          <Header
+            placement="left"
+            backgroundColor = "#ff1900"
+            leftComponent={{ icon: 'watch', color: '#fff' }}
+            centerComponent={{ text: 'PAL', style: { color: '#fff' } }}
+            rightComponent={{ icon: 'menu', color: '#fff' }}
+            />
+          <View style = {styles.semiCircleContainer}>
+            <Progress.Circle
+              size= { Dimensions.get('window').width-30 } 
+              indeterminate={ false }
+              progress = { .7 }
+              animated = {true}
+              borderColor = {'#666'}
+              color = {'green'}
+              borderWidth = {2}
+              thickness = { 15 }
+            />
           </View>
-          </AnimatedBar>
-        </View>
         </View>
         /* Details Section*/
         <FlatList
@@ -68,6 +63,9 @@ const data = [
 const numColumns = 3;
 const size = Dimensions.get('window').width/numColumns;
 const styles = StyleSheet.create({
+  semiCircleContainer : {
+    margin: 15,
+  },
   itemContainer: {
     width: size,
     height: size,
