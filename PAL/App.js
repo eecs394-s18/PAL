@@ -5,8 +5,8 @@ import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Header, Button } from 'react-native-elements';
-import AnimatedBar from "react-native-animated-bar";
 import { createBottomTabNavigator } from 'react-navigation';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 class App extends React.Component {
   state = {
@@ -15,47 +15,41 @@ class App extends React.Component {
 
   render() {
     return (
-      /* Status Bar*/
-      <View>
-        <View>
-        <Header
-          placement="left"
-          backgroundColor = "#ff1900"
-          leftComponent={{ icon: 'watch', color: '#fff' }}
-          centerComponent={{ text: 'Gaia', style: { color: '#fff', fontSize: 20, height: 20 } }}
-          rightComponent={{ icon: 'menu', color: '#fff' }}
-          />
-        <View>
-          <AnimatedBar
-            progress={this.state.progress}
-            height={null}
-            borderColor="#DDD"
-            barColor="#f18400"
-            borderRadius={5}
-            borderWidth={5}
-            duration={500}
-            >
-          <View style={[styles.row, styles.center]}>
-            <Text style={[styles.barText, { fontSize: 30 }]}>
-              {Math.round(this.state.progress * 100)}%
-            </Text>
+        <View style={{flex:1}}>
+          <View>
+            <Header
+            placement="left"
+            backgroundColor = "#ff1900"
+            leftComponent={{ icon: 'watch', color: '#fff' }}
+            centerComponent={{ text: 'PAL', style: { color: '#fff' } }}
+            rightComponent={{ icon: 'menu', color: '#fff' }}
+            />
+          <View>
+            <AnimatedCircularProgress
+              style = {styles.semiCircleContainer}
+              size={Dimensions.get('window').width-30}
+              width={25}
+              fill={90}
+              arcSweepAngle={180}
+              rotation={270}
+              tintColor="green"
+              backgroundColor="#666"
+              onAnimationComplete={() => console.log('onAnimationComplete')}
+            />
           </View>
-          </AnimatedBar>
+          </View>
+          <FlatList style={styles.flatListContainer}
+              data={data}
+              renderItem={({item}) => (
+                <View style={styles.itemContainer}>
+                  <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
+                  <Text style={styles.item}>{item.name}</Text>
+                </View>
+              )}
+              keyExtractor={item => item.id}
+              numColumns={numColumns}
+            />
         </View>
-        </View>
-        /* Details Section*/
-        <FlatList style={styles.flatListContainer}
-          data={data}
-          renderItem={({item}) => (
-            <View style={styles.itemContainer}>
-              <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
-              <Text style={styles.item}>{item.name}</Text>
-            </View>
-          )}
-          keyExtractor={item => item.id}
-          numColumns={numColumns}
-        />
-      </View>
     );
   }
 }
@@ -121,11 +115,17 @@ const numColumns = 3;
 const size = Dimensions.get('window').width/numColumns;
 const styles = StyleSheet.create({
   flatListContainer: {
+    flex: 1,
     top: 300,
   },
   ButtonContainer: {
+    flex: 1,
     top: 300,
     backgroundColor: '#424242',
+  },
+  semiCircleContainer : {
+    flex: 1,
+    margin: 15,
   },
   itemContainer: {
     width: size,
