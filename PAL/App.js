@@ -1,57 +1,106 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, FlatList, Alert } from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Header } from 'react-native-elements';
-import AnimatedBar from "react-native-animated-bar";
-import * as Progress from 'react-native-progress';
-import { AnimatedCircularProgress } from 'react-native-circular-progress'; 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Header, Button } from 'react-native-elements';
+import { createBottomTabNavigator } from 'react-navigation';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     progress: 0.5,
   }
+
   render() {
     return (
-      <View>
-        <View>
-          <Header
+        <View style={{flex:1}}>
+          <View>
+            <Header
             placement="left"
             backgroundColor = "#ff1900"
             leftComponent={{ icon: 'watch', color: '#fff' }}
             centerComponent={{ text: 'PAL', style: { color: '#fff' } }}
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
-          <View style = {styles.semiCircleContainer}>
+          <View>
             <AnimatedCircularProgress
-                   size={Dimensions.get('window').width-30}
-                   width={25}
-                   fill={90}
-                   arcSweepAngle={180}
-                   rotation={270}
-                   tintColor="green"
-                   backgroundColor="#666" 
-                   onAnimationComplete={() => console.log('onAnimationComplete')}
-                   
+              style = {styles.semiCircleContainer}
+              size={Dimensions.get('window').width-30}
+              width={25}
+              fill={90}
+              arcSweepAngle={180}
+              rotation={270}
+              tintColor="green"
+              backgroundColor="#666"
+              onAnimationComplete={() => console.log('onAnimationComplete')}
             />
           </View>
+          </View>
+          <FlatList style={styles.flatListContainer}
+              data={data}
+              renderItem={({item}) => (
+                <View style={styles.itemContainer}>
+                  <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
+                  <Text style={styles.item}>{item.name}</Text>
+                </View>
+              )}
+              keyExtractor={item => item.id}
+              numColumns={numColumns}
+            />
         </View>
-        /* Details Section*/
-        <FlatList
-          data={data}
-          renderItem={({item}) => (
-            <View style={styles.itemContainer}>
-              <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
-              <Text style={styles.item}>{item.name}</Text>
-            </View>
-          )}
-          keyExtractor={item => item.id}
-          numColumns={numColumns}
-        />
+    );
+  }
+}
+
+class MyCircleScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>My Circle!</Text>
       </View>
     );
   }
 }
+
+class ReportsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>ReportsScreen!</Text>
+      </View>
+    );
+  }
+}
+
+export default createBottomTabNavigator(
+  {
+    Home: App,
+    Report: ReportsScreen,
+    MyCircle: MyCircleScreen,
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === 'Home') {
+          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Report') {
+          iconName = `ios-options${focused ? '' : '-outline'}`;
+        }
+        else if (routeName === 'MyCircle') {
+          iconName = `ios-people${focused ? '' : '-outline'}`;
+        }
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
+  }
+);
 
 const data = [
   {id: 1, name: 'Message', icon: 'comments'},
@@ -64,7 +113,17 @@ const data = [
 const numColumns = 3;
 const size = Dimensions.get('window').width/numColumns;
 const styles = StyleSheet.create({
+  flatListContainer: {
+    flex: 1,
+    top: 300,
+  },
+  ButtonContainer: {
+    flex: 1,
+    top: 300,
+    backgroundColor: '#424242',
+  },
   semiCircleContainer : {
+    flex: 1,
     margin: 15,
   },
   itemContainer: {
@@ -75,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    top: 20,
+    top: 10,
   },
   item: {
     flex: 1,
