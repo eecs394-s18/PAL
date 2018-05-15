@@ -1,0 +1,176 @@
+import React, { Component } from 'react';
+import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert, Image} from 'react-native';
+import Dimensions from 'Dimensions';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Header, Button } from 'react-native-elements';
+import { createBottomTabNavigator } from 'react-navigation';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import CalendarStrip from 'react-native-calendar-strip';
+import moment from 'moment';
+import * as firebase from 'firebase';
+
+import styles from './styles/home';
+import MyCircleScreen from './MyCircle';
+import ReportsScreen from './Report';
+
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
+    authDomain: "pal394-a6f1f.firebaseapp.com",
+    databaseURL: "https://pal394-a6f1f.firebaseio.com",
+    projectId: "pal394-a6f1f",
+    storageBucket: "",
+    messagingSenderId: "33475295035"
+};
+var curfirebase=firebase.initializeApp(firebaseConfig);
+var statusfirebase=curfirebase.database().ref("/Jason/status");
+var latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
+var lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
+var batfirebase=curfirebase.database().ref("/Jason/status");
+
+
+class HomeScreen extends React.Component {
+    constructor(props){
+super(props)
+  this.state = {
+    progress: 0.5,
+    opacity: 0.5,
+    battery: 0.0,
+    lat: "",
+        lng: "",
+
+  }
+
+}
+
+componentDidMount() {
+    latfirebase.on('value', snapshot => {this.setState({lat: snapshot.val()})
+
+    }),
+    statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
+
+    }),
+    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
+
+    }),
+     lngfirebase.on('value', snapshot => {this.setState({lng: snapshot.val()})
+
+    });
+  }
+   render() {
+
+    return (
+
+        <View style={{flex:1}}>
+
+          <View>
+            <Header
+            placement="left"
+            backgroundColor = "#ff1900"
+            leftComponent={< ShirtStatus />}
+            centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
+            rightComponent={{ icon: 'menu', color: '#fff' }}
+            />
+          <View>
+
+            <Text style={styles.statusTitle}>{"Jason's Current Status"}</Text>
+            <Text style={styles.statusGreen}>Green</Text>
+            <AnimatedCircularProgress
+              style = {styles.semiCircleContainer}
+              size={Dimensions.get('window').width-100}
+              width={25}
+              fill={100*this.state.progress}
+              arcSweepAngle={180}
+              rotation={270}
+              tintColor="green"
+              backgroundColor="#666"
+              onAnimationComplete={() => console.log('onAnimationComplete')}
+            />
+            <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
+              <Image style={styles.face}
+                source={require('./resources/f2.png')}
+              />
+            </View>
+
+                    <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}><Text style = {{textAlign: 'center'}}> Jason is at {this.state.lat}, {this.state.lng}
+  </Text>  </View>
+
+
+
+          </View>
+          </View>
+          <FlatList style={styles.flatListContainer}
+              data={data}
+              renderItem={({item}) => (
+                <TouchableHighlight onPress={() => {}}
+                  activeOpacity={this.state.opacity}
+                  underlayColor="#fff">
+                  <View style={styles.itemContainer}>
+                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
+                    <Text style={styles.item}>{item.name}</Text>
+                  </View>
+                </TouchableHighlight>
+              )}
+              keyExtractor={item => item.id}
+              numColumns={numColumns}
+            />
+        </View>
+    );
+  }
+}
+
+
+class ShirtStatus extends React.Component{
+  render() {
+    return (
+      <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
+      </Text>
+    );
+  }
+};
+
+
+export default createBottomTabNavigator(
+  {
+    Home: HomeScreen,
+    Report: ReportsScreen,
+    MyCircle: MyCircleScreen,
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === 'Home') {
+          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Report') {
+          iconName = `ios-options${focused ? '' : '-outline'}`;
+        }
+        else if (routeName === 'MyCircle') {
+          iconName = `ios-people${focused ? '' : '-outline'}`;
+        }
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
+  }
+);
+
+const data = [
+  {id: 1, name: 'Message', icon: 'comments'},
+  {id: 2, name: 'So Far Today', icon: 'bar-chart'},
+  {id: 3, name: 'Share', icon:'share'},
+  {id: 4, name: 'Heart Rate', icon:'heart'},
+  {id: 5, name: 'Send a Hug or Calming Technique'},
+  {id: 6, name: 'Body Temperature', icon: 'thermometer-0'},
+];
+const numColumns = 3;
