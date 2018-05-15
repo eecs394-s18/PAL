@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert } from 'react-native';
 import Dimensions from 'Dimensions';
@@ -7,6 +6,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Header, Button } from 'react-native-elements';
 import { createBottomTabNavigator } from 'react-navigation';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import CalendarStrip from 'react-native-calendar-strip';
+import moment from 'moment';
 
 class App extends React.Component {
   state = {
@@ -16,7 +17,9 @@ class App extends React.Component {
 
   render() {
     return (
+
         <View style={{flex:1}}>
+
           <View>
             <Header
             placement="left"
@@ -26,6 +29,16 @@ class App extends React.Component {
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
           <View>
+              <CalendarStrip
+                  calendarAnimation={{type: 'parallel', duration: 30}}
+                  daySelectionAnimation={{type: 'background', duration: 200, highlightColor: '#D2D2D2'}}
+                  style={{height:80, paddingTop: 2, paddingBottom:12, marginTop: -1,}}
+                  calendarHeaderStyle={{color: 'white'}}
+                  calendarColor={'#7B7B7B'}
+                  dateNumberStyle={{color: 'white'}}
+                  dateNameStyle={{color: 'white'}}
+                  iconContainer={{flex: 0.08}}
+              />
             <AnimatedCircularProgress
               style = {styles.semiCircleContainer}
               size={Dimensions.get('window').width-30}
@@ -54,6 +67,7 @@ class App extends React.Component {
               keyExtractor={item => item.id}
               numColumns={numColumns}
             />
+
         </View>
     );
   }
@@ -62,9 +76,16 @@ class App extends React.Component {
 class MyCircleScreen extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>My Circle!</Text>
-      </View>
+        <CalendarStrip
+            calendarAnimation={{type: 'sequence', duration: 30}}
+            daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#9265DC'}}
+            style={{height:100, paddingTop: 20, paddingBottom: 10}}
+            calendarHeaderStyle={{color: 'white'}}
+            calendarColor={'#7743CE'}
+            dateNumberStyle={{color: 'white'}}
+            dateNameStyle={{color: 'white'}}
+            iconContainer={{flex: 0.1}}
+        />
     );
   }
 }
