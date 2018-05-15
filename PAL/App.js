@@ -10,6 +10,10 @@ import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import * as firebase from 'firebase';
 
+import styles from './styles/home';
+import MyCircleScreen from './MyCircle';
+import ReportsScreen from './Report';
+
 // Initialize Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
@@ -26,7 +30,7 @@ var lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
 var batfirebase=curfirebase.database().ref("/Jason/status");
 
 
-class App extends React.Component {
+class HomeScreen extends React.Component {
     constructor(props){
 super(props)
   this.state = {
@@ -43,16 +47,16 @@ super(props)
 componentDidMount() {
     latfirebase.on('value', snapshot => {this.setState({lat: snapshot.val()})
 
-    }), 
+    }),
     statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
 
-    }), 
+    }),
     batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
 
-    }), 
+    }),
      lngfirebase.on('value', snapshot => {this.setState({lng: snapshot.val()})
 
-    }); 
+    });
   }
    render() {
 
@@ -69,16 +73,7 @@ componentDidMount() {
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
           <View>
-              <CalendarStrip
-                  calendarAnimation={{type: 'parallel', duration: 30}}
-                  daySelectionAnimation={{type: 'background', duration: 200, highlightColor: '#D2D2D2'}}
-                  style={{height:80, paddingTop: 2, paddingBottom:12, marginTop: -1,}}
-                  calendarHeaderStyle={{color: 'white'}}
-                  calendarColor={'#7B7B7B'}
-                  dateNumberStyle={{color: 'white'}}
-                  dateNameStyle={{color: 'white'}}
-                  iconContainer={{flex: 0.08}}
-              />
+
             <Text style={styles.statusTitle}>{"Jason's Current Status"}</Text>
             <Text style={styles.statusGreen}>Green</Text>
             <AnimatedCircularProgress
@@ -98,9 +93,9 @@ componentDidMount() {
               />
             </View>
 
-                    <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}><Text style = {{textAlign: 'center'}}> Jason is at {this.state.lat}, {this.state.lng}     	
+                    <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}><Text style = {{textAlign: 'center'}}> Jason is at {this.state.lat}, {this.state.lng}
   </Text>  </View>
-             		
+
 
 
           </View>
@@ -140,36 +135,10 @@ class ShirtStatus extends React.Component{
   }
 };
 
-class MyCircleScreen extends React.Component {
-  render() {
-    return (
-        <CalendarStrip
-            calendarAnimation={{type: 'sequence', duration: 30}}
-            daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#9265DC'}}
-            style={{height:100, paddingTop: 20, paddingBottom: 10}}
-            calendarHeaderStyle={{color: 'white'}}
-            calendarColor={'#7743CE'}
-            dateNumberStyle={{color: 'white'}}
-            dateNameStyle={{color: 'white'}}
-            iconContainer={{flex: 0.1}}
-        />
-    );
-  }
-}
-
-class ReportsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>ReportsScreen!</Text>
-      </View>
-    );
-  }
-}
 
 export default createBottomTabNavigator(
   {
-    Home: App,
+    Home: HomeScreen,
     Report: ReportsScreen,
     MyCircle: MyCircleScreen,
   },
@@ -205,84 +174,3 @@ const data = [
   {id: 6, name: 'Body Temperature', icon: 'thermometer-0'},
 ];
 const numColumns = 3;
-
-const size = Dimensions.get('window').width/numColumns;
-const styles = StyleSheet.create({
-  flatListContainer: {
-    flex: 1,
-    top: 150,
-  },
-  ButtonContainer: {
-    flex: 1,
-    top: 150,
-    backgroundColor: '#424242',
-  },
-  statusTitle: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 18,
-    margin: 5,
-  },
-  statusGreen: {
-    textAlign: 'center',
-    fontSize: 15,
-    color: 'grey',
-    margin: 2,
-  },
-  statusGrey: {
-    fontSize: 15,
-    color: 'grey',
-  },
-  statusRed: {
-    fontSize: 15,
-    color: 'grey',
-  },
-  face: {
-    width: 80,
-    height: 80,
-    top: 120,
-  },
-  semiCircleContainer : {
-    flex: 1,
-    margin: 15,
-    alignItems: 'center',
-    top: 10,
-  },
-  itemContainer: {
-    width: size,
-    height: size,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    top: 10,
-  },
-  item: {
-    flex: 1,
-    textAlign: 'center',
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingLeft: 0,
-    backgroundColor: '#fff',
-    color: '#424242',
-  },
-  searchIcon: {
-    padding: 10,
-  },
-  rowText: {
-    marginRight: 20,
-  },
-  row: {
-    flexDirection: "row",
-  },
-  center: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  barText: {
-    backgroundColor: "transparent",
-    color: "#FFF",
-  }
-});
