@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from 'react-navigation';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
+import * as firebase from 'firebase';
 
 class App extends React.Component {
   state = {
@@ -71,6 +72,18 @@ class App extends React.Component {
     );
   }
 }
+
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
+    authDomain: "pal394-a6f1f.firebaseapp.com",
+    databaseURL: "https://pal394-a6f1f.firebaseio.com",
+    projectId: "pal394-a6f1f",
+    storageBucket: "",
+    messagingSenderId: "33475295035"
+};
+firebase.initializeApp(firebaseConfig);
+
 
 class ShirtStatus extends React.Component{
   render() {
