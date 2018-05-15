@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList, Alert } from 'react-native';
+import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert } from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -11,6 +11,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 class App extends React.Component {
   state = {
     progress: 0.5,
+    opacity: 0.5,
   }
 
   render() {
@@ -41,10 +42,14 @@ class App extends React.Component {
           <FlatList style={styles.flatListContainer}
               data={data}
               renderItem={({item}) => (
-                <View style={styles.itemContainer}>
-                  <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
-                  <Text style={styles.item}>{item.name}</Text>
-                </View>
+                <TouchableHighlight onPress={() => {}}
+                  activeOpacity={this.state.opacity}
+                  underlayColor="#fff">
+                  <View style={styles.itemContainer}>
+                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
+                    <Text style={styles.item}>{item.name}</Text>
+                  </View>
+                </TouchableHighlight>
               )}
               keyExtractor={item => item.id}
               numColumns={numColumns}
