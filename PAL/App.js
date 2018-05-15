@@ -23,6 +23,7 @@ var curfirebase=firebase.initializeApp(firebaseConfig);
 var statusfirebase=curfirebase.database().ref("/Jason/status");
 var latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
 var lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
+var batfirebase=curfirebase.database().ref("/Jason/status");
 
 
 class App extends React.Component {
@@ -31,6 +32,7 @@ super(props)
   this.state = {
     progress: 0.5,
     opacity: 0.5,
+    battery: 0.0,
     lat: "",
         lng: "",
 
@@ -43,6 +45,9 @@ componentDidMount() {
 
     }), 
     statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
+
+    }), 
+    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
 
     }), 
      lngfirebase.on('value', snapshot => {this.setState({lng: snapshot.val()})
