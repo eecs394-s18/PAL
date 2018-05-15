@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert } from 'react-native';
+import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert, Image} from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -24,8 +24,8 @@ class App extends React.Component {
             <Header
             placement="left"
             backgroundColor = "#ff1900"
-            leftComponent={{ icon: 'watch', color: '#fff' }}
-            centerComponent={{ text: 'PAL', style: { color: '#fff' } }}
+            leftComponent={< ShirtStatus />}
+            centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
           <View>
@@ -67,11 +67,24 @@ class App extends React.Component {
               keyExtractor={item => item.id}
               numColumns={numColumns}
             />
-
         </View>
     );
   }
 }
+
+class ShirtStatus extends React.Component{
+  render() {
+    return (
+      <Text>
+        <Image 
+          source={require('./resources/tshirt_white.png')} 
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
+      </Text>
+    );
+  }
+};
 
 class MyCircleScreen extends React.Component {
   render() {
