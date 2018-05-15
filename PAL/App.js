@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList, Alert, Image } from 'react-native';
+import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert, Image} from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,6 +12,7 @@ import moment from 'moment';
 class App extends React.Component {
   state = {
     progress: 0.5,
+    opacity: 0.5,
   }
 
   render() {
@@ -23,8 +24,8 @@ class App extends React.Component {
             <Header
             placement="left"
             backgroundColor = "#ff1900"
-            leftComponent={{ icon: 'watch', color: '#fff' }}
-            centerComponent={{ text: 'PAL', style: { color: '#fff' } }}
+            leftComponent={< ShirtStatus />}
+            centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
           <View>
@@ -61,19 +62,36 @@ class App extends React.Component {
           <FlatList style={styles.flatListContainer}
               data={data}
               renderItem={({item}) => (
-                <View style={styles.itemContainer}>
-                  <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
-                  <Text style={styles.item}>{item.name}</Text>
-                </View>
+                <TouchableHighlight onPress={() => {}}
+                  activeOpacity={this.state.opacity}
+                  underlayColor="#fff">
+                  <View style={styles.itemContainer}>
+                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
+                    <Text style={styles.item}>{item.name}</Text>
+                  </View>
+                </TouchableHighlight>
               )}
               keyExtractor={item => item.id}
               numColumns={numColumns}
             />
-
         </View>
     );
   }
 }
+
+class ShirtStatus extends React.Component{
+  render() {
+    return (
+      <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
+      </Text>
+    );
+  }
+};
 
 class MyCircleScreen extends React.Component {
   render() {
