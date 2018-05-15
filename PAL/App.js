@@ -10,13 +10,43 @@ import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import * as firebase from 'firebase';
 
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
+    authDomain: "pal394-a6f1f.firebaseapp.com",
+    databaseURL: "https://pal394-a6f1f.firebaseio.com",
+    projectId: "pal394-a6f1f",
+    storageBucket: "",
+    messagingSenderId: "33475295035"
+};
+var curfirebase=firebase.initializeApp(firebaseConfig);
+var latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
+var lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
+
+
 class App extends React.Component {
-  state = {
+    constructor(props){
+super(props)
+  this.state = {
     progress: 0.5,
     opacity: 0.5,
+    lat: "",
+        lng: "",
+
   }
 
-  render() {
+}
+
+componentDidMount() {
+    latfirebase.on('value', snapshot => {this.setState({lat: snapshot.val()})
+
+    }), 
+     lngfirebase.on('value', snapshot => {this.setState({lng: snapshot.val()})
+
+    }); 
+  }
+   render() {
+
     return (
 
         <View style={{flex:1}}>
@@ -58,6 +88,12 @@ class App extends React.Component {
                 source={require('./resources/f2.png')}
               />
             </View>
+
+                    <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}><Text style = {{textAlign: 'center'}}> Jason is at {this.state.lat}, {this.state.lng}     	
+  </Text>  </View>
+             		
+
+
           </View>
           </View>
           <FlatList style={styles.flatListContainer}
@@ -79,17 +115,6 @@ class App extends React.Component {
     );
   }
 }
-
-// Initialize Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
-    authDomain: "pal394-a6f1f.firebaseapp.com",
-    databaseURL: "https://pal394-a6f1f.firebaseio.com",
-    projectId: "pal394-a6f1f",
-    storageBucket: "",
-    messagingSenderId: "33475295035"
-};
-firebase.initializeApp(firebaseConfig);
 
 
 class ShirtStatus extends React.Component{
@@ -171,15 +196,16 @@ const data = [
   {id: 6, name: 'Body Temperature', icon: 'thermometer-0'},
 ];
 const numColumns = 3;
+
 const size = Dimensions.get('window').width/numColumns;
 const styles = StyleSheet.create({
   flatListContainer: {
     flex: 1,
-    top: 200,
+    top: 150,
   },
   ButtonContainer: {
     flex: 1,
-    top: 200,
+    top: 150,
     backgroundColor: '#424242',
   },
   statusTitle: {
