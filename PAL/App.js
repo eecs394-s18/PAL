@@ -55,7 +55,7 @@ class App extends React.Component {
             />
             <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
               <Image style={styles.face}
-                source={require('./img/f2.png')}
+                source={require('./resources/f2.png')}
               />
             </View>
           </View>
