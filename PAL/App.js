@@ -40,17 +40,24 @@ class App extends React.Component {
                   dateNameStyle={{color: 'white'}}
                   iconContainer={{flex: 0.08}}
               />
+            <Text style={styles.statusTitle}>{"Jason's Current Status"}</Text>
+            <Text style={styles.statusGreen}>Green</Text>
             <AnimatedCircularProgress
               style = {styles.semiCircleContainer}
-              size={Dimensions.get('window').width-30}
+              size={Dimensions.get('window').width-100}
               width={25}
-              fill={90}
+              fill={50}
               arcSweepAngle={180}
               rotation={270}
               tintColor="green"
               backgroundColor="#666"
               onAnimationComplete={() => console.log('onAnimationComplete')}
             />
+            <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
+              <Image style={styles.face}
+                source={require('./img/f2.png')}
+              />
+            </View>
           </View>
           </View>
           <FlatList style={styles.flatListContainer}
@@ -89,8 +96,8 @@ class ShirtStatus extends React.Component{
   render() {
     return (
       <Text>
-        <Image 
-          source={require('./resources/tshirt_white.png')} 
+        <Image
+          source={require('./resources/tshirt_white.png')}
           style= {{height: 20, width: 20}}
         />
         <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
@@ -168,16 +175,43 @@ const size = Dimensions.get('window').width/numColumns;
 const styles = StyleSheet.create({
   flatListContainer: {
     flex: 1,
-    top: 300,
+    top: 200,
   },
   ButtonContainer: {
     flex: 1,
-    top: 300,
+    top: 200,
     backgroundColor: '#424242',
+  },
+  statusTitle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    margin: 5,
+  },
+  statusGreen: {
+    textAlign: 'center',
+    fontSize: 15,
+    color: 'grey',
+    margin: 2,
+  },
+  statusGrey: {
+    fontSize: 15,
+    color: 'grey',
+  },
+  statusRed: {
+    fontSize: 15,
+    color: 'grey',
+  },
+  face: {
+    width: 80,
+    height: 80,
+    top: 120,
   },
   semiCircleContainer : {
     flex: 1,
     margin: 15,
+    alignItems: 'center',
+    top: 10,
   },
   itemContainer: {
     width: size,
