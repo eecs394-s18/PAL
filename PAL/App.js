@@ -20,6 +20,7 @@ const firebaseConfig = {
     messagingSenderId: "33475295035"
 };
 var curfirebase=firebase.initializeApp(firebaseConfig);
+var statusfirebase=curfirebase.database().ref("/Jason/status");
 var latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
 var lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
 
@@ -39,6 +40,9 @@ super(props)
 
 componentDidMount() {
     latfirebase.on('value', snapshot => {this.setState({lat: snapshot.val()})
+
+    }), 
+    statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
 
     }), 
      lngfirebase.on('value', snapshot => {this.setState({lng: snapshot.val()})
@@ -76,7 +80,7 @@ componentDidMount() {
               style = {styles.semiCircleContainer}
               size={Dimensions.get('window').width-100}
               width={25}
-              fill={50}
+              fill={100*this.state.progress}
               arcSweepAngle={180}
               rotation={270}
               tintColor="green"
