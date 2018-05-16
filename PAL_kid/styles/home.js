@@ -80,5 +80,10 @@ export default StyleSheet.create({
   barText: {
     backgroundColor: "transparent",
     color: "#FFF",
+  },
+  map:{
+    top: 175,
+    alignSelf: 'stretch', 
+    height: 300 
   }
 });

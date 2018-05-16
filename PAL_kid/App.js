@@ -14,6 +14,11 @@ import styles from './styles/home';
 import MyCircleScreen from './MyCircle';
 import ReportsScreen from './Report';
 
+import { Constants, Location, Permissions, MapView } from 'expo';
+
+
+
+
 // Initialize Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
@@ -32,32 +37,59 @@ var batfirebase=curfirebase.database().ref("/Jason/status");
 
 class HomeScreen extends React.Component {
     constructor(props){
-super(props)
-  this.state = {
-    progress: 0.5,
-    opacity: 0.5,
-    battery: 0.0,
-    lat: "",
-        lng: "",
-
-  }
-
+	super(props);
+	
+	this.state = {
+	    progress: 0.5,
+	    opacity: 0.5,
+	    battery: 0.0,
+	    lat: "",
+	    lng: "",
+	    
+	    mapRegion: { 
+	    	latitude: 37.78825, 
+	    	longitude: -122.4324, 
+	    	latitudeDelta: 0.0922, 
+			longitudeDelta: 0.0421
+	    	},
+	    locationResult: null
+	};
 }
+	
+	componentDidMount() {
+		this._getLocationAsync();
+		this._getInfoFromDatabase();
+	    
+	}
+	_getLocationAsync = async () => {
+	   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+	   if (status !== 'granted') {
+	     this.setState({
+	       locationResult: 'Permission to access location was denied',
+	     });
+	   }
 
-componentDidMount() {
-    latfirebase.on('value', snapshot => {this.setState({lat: snapshot.val()})
+	   let location = await Location.getCurrentPositionAsync({});
+	   if(location!==null){
+	   	let lat = location.coords.latitude;
+	   	let lon = location.coords.longitude;
+	   	this.setState({ lat: lat});
+	   	this.setState({ lng: lon});
+	   	let mapRegionCopy = Object.assign({}, this.state.mapRegion); 
+	   	mapRegionCopy.latitude = lat;
+	   	mapRegionCopy.longitude = lon;
+	   	this.setState({ mapRegion: mapRegionCopy});
+	   }
+	   this.setState({ locationResult: JSON.stringify(location) });
 
-    }),
-    statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
+ 	};
+	_getInfoFromDatabase(){
 
-    }),
-    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
-
-    }),
-     lngfirebase.on('value', snapshot => {this.setState({lng: snapshot.val()})
-
-    });
-  }
+	    statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
+	    }),
+	    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
+	    });
+	}
    render() {
 
     return (
@@ -65,56 +97,49 @@ componentDidMount() {
         <View style={{flex:1}}>
 
           <View>
-            <Header
-            placement="left"
-            backgroundColor = "#ff1900"
-            leftComponent={< ShirtStatus />}
-            centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
-            rightComponent={{ icon: 'menu', color: '#fff' }}
-            />
-          <View>
+	            <Header
+	            placement="left"
+	            backgroundColor = "#ef8b3e"
+	            leftComponent={< ShirtStatus />}
+	            centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
+	            rightComponent={{ icon: 'menu', color: '#fff' }}
+	            />
+	          <View>
+		            <Text style={styles.statusTitle}>{"Your Current Status"}</Text>
+		            <Text style={styles.statusGreen}>Green</Text>
+		            <AnimatedCircularProgress
+		              style = {styles.semiCircleContainer}
+		              size={Dimensions.get('window').width-100}
+		              width={25}
+		              fill={100*this.state.progress}
+		              arcSweepAngle={180}
+		              rotation={270}
+		              tintColor="green"
+		              backgroundColor="#666"
+		              onAnimationComplete={() => console.log('onAnimationComplete')}
+		            />
+		            <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
+		              <Image style={styles.face}
+		                source={require('./resources/f2.png')}
+		              />
+		            </View>
 
-            <Text style={styles.statusTitle}>{"Jason's Current Status"}</Text>
-            <Text style={styles.statusGreen}>Green</Text>
-            <AnimatedCircularProgress
-              style = {styles.semiCircleContainer}
-              size={Dimensions.get('window').width-100}
-              width={25}
-              fill={100*this.state.progress}
-              arcSweepAngle={180}
-              rotation={270}
-              tintColor="green"
-              backgroundColor="#666"
-              onAnimationComplete={() => console.log('onAnimationComplete')}
-            />
-            <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
-              <Image style={styles.face}
-                source={require('./resources/f2.png')}
-              />
-            </View>
+	               <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
+	                    <Text style = {{textAlign: 'center'}}> You are at latitude: {this.state.lat} longitude: {this.state.lng}</Text>  
+	  				</View>
 
-                    <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}><Text style = {{textAlign: 'center'}}> Jason is at {this.state.lat}, {this.state.lng}
-  </Text>  </View>
+	  				<View>
+	  					<MapView
+				          style={styles.map}
+				          region={this.state.mapRegion}
+				          onRegionChange={this._handleMapRegionChange}
+				        />
+	  				</View>
 
+	  				
 
-
+	          </View>
           </View>
-          </View>
-          <FlatList style={styles.flatListContainer}
-              data={data}
-              renderItem={({item}) => (
-                <TouchableHighlight onPress={() => {}}
-                  activeOpacity={this.state.opacity}
-                  underlayColor="#fff">
-                  <View style={styles.itemContainer}>
-                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
-                    <Text style={styles.item}>{item.name}</Text>
-                  </View>
-                </TouchableHighlight>
-              )}
-              keyExtractor={item => item.id}
-              numColumns={numColumns}
-            />
         </View>
     );
   }
