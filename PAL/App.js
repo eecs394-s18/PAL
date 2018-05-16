@@ -23,11 +23,12 @@ const firebaseConfig = {
     storageBucket: "",
     messagingSenderId: "33475295035"
 };
+
 var curfirebase=firebase.initializeApp(firebaseConfig);
+
+var addressfirebase=curfirebase.database().ref("/Jason/address");
 var statusfirebase=curfirebase.database().ref("/Jason/status");
-var latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
-var lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
-var batfirebase=curfirebase.database().ref("/Jason/status");
+var batfirebase=curfirebase.database().ref("/Jason/battery");
 
 
 class HomeScreen extends React.Component {
@@ -38,25 +39,21 @@ super(props)
     opacity: 0.5,
     battery: 0.0,
     lat: "",
-        lng: "",
+    lng: "",
+    address: ""
 
   }
 
 }
 
 componentDidMount() {
-    latfirebase.on('value', snapshot => {this.setState({lat: snapshot.val()})
-
-    }),
-    statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
-
-    }),
-    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
-
-    }),
-     lngfirebase.on('value', snapshot => {this.setState({lng: snapshot.val()})
-
+    addressfirebase.on('value', snapshot => {this.setState({address: snapshot.val()})
     });
+    statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
+    });
+    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
+    });
+
   }
    render() {
 
@@ -93,8 +90,9 @@ componentDidMount() {
               />
             </View>
 
-                    <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}><Text style = {{textAlign: 'center'}}> Jason is at {this.state.lat}, {this.state.lng}
-  </Text>  </View>
+                    <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
+                    <Text style = {{textAlign: 'center'}}> Jason is at {this.state.address}</Text>  
+                    </View>
 
 
 
