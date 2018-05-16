@@ -34,6 +34,8 @@ var curfirebase=firebase.initializeApp(firebaseConfig);
 var statusfirebase=curfirebase.database().ref("/Jason/status");
 var coorfirebase=curfirebase.database().ref("/Jason/coordinates/");
 var batfirebase=curfirebase.database().ref("/Jason/battery");
+var kidfirebase=curfirebase.database().ref("/Jason/");
+var addressfirebase=curfirebase.database().ref("/Jason/address");
 
 
 class HomeScreen extends React.Component {
@@ -76,10 +78,11 @@ class HomeScreen extends React.Component {
         			address_components[1].long_name+", "+
         			address_components[2].long_name;
         	this.setState({locationName: address});
+        	kidfirebase.update({address:address});
         })
         .catch(error => console.warn(error));
         
- 	};
+ 	}
 
  	_uploadLocationToDatabase = location => {
  		let lat = location.coords.latitude;
@@ -90,7 +93,7 @@ class HomeScreen extends React.Component {
 	   		lat: lat,
 	   		lng: lon
 	   	});
-	};
+	}
 
 	_updateMapRegion = location => {
 		let lat = location.coords.latitude;
@@ -99,7 +102,7 @@ class HomeScreen extends React.Component {
 	   	mapRegionCopy.latitude = lat;
 	   	mapRegionCopy.longitude = lon;
 	   	this.setState({ mapRegion: mapRegionCopy});
-	};
+	}
 
 	_getLocationAsync = async () => {
 	   let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -122,7 +125,7 @@ class HomeScreen extends React.Component {
 
 	   this.setState({ locationResult: JSON.stringify(location) });
 
- 	};
+ 	}
 
 
 
