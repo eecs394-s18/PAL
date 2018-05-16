@@ -52,6 +52,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+    borderColor: '#f18400',
+    borderWidth: 1,
     top: 10,
   },
   item: {
