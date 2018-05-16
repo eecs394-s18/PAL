@@ -28,11 +28,11 @@ const firebaseConfig = {
     storageBucket: "",
     messagingSenderId: "33475295035"
 };
+
 var curfirebase=firebase.initializeApp(firebaseConfig);
 var statusfirebase=curfirebase.database().ref("/Jason/status");
-var latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
-var lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
-var batfirebase=curfirebase.database().ref("/Jason/status");
+var coorfirebase=curfirebase.database().ref("/Jason/coordinates/");
+var batfirebase=curfirebase.database().ref("/Jason/battery");
 
 
 class HomeScreen extends React.Component {
@@ -70,23 +70,32 @@ class HomeScreen extends React.Component {
 	   }
 
 	   let location = await Location.getCurrentPositionAsync({});
+
 	   if(location!==null){
+	   	// update the location
 	   	let lat = location.coords.latitude;
 	   	let lon = location.coords.longitude;
 	   	this.setState({ lat: lat});
 	   	this.setState({ lng: lon});
+	   	coorfirebase.set({
+	   		lat: lat,
+	   		lng: lon
+	   	});
+
+	   	// update the map 
 	   	let mapRegionCopy = Object.assign({}, this.state.mapRegion); 
 	   	mapRegionCopy.latitude = lat;
 	   	mapRegionCopy.longitude = lon;
 	   	this.setState({ mapRegion: mapRegionCopy});
 	   }
+
 	   this.setState({ locationResult: JSON.stringify(location) });
 
  	};
 	_getInfoFromDatabase(){
 
 	    statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
-	    }),
+	    });
 	    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
 	    });
 	}
