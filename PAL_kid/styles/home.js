@@ -84,6 +84,6 @@ export default StyleSheet.create({
   map:{
     top: 175,
     alignSelf: 'stretch', 
-    height: 300 
+    height: 320 
   }
 });
