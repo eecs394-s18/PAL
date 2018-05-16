@@ -91,7 +91,7 @@ componentDidMount() {
             </View>
 
                     <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
-                    <Text style = {{textAlign: 'center'}}> Jason is at {this.state.address}</Text>  
+                    <Text style = {{textAlign: 'center'}}> Jason is at {this.state.address}</Text>
                     </View>
 
 
@@ -165,7 +165,7 @@ export default createBottomTabNavigator(
 
 const data = [
   {id: 1, name: 'Message', icon: 'comments'},
-  {id: 2, name: 'So Far Today', icon: 'bar-chart'},
+  {id: 2, name: 'History', icon: 'bar-chart'},
   {id: 3, name: 'Share', icon:'share'},
   {id: 4, name: 'Heart Rate', icon:'heart'},
   {id: 5, name: 'Send a Hug or Calming Technique'},

@@ -40,7 +40,7 @@ var kidfirebase=curfirebase.database().ref("/Jason/");
 class HomeScreen extends React.Component {
     constructor(props){
 	super(props);
-	
+
 	this.state = {
 	    progress: 0.5,
 	    opacity: 0.5,
@@ -48,22 +48,22 @@ class HomeScreen extends React.Component {
 	    lat: "",
 	    lng: "",
 	    locationName: "",
-	    
-	    mapRegion: { 
-	    	latitude: 37.78825, 
-	    	longitude: -122.4324, 
-	    	latitudeDelta: 0.0922, 
+
+	    mapRegion: {
+	    	latitude: 37.78825,
+	    	longitude: -122.4324,
+	    	latitudeDelta: 0.0922,
 			longitudeDelta: 0.0421
 	    	},
 	    locationResult: null
 	};
 }
-	
+
 	componentDidMount() {
 		Geocoder.init('AIzaSyDYBD9kcnAd-Zcf-hn5d_Aq9Y2vLgqDfsw');
 		this._getLocationAsync();
 		this._getInfoFromDatabase();
-	    
+
 	}
 
 	_updateLoactionName = location => {
@@ -80,7 +80,7 @@ class HomeScreen extends React.Component {
         	kidfirebase.update({address:address});
         })
         .catch(error => console.warn(error));
-        
+
  	}
 
  	_uploadLocationToDatabase = location => {
@@ -97,7 +97,7 @@ class HomeScreen extends React.Component {
 	_updateMapRegion = location => {
 		let lat = location.coords.latitude;
 	   	let lon = location.coords.longitude;
-		let mapRegionCopy = Object.assign({}, this.state.mapRegion); 
+		let mapRegionCopy = Object.assign({}, this.state.mapRegion);
 	   	mapRegionCopy.latitude = lat;
 	   	mapRegionCopy.longitude = lon;
 	   	this.setState({ mapRegion: mapRegionCopy});
@@ -118,7 +118,7 @@ class HomeScreen extends React.Component {
 	   	this._uploadLocationToDatabase(location);
 	   	// update the location name
 	   	this._updateLoactionName(location);
-	   	// update the map 
+	   	// update the map
 	   	this._updateMapRegion(location);
 	   }
 
@@ -173,7 +173,7 @@ class HomeScreen extends React.Component {
 		            </View>
 
 	               <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
-	                    <Text style = {{textAlign: 'center'}}> You are at {this.state.locationName}</Text>  
+	                    <Text style = {{textAlign: 'center'}}> You are at {this.state.locationName}</Text>
 	  				</View>
 
 	  				<View>
@@ -182,7 +182,7 @@ class HomeScreen extends React.Component {
 				          region={this.state.mapRegion}
 				          onRegionChange={this._handleMapRegionChange}
 				        />
-	  				</View>  				
+	  				</View>
 
 	          </View>
           </View>
@@ -238,7 +238,7 @@ export default createBottomTabNavigator(
 
 const data = [
   {id: 1, name: 'Message', icon: 'comments'},
-  {id: 2, name: 'So Far Today', icon: 'bar-chart'},
+  {id: 2, name: 'History', icon: 'bar-chart'},
   {id: 3, name: 'Share', icon:'share'},
   {id: 4, name: 'Heart Rate', icon:'heart'},
   {id: 5, name: 'Send a Hug or Calming Technique'},
