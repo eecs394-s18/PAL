@@ -7,6 +7,7 @@ import { Header, Button } from 'react-native-elements';
 import { createBottomTabNavigator } from 'react-navigation';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import CalendarStrip from 'react-native-calendar-strip';
+import Geocoder from 'react-native-geocoding';
 import moment from 'moment';
 import * as firebase from 'firebase';
 
@@ -45,6 +46,7 @@ class HomeScreen extends React.Component {
 	    battery: 0.0,
 	    lat: "",
 	    lng: "",
+	    locationName: "",
 	    
 	    mapRegion: { 
 	    	latitude: 37.78825, 
@@ -57,10 +59,48 @@ class HomeScreen extends React.Component {
 }
 	
 	componentDidMount() {
+		Geocoder.init('AIzaSyDYBD9kcnAd-Zcf-hn5d_Aq9Y2vLgqDfsw');
 		this._getLocationAsync();
 		this._getInfoFromDatabase();
 	    
 	}
+
+	_updateLoactionName = location => {
+ 		let lat = location.coords.latitude;
+	   	let lon = location.coords.longitude;
+	   	let address = "";
+	   	Geocoder.from(lat, lon)
+        .then(json => {
+        	address_components = json.results[0]["address_components"];
+        	address = address_components[0].long_name+" "+
+        			address_components[1].long_name+", "+
+        			address_components[2].long_name;
+        	this.setState({locationName: address});
+        })
+        .catch(error => console.warn(error));
+        
+ 	};
+
+ 	_uploadLocationToDatabase = location => {
+ 		let lat = location.coords.latitude;
+	   	let lon = location.coords.longitude;
+	   	this.setState({ lat: lat});
+	   	this.setState({ lng: lon});
+	   	coorfirebase.set({
+	   		lat: lat,
+	   		lng: lon
+	   	});
+	};
+
+	_updateMapRegion = location => {
+		let lat = location.coords.latitude;
+	   	let lon = location.coords.longitude;
+		let mapRegionCopy = Object.assign({}, this.state.mapRegion); 
+	   	mapRegionCopy.latitude = lat;
+	   	mapRegionCopy.longitude = lon;
+	   	this.setState({ mapRegion: mapRegionCopy});
+	};
+
 	_getLocationAsync = async () => {
 	   let { status } = await Permissions.askAsync(Permissions.LOCATION);
 	   if (status !== 'granted') {
@@ -73,25 +113,22 @@ class HomeScreen extends React.Component {
 
 	   if(location!==null){
 	   	// update the location
-	   	let lat = location.coords.latitude;
-	   	let lon = location.coords.longitude;
-	   	this.setState({ lat: lat});
-	   	this.setState({ lng: lon});
-	   	coorfirebase.set({
-	   		lat: lat,
-	   		lng: lon
-	   	});
-
+	   	this._uploadLocationToDatabase(location);
+	   	// update the location name
+	   	this._updateLoactionName(location);
 	   	// update the map 
-	   	let mapRegionCopy = Object.assign({}, this.state.mapRegion); 
-	   	mapRegionCopy.latitude = lat;
-	   	mapRegionCopy.longitude = lon;
-	   	this.setState({ mapRegion: mapRegionCopy});
+	   	this._updateMapRegion(location);
 	   }
 
 	   this.setState({ locationResult: JSON.stringify(location) });
 
  	};
+
+
+
+ 	_handleMapRegionChange = mapRegion => {
+    	this.setState({ mapRegion });
+  	};
 	_getInfoFromDatabase(){
 
 	    statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
@@ -134,7 +171,7 @@ class HomeScreen extends React.Component {
 		            </View>
 
 	               <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
-	                    <Text style = {{textAlign: 'center'}}> You are at latitude: {this.state.lat} longitude: {this.state.lng}</Text>  
+	                    <Text style = {{textAlign: 'center'}}> You are at {this.state.locationName}</Text>  
 	  				</View>
 
 	  				<View>
@@ -143,9 +180,7 @@ class HomeScreen extends React.Component {
 				          region={this.state.mapRegion}
 				          onRegionChange={this._handleMapRegionChange}
 				        />
-	  				</View>
-
-	  				
+	  				</View>  				
 
 	          </View>
           </View>
