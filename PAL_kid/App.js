@@ -30,12 +30,14 @@ const firebaseConfig = {
     messagingSenderId: "33475295035"
 };
 
+
 var curfirebase=firebase.initializeApp(firebaseConfig);
 var statusfirebase=curfirebase.database().ref("/Jason/status");
 var coorfirebase=curfirebase.database().ref("/Jason/coordinates/");
 var batfirebase=curfirebase.database().ref("/Jason/battery");
 var kidfirebase=curfirebase.database().ref("/Jason/");
 var addressfirebase=curfirebase.database().ref("/Jason/address");
+
 
 
 class HomeScreen extends React.Component {
@@ -74,6 +76,7 @@ class HomeScreen extends React.Component {
 	   	Geocoder.from(lat, lon)
         .then(json => {
         	address_components = json.results[0]["address_components"];
+        	// shorter address
         	address = address_components[0].long_name+" "+
         			address_components[1].long_name+", "+
         			address_components[2].long_name;
