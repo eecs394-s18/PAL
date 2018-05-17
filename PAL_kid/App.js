@@ -153,7 +153,7 @@ class HomeScreen extends React.Component {
 	            placement="left"
 	            backgroundColor = "#ef8b3e"
 	            leftComponent={< ShirtStatus />}
-	            centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
+	            centerComponent={{ text: 'PAL-Kid', style: {color: '#fff', marginLeft: -30} }}
 	            rightComponent={{ icon: 'menu', color: '#fff' }}
 	            />
 	          <View>
