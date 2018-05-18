@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert, Image} from 'react-native';
 import Dimensions from 'Dimensions';
-import { VictoryChart, VictoryLine, VictoryTheme } from "victory-native";
+import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis } from "victory-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Header, Button } from 'react-native-elements';
@@ -17,6 +17,13 @@ export default class ReportsScreen extends React.Component {
   }
 
   render() {
+    let cannedData = [
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 }
+    ];
     return (
         <View>
             <Header
@@ -37,23 +44,8 @@ export default class ReportsScreen extends React.Component {
               dateNameStyle={{color: 'white'}}
               iconContainer={{flex: 0.1}}
           />
-          <VictoryChart
-            theme={VictoryTheme.material}
-          >
-            <VictoryLine
-              style={{
-                data: { stroke: "#2082d8" },
-                parent: { border: "1px solid #ccc"}
-              }}
-              data={[
-                { x: 1, y: 2 },
-                { x: 2, y: 3 },
-                { x: 3, y: 5 },
-                { x: 4, y: 4 },
-                { x: 5, y: 7 }
-              ]}
-            />
-          </VictoryChart>
+
+          <Chart data={cannedData} />
         </View>
 
 
@@ -71,6 +63,22 @@ class ShirtStatus extends React.Component{
         />
         <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
       </Text>
+    );
+  }
+};
+
+class Chart extends React.Component{
+  render() {
+    return (
+      <VictoryChart theme={VictoryTheme.material}>
+        <VictoryLine
+        style={{
+          data: { stroke: "#2082d8" },
+          parent: { border: "1px solid #ccc"}
+        }}
+        data={this.props.data}
+          />
+      </VictoryChart>
     );
   }
 };
