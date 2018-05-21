@@ -24,6 +24,8 @@ export default class ReportsScreen extends React.Component {
     //Binds functions, defines them
     this.changeHR = this.changeHR.bind(this)
     this.changeXY = this.changeXY.bind(this)
+    this.changeEMG = this.changeEMG.bind(this)
+
   }
 
   render() {
@@ -61,6 +63,11 @@ export default class ReportsScreen extends React.Component {
             underlayColor={this.state.color}
             title = "HR">
           </Button>
+            <Button onPress={this.changeEMG}
+            activeOpacity={this.state.opacity}
+            underlayColor={this.state.color}
+            title = "EMG">
+          </Button>
         </View>
     );
   }
@@ -71,11 +78,14 @@ export default class ReportsScreen extends React.Component {
   changeXY() {
     this._chart.changeXY(XYcannedData);
   }
+  changeEMG() {
+    this._chart.changeEMG(cannedEMGdata);
+  }
 
 }
 
 //Canned Data
-var XYcannedData = [{x: 0, y: 90 },
+var HRcannedData = [{x: 0, y: 90 },
   {x: 1, y: 90 },
   {x: 2, y: 88 },
   {x: 3, y: 86 },
@@ -137,7 +147,7 @@ var XYcannedData = [{x: 0, y: 90 },
   {x: 59, y: 84 },
   {x: 60, y: 81 }];
 
-  var HRcannedData = [{x: 0, y: 90 },
+  var XYcannedData = [{x: 0, y: 90 }, 
     {x: 1, y: 20 },
     {x: 2, y: 20 },
     {x: 3, y: 20 },
@@ -199,6 +209,69 @@ var XYcannedData = [{x: 0, y: 90 },
     {x: 59, y: 84 },
     {x: 60, y: 81 }];
 
+    var cannedEMGdata=[
+{x: 1, y: 18.6 },
+{x: 2, y: 18.6 },
+{x: 3, y: 18.6 },
+{x: 4, y: 26.9 },
+{x: 5, y: 14.5 },
+{x: 6, y: 18.6 },
+{x: 7, y: 16.6 },
+{x: 8, y: 22.8 },
+{x: 9, y: 16.6 },
+{x: 10, y: 18.6 },
+{x: 11, y: 16.6 },
+{x: 12, y: 22.8 },
+{x: 13, y: 12.4 },
+{x: 14, y: 20.7 },
+{x: 15, y: 24.9 },
+{x: 16, y: 24.9 },
+{x: 17, y: 35.2 },
+{x: 18, y: 35.2 },
+{x: 19, y: 78.7 },
+{x: 20, y: 33.1 },
+{x: 21, y: 53.9 },
+{x: 22, y: 74.6 },
+{x: 23, y: 89.1 },
+{x: 24, y: 16.6 },
+{x: 25, y: 16.6 },
+{x: 26, y: 39.4 },
+{x: 27, y: 16.6 },
+{x: 28, y: 45.6 },
+{x: 29, y: 12.4 },
+{x: 30, y: 16.6 },
+{x: 31, y: 14.5 },
+{x: 32, y: 12.4 },
+{x: 33, y: 10.4 },
+{x: 34, y: 12.4 },
+{x: 35, y: 14.5 },
+{x: 36, y: 12.4 },
+{x: 37, y: 12.4 },
+{x: 38, y: 31.1 },
+{x: 39, y: 14.5 },
+{x: 40, y: 18.6 },
+{x: 41, y: 14.5 },
+{x: 42, y: 16.6 },
+{x: 43, y: 14.5 },
+{x: 44, y: 14.5 },
+{x: 45, y: 16.6 },
+{x: 46, y: 16.6 },
+{x: 47, y: 14.5 },
+{x: 48, y: 12.4 },
+{x: 49, y: 18.6 },
+{x: 50, y: 43.5 },
+{x: 51, y: 20.7 },
+{x: 52, y: 20.7 },
+{x: 53, y: 14.5 },
+{x: 54, y: 16.6 },
+{x: 55, y: 18.6 },
+{x: 56, y: 16.6 },
+{x: 57, y: 26.9 },
+{x: 58, y: 14.5 },
+{x: 59, y: 26.9 } ];
+
+
+
 
 
 
@@ -234,6 +307,11 @@ class Chart extends React.Component{
   changeXY (new_data) {
     Chart_data = new_data
     data_color = "#0000ff"
+    this.forceUpdate();
+  }
+    changeEMG (new_data) {
+    Chart_data = new_data
+    data_color = "#4682b4"
     this.forceUpdate();
   }
   render() {
