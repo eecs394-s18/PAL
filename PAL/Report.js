@@ -81,14 +81,13 @@ export default class ReportsScreen extends React.Component {
 
     return (
         <View>
-            <Header
+          <Header
             placement="left"
             backgroundColor = "#ff1900"
             leftComponent={< ShirtStatus />}
             centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
-
           <CalendarStrip
               calendarAnimation={{type: 'sequence', duration: 30}}
               daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#9265DC'}}
@@ -99,7 +98,6 @@ export default class ReportsScreen extends React.Component {
               dateNameStyle={{color: 'white'}}
               iconContainer={{flex: 0.1}}
           />
-
           <Chart data={cannedData} />
         </View>
 
@@ -123,7 +121,6 @@ class ShirtStatus extends React.Component{
 };
 
 class Chart extends React.Component{
-
   render() {
     return (
       <VictoryChart theme={VictoryTheme.material}>

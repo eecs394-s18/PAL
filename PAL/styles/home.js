@@ -82,5 +82,11 @@ export default StyleSheet.create({
   barText: {
     backgroundColor: "transparent",
     color: "#FFF",
+  },
+  scheduleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   }
 });

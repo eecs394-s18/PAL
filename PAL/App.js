@@ -11,7 +11,7 @@ import moment from 'moment';
 import * as firebase from 'firebase';
 
 import styles from './styles/home';
-import MyCircleScreen from './MyCircle';
+import ScheduleScreen from './Schedule';
 import ReportsScreen from './Report';
 
 // Initialize Firebase
@@ -25,42 +25,34 @@ const firebaseConfig = {
 };
 
 var curfirebase=firebase.initializeApp(firebaseConfig);
-
 var addressfirebase=curfirebase.database().ref("/Jason/address");
 var statusfirebase=curfirebase.database().ref("/Jason/status");
 var batfirebase=curfirebase.database().ref("/Jason/battery");
 
-
 class HomeScreen extends React.Component {
-    constructor(props){
-super(props)
-  this.state = {
+  constructor(props){
+    super(props)
+    this.state = {
     progress: 0.5,
     opacity: 0.5,
     battery: 0.0,
     lat: "",
     lng: "",
     address: ""
-
+    }
   }
 
-}
-
-componentDidMount() {
+  componentDidMount() {
     addressfirebase.on('value', snapshot => {this.setState({address: snapshot.val()})
     });
     statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
     });
     batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
     });
-
   }
    render() {
-
     return (
-
         <View style={{flex:1}}>
-
           <View>
             <Header
             placement="left"
@@ -70,7 +62,6 @@ componentDidMount() {
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
           <View>
-
             <Text style={styles.statusTitle}>{"Jason's Current Status"}</Text>
             <Text style={styles.statusGreen}>Green</Text>
             <AnimatedCircularProgress
@@ -89,13 +80,9 @@ componentDidMount() {
                 source={require('./resources/f2.png')}
               />
             </View>
-
-                    <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
-                    <Text style = {{textAlign: 'center'}}> Jason is at {this.state.address}</Text>
-                    </View>
-
-
-
+              <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
+              <Text style = {{textAlign: 'center'}}> Jason is at {this.state.address}</Text>
+              </View>
           </View>
           </View>
           <FlatList style={styles.flatListContainer}
@@ -138,7 +125,7 @@ export default createBottomTabNavigator(
   {
     Home: HomeScreen,
     Report: ReportsScreen,
-    MyCircle: MyCircleScreen,
+    Schedule: ScheduleScreen,
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -150,7 +137,7 @@ export default createBottomTabNavigator(
         } else if (routeName === 'Report') {
           iconName = `ios-options${focused ? '' : '-outline'}`;
         }
-        else if (routeName === 'MyCircle') {
+        else if (routeName === 'Schedule') {
           iconName = `ios-people${focused ? '' : '-outline'}`;
         }
         return <Ionicons name={iconName} size={25} color={tintColor} />;
