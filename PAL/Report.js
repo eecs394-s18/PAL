@@ -25,6 +25,10 @@ export default class ReportsScreen extends React.Component {
     this.changeHR = this.changeHR.bind(this)
     this.changeXY = this.changeXY.bind(this)
     this.changeEMG = this.changeEMG.bind(this)
+    //resp is in breaths per minute from last breath 
+    this.changeresp = this.changeresp.bind(this)
+    this.changehgsr = this.changehgsr.bind(this)
+
 
   }
 
@@ -41,7 +45,7 @@ export default class ReportsScreen extends React.Component {
           <CalendarStrip
               calendarAnimation={{type: 'sequence', duration: 30}}
               daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#9265DC'}}
-              style={{height:100, paddingTop: 5, paddingBottom: 5}}
+              style={{height:85, paddingTop: 5, paddingBottom: 5}}
               calendarHeaderStyle={{color: 'white'}}
               calendarColor={'#7743CE'}
               dateNumberStyle={{color: 'white'}}
@@ -68,6 +72,16 @@ export default class ReportsScreen extends React.Component {
             underlayColor={this.state.color}
             title = "EMG">
           </Button>
+           <Button onPress={this.changeresp}
+            activeOpacity={this.state.opacity}
+            underlayColor={this.state.color}
+            title = "Resp">
+          </Button>
+          <Button onPress={this.changehgsr}
+            activeOpacity={this.state.opacity}
+            underlayColor={this.state.color}
+            title = "HGSR">
+          </Button>
         </View>
     );
   }
@@ -80,6 +94,12 @@ export default class ReportsScreen extends React.Component {
   }
   changeEMG() {
     this._chart.changeEMG(cannedEMGdata);
+  }
+  changeresp() {
+    this._chart.changeresp(respcanneddata);
+  }
+   changehgsr() {
+    this._chart.changehgsr(HGSRdata);
   }
 
 }
@@ -208,6 +228,25 @@ var HRcannedData = [{x: 0, y: 90 },
     {x: 58, y: 85 },
     {x: 59, y: 84 },
     {x: 60, y: 81 }];
+    var respcanneddata=data=[
+{x: 2.2, y: 27.2727272727273 },
+{x: 8.8, y: 9.09090909090909 },
+{x: 11, y: 27.2727272727273 },
+{x: 13.2, y: 27.2727272727273 },
+{x: 19.8, y: 9.09090909090909 },
+{x: 22, y: 27.2727272727273 },
+{x: 24.2, y: 27.2727272727273 },
+{x: 30.8, y: 9.09090909090909 },
+{x: 33, y: 27.2727272727273 },
+{x: 35.2, y: 27.2727272727272 },
+{x: 41.8, y: 9.0909090909091 },
+{x: 44, y: 27.2727272727272 },
+{x: 46.2, y: 27.2727272727272 },
+{x: 52.8, y: 9.0909090909091 },
+{x: 55, y: 27.2727272727272 },
+{x: 57.2, y: 27.2727272727272 }
+];
+
 
     var cannedEMGdata=[
 {x: 1, y: 18.6 },
@@ -269,7 +308,68 @@ var HRcannedData = [{x: 0, y: 90 },
 {x: 57, y: 26.9 },
 {x: 58, y: 14.5 },
 {x: 59, y: 26.9 } ];
-
+var HGSRdata=[
+{x: 1, y: 19.154 },
+{x: 2, y: 19.147 },
+{x: 3, y: 19.04 },
+{x: 4, y: 18.97 },
+{x: 5, y: 18.925 },
+{x: 6, y: 18.953 },
+{x: 7, y: 18.943 },
+{x: 8, y: 18.841 },
+{x: 9, y: 18.761 },
+{x: 10, y: 18.724 },
+{x: 11, y: 18.649 },
+{x: 12, y: 18.612 },
+{x: 13, y: 18.873 },
+{x: 14, y: 18.789 },
+{x: 15, y: 18.637 },
+{x: 16, y: 18.562 },
+{x: 17, y: 18.508 },
+{x: 18, y: 18.45 },
+{x: 19, y: 18.366 },
+{x: 20, y: 18.336 },
+{x: 21, y: 18.274 },
+{x: 22, y: 18.314 },
+{x: 23, y: 18.279 },
+{x: 24, y: 18.354 },
+{x: 25, y: 18.276 },
+{x: 26, y: 18.244 },
+{x: 27, y: 18.386 },
+{x: 28, y: 18.351 },
+{x: 29, y: 18.252 },
+{x: 30, y: 18.55 },
+{x: 31, y: 18.475 },
+{x: 32, y: 18.326 },
+{x: 33, y: 18.237 },
+{x: 34, y: 18.17 },
+{x: 35, y: 18.122 },
+{x: 36, y: 18.073 },
+{x: 37, y: 18.038 },
+{x: 38, y: 18.003 },
+{x: 39, y: 17.966 },
+{x: 40, y: 17.928 },
+{x: 41, y: 17.894 },
+{x: 42, y: 17.864 },
+{x: 43, y: 17.834 },
+{x: 44, y: 18.093 },
+{x: 45, y: 19.087 },
+{x: 46, y: 18.781 },
+{x: 47, y: 18.408 },
+{x: 48, y: 18.224 },
+{x: 49, y: 18.112 },
+{x: 50, y: 18.035 },
+{x: 51, y: 17.978 },
+{x: 52, y: 17.926 },
+{x: 53, y: 17.881 },
+{x: 54, y: 17.846 },
+{x: 55, y: 17.814 },
+{x: 56, y: 17.777 },
+{x: 57, y: 17.747 },
+{x: 58, y: 17.717 },
+{x: 59, y: 17.695 },
+{x: 60, y: 17.69 }
+];
 
 
 
@@ -310,6 +410,16 @@ class Chart extends React.Component{
     this.forceUpdate();
   }
     changeEMG (new_data) {
+    Chart_data = new_data
+    data_color = "#4682b4"
+    this.forceUpdate();
+  }
+   changeresp (new_data) {
+    Chart_data = new_data
+    data_color = "#4682b4"
+    this.forceUpdate();
+  }
+   changehgsr (new_data) {
     Chart_data = new_data
     data_color = "#4682b4"
     this.forceUpdate();
