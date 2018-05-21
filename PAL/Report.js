@@ -11,74 +11,22 @@ import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import * as firebase from 'firebase';
 
+import styles from './styles/home';
+
+
 export default class ReportsScreen extends React.Component {
   constructor(props){
-    super(props);
+    super(props)
+    this.state = {
+          color: "#fff",
+          opacity: 0.5,
+    }
+    //Binds functions, defines them
+    this.changeHR = this.changeHR.bind(this)
+    this.changeXY = this.changeXY.bind(this)
   }
 
   render() {
-    let cannedData = [{x: 0, y: 90 },
-      {x: 1, y: 90 },
-      {x: 2, y: 88 },
-      {x: 3, y: 86 },
-      {x: 4, y: 85 },
-      {x: 5, y: 93 },
-      {x: 6, y: 89 },
-      {x: 7, y: 99 },
-      {x: 8, y: 80 },
-      {x: 9, y: 65 },
-      {x: 10, y: 75 },
-      {x: 11, y: 65 },
-      {x: 12, y: 69 },
-      {x: 13, y: 74 },
-      {x: 14, y: 76 },
-      {x: 15, y: 78 },
-      {x: 16, y: 85 },
-      {x: 17, y: 84 },
-      {x: 18, y: 80 },
-      {x: 19, y: 88 },
-      {x: 20, y: 77 },
-      {x: 21, y: 76 },
-      {x: 22, y: 80 },
-      {x: 23, y: 80 },
-      {x: 24, y: 80 },
-      {x: 25, y: 91 },
-      {x: 26, y: 89 },
-      {x: 27, y: 86 },
-      {x: 28, y: 89 },
-      {x: 29, y: 84 },
-      {x: 30, y: 83 },
-      {x: 31, y: 90 },
-      {x: 32, y: 85 },
-      {x: 33, y: 85 },
-      {x: 34, y: 87 },
-      {x: 35, y: 81 },
-      {x: 36, y: 77 },
-      {x: 37, y: 80 },
-      {x: 38, y: 80 },
-      {x: 39, y: 80 },
-      {x: 40, y: 85 },
-      {x: 41, y: 89 },
-      {x: 42, y: 85 },
-      {x: 43, y: 84 },
-      {x: 44, y: 90 },
-      {x: 45, y: 91 },
-      {x: 46, y: 84 },
-      {x: 47, y: 80 },
-      {x: 48, y: 63 },
-      {x: 49, y: 59 },
-      {x: 50, y: 63 },
-      {x: 51, y: 65 },
-      {x: 52, y: 67 },
-      {x: 53, y: 74 },
-      {x: 54, y: 84 },
-      {x: 55, y: 80 },
-      {x: 56, y: 82 },
-      {x: 57, y: 85 },
-      {x: 58, y: 85 },
-      {x: 59, y: 84 },
-      {x: 60, y: 81 }];
-
     return (
         <View>
             <Header
@@ -100,13 +48,165 @@ export default class ReportsScreen extends React.Component {
               iconContainer={{flex: 0.1}}
           />
 
-          <Chart data={cannedData} />
+
+          //Passes data to graph
+          <Chart ref = {Chart => {this._chart = Chart}} data = {XYcannedData} />
+
+          //Buttons to change Graph Data
+          <Button onPress={this.changeXY}
+            activeOpacity={this.state.opacity}
+            underlayColor={this.state.color}
+            title = "XY">
+          </Button>
+
+          <Button onPress={this.changeHR}
+            activeOpacity={this.state.opacity}
+            underlayColor={this.state.color}
+            title = "HR">
+          </Button>
         </View>
 
 
     );
+
   }
+
+  changeHR() {
+    this._chart.changeHR(HRcannedData);
+  }
+  changeXY() {
+    this._chart.changeXY(XYcannedData);
+  }
+
 }
+
+//Canned Data
+var XYcannedData = [{x: 0, y: 90 },
+  {x: 1, y: 90 },
+  {x: 2, y: 88 },
+  {x: 3, y: 86 },
+  {x: 4, y: 85 },
+  {x: 5, y: 93 },
+  {x: 6, y: 89 },
+  {x: 7, y: 99 },
+  {x: 8, y: 80 },
+  {x: 9, y: 65 },
+  {x: 10, y: 75 },
+  {x: 11, y: 65 },
+  {x: 12, y: 69 },
+  {x: 13, y: 74 },
+  {x: 14, y: 76 },
+  {x: 15, y: 78 },
+  {x: 16, y: 85 },
+  {x: 17, y: 84 },
+  {x: 18, y: 80 },
+  {x: 19, y: 88 },
+  {x: 20, y: 77 },
+  {x: 21, y: 76 },
+  {x: 22, y: 80 },
+  {x: 23, y: 80 },
+  {x: 24, y: 80 },
+  {x: 25, y: 91 },
+  {x: 26, y: 89 },
+  {x: 27, y: 86 },
+  {x: 28, y: 89 },
+  {x: 29, y: 84 },
+  {x: 30, y: 83 },
+  {x: 31, y: 90 },
+  {x: 32, y: 85 },
+  {x: 33, y: 85 },
+  {x: 34, y: 87 },
+  {x: 35, y: 81 },
+  {x: 36, y: 77 },
+  {x: 37, y: 80 },
+  {x: 38, y: 80 },
+  {x: 39, y: 80 },
+  {x: 40, y: 85 },
+  {x: 41, y: 89 },
+  {x: 42, y: 85 },
+  {x: 43, y: 84 },
+  {x: 44, y: 90 },
+  {x: 45, y: 91 },
+  {x: 46, y: 84 },
+  {x: 47, y: 80 },
+  {x: 48, y: 63 },
+  {x: 49, y: 59 },
+  {x: 50, y: 63 },
+  {x: 51, y: 65 },
+  {x: 52, y: 67 },
+  {x: 53, y: 74 },
+  {x: 54, y: 84 },
+  {x: 55, y: 80 },
+  {x: 56, y: 82 },
+  {x: 57, y: 85 },
+  {x: 58, y: 85 },
+  {x: 59, y: 84 },
+  {x: 60, y: 81 }];
+
+  var HRcannedData = [{x: 0, y: 90 },
+    {x: 1, y: 20 },
+    {x: 2, y: 20 },
+    {x: 3, y: 20 },
+    {x: 4, y: 85 },
+    {x: 5, y: 93 },
+    {x: 6, y: 89 },
+    {x: 7, y: 99 },
+    {x: 8, y: 80 },
+    {x: 9, y: 65 },
+    {x: 20, y: 75 },
+    {x: 20, y: 65 },
+    {x: 20, y: 69 },
+    {x: 13, y: 20 },
+    {x: 14, y: 20 },
+    {x: 15, y: 20 },
+    {x: 16, y: 20 },
+    {x: 17, y: 84 },
+    {x: 18, y: 20 },
+    {x: 19, y: 88 },
+    {x: 20, y: 77 },
+    {x: 21, y: 76 },
+    {x: 22, y: 80 },
+    {x: 23, y: 80 },
+    {x: 24, y: 80 },
+    {x: 25, y: 91 },
+    {x: 26, y: 89 },
+    {x: 27, y: 86 },
+    {x: 28, y: 89 },
+    {x: 29, y: 84 },
+    {x: 30, y: 83 },
+    {x: 31, y: 90 },
+    {x: 32, y: 85 },
+    {x: 33, y: 85 },
+    {x: 34, y: 87 },
+    {x: 35, y: 81 },
+    {x: 36, y: 77 },
+    {x: 37, y: 80 },
+    {x: 38, y: 80 },
+    {x: 39, y: 80 },
+    {x: 40, y: 85 },
+    {x: 41, y: 89 },
+    {x: 42, y: 85 },
+    {x: 43, y: 84 },
+    {x: 44, y: 90 },
+    {x: 45, y: 91 },
+    {x: 46, y: 84 },
+    {x: 47, y: 80 },
+    {x: 48, y: 63 },
+    {x: 49, y: 59 },
+    {x: 50, y: 63 },
+    {x: 51, y: 65 },
+    {x: 52, y: 67 },
+    {x: 53, y: 74 },
+    {x: 54, y: 84 },
+    {x: 55, y: 80 },
+    {x: 56, y: 82 },
+    {x: 57, y: 85 },
+    {x: 58, y: 85 },
+    {x: 59, y: 84 },
+    {x: 60, y: 81 }];
+
+
+
 
 class ShirtStatus extends React.Component{
   render() {
@@ -122,18 +222,39 @@ class ShirtStatus extends React.Component{
   }
 };
 
-class Chart extends React.Component{
 
+//Chart Component
+Chart_data = XYcannedData
+data_color = "#2082d8"
+
+class Chart extends React.Component{
+  constructor(props){
+    super(props)
+  }
+
+  changeHR (new_data) {
+    Chart_data = new_data
+    data_color = "#ff0000"
+    this.forceUpdate();
+  }
+  changeXY (new_data) {
+    Chart_data = new_data
+    data_color = "#0000ff"
+    this.forceUpdate();
+  }
   render() {
+
     return (
       <VictoryChart theme={VictoryTheme.material}>
         <VictoryLine
         style={{
-          data: { stroke: "#2082d8" },
+          data: { stroke: data_color },
           parent: { border: "1px solid #ccc"}
         }}
-        data={this.props.data}
+
+        data = {Chart_data}
           />
+
       </VictoryChart>
     );
   }
