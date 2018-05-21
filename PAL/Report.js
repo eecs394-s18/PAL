@@ -46,11 +46,6 @@ export default class ReportsScreen extends React.Component {
               dateNameStyle={{color: 'white'}}
               iconContainer={{flex: 0.1}}
           />
-<<<<<<< HEAD
-          <Chart data={cannedData} />
-=======
-
-
           //Passes data to graph
           <Chart ref = {Chart => {this._chart = Chart}} data = {XYcannedData} />
 
@@ -66,12 +61,8 @@ export default class ReportsScreen extends React.Component {
             underlayColor={this.state.color}
             title = "HR">
           </Button>
->>>>>>> 37f8817106fd62bcc8d63f46158f99ba8aa1a0bd
         </View>
-
-
     );
-
   }
 
   changeHR() {
