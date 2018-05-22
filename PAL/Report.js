@@ -57,29 +57,39 @@ export default class ReportsScreen extends React.Component {
 
           //Buttons to change Graph Data
           <Button onPress={this.changeXY}
-            activeOpacity={this.state.opacity}
-            underlayColor={this.state.color}
+            buttonStyle={{borderColor: "transparent",
+                          borderWidth: 0,
+                          borderRadius: 5,
+                          backgroundColor: "#2082d8"}}
             title = "XY">
           </Button>
 
           <Button onPress={this.changeHR}
-            activeOpacity={this.state.opacity}
-            underlayColor={this.state.color}
+            buttonStyle={{borderColor: "transparent",
+                          borderWidth: 0,
+                          borderRadius: 5,
+                          backgroundColor: "#f74259"}}
             title = "HR">
           </Button>
             <Button onPress={this.changeEMG}
-            activeOpacity={this.state.opacity}
-            underlayColor={this.state.color}
+            buttonStyle={{borderColor: "transparent",
+                          borderWidth: 0,
+                          borderRadius: 5,
+                          backgroundColor: "#8cd01b"}}
             title = "EMG">
           </Button>
            <Button onPress={this.changeresp}
-            activeOpacity={this.state.opacity}
-            underlayColor={this.state.color}
+            buttonStyle={{borderColor: "transparent",
+                          borderWidth: 0,
+                          borderRadius: 5,
+                          backgroundColor: "#33d1d8"}}
             title = "Resp">
           </Button>
           <Button onPress={this.changehgsr}
-            activeOpacity={this.state.opacity}
-            underlayColor={this.state.color}
+            buttonStyle={{borderColor: "transparent",
+                          borderWidth: 0,
+                          borderRadius: 5,
+                          backgroundColor: "#f59623"}}
             title = "HGSR">
           </Button>
         </View>
