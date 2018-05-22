@@ -53,7 +53,7 @@ export default class ReportsScreen extends React.Component {
               iconContainer={{flex: 0.1}}
           />
           //Passes data to graph
-          <Chart ref = {Chart => {this._chart = Chart}} data = {XYcannedData} />
+          <Chart ref = {Chart => {this._chart = Chart}} data = {XYcannedData}/>
 
           //Buttons to change Graph Data
           <Button onPress={this.changeXY}
@@ -393,6 +393,8 @@ class ShirtStatus extends React.Component{
 //Chart Component
 Chart_data = XYcannedData
 data_color = "#2082d8"
+chart_title = "XY"
+
 
 class Chart extends React.Component{
   constructor(props){
@@ -401,43 +403,51 @@ class Chart extends React.Component{
 
   changeHR (new_data) {
     Chart_data = new_data
-    data_color = "#ff0000"
+    data_color = "#f74259"
+    chart_title = "Heart Rate"
     this.forceUpdate();
   }
   changeXY (new_data) {
     Chart_data = new_data
-    data_color = "#0000ff"
+    data_color = "#2082d8"
+    chart_title = "XY"
     this.forceUpdate();
   }
     changeEMG (new_data) {
     Chart_data = new_data
-    data_color = "#4682b4"
+    data_color = "#8cd01b"
+    chart_title = "EMG"
     this.forceUpdate();
   }
    changeresp (new_data) {
     Chart_data = new_data
-    data_color = "#4682b4"
+    data_color = "#33d1d8"
+    chart_title = "Respiratory"
     this.forceUpdate();
   }
    changehgsr (new_data) {
     Chart_data = new_data
-    data_color = "#4682b4"
+    data_color = "#f59623"
+    chart_title = "HGSR"
     this.forceUpdate();
   }
   render() {
 
     return (
-      <VictoryChart theme={VictoryTheme.material}>
-        <VictoryLine
-        style={{
-          data: { stroke: data_color },
-          parent: { border: "1px solid #ccc"}
-        }}
+      <View style={{ alignItems: 'center', }}>
+        <Text style={{marginTop: 10, marginBottom: -30, fontSize: 20, fontWeight: 'bold'}}>{chart_title}</Text>
+        <VictoryChart theme={VictoryTheme.material}>
+          <VictoryLine
+          style={{
+            data: { stroke: data_color },
+            parent: { border: "1px solid #ccc"}
+          }}
 
-        data = {Chart_data}
-          />
+          data = {Chart_data}
+            />
 
-      </VictoryChart>
+        </VictoryChart>
+      </View>
     );
   }
 };
