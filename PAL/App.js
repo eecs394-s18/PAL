@@ -13,7 +13,7 @@ import * as firebase from 'firebase';
 import styles from './styles/home';
 import ScheduleScreen from './Schedule';
 import ReportsScreen from './Report';
-import getGradient from './gradient';
+import { GetGradient } from './gradient';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -72,7 +72,7 @@ class HomeScreen extends React.Component {
               fill={100*this.state.progress}
               arcSweepAngle={180}
               rotation={270}
-              tintColor= "green"
+              tintColor= {GetGradient(this.state.progress)}
               backgroundColor="#666"
               onAnimationComplete={() => console.log('onAnimationComplete')}
             />

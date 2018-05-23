@@ -1,7 +1,8 @@
-function getGradient(var ratio){
+export function GetGradient(ratio){
   // var red =     '#ff0000';
   // var yellow =  '#ffff00';
   // var green =   '#008000';
+  ratio = 1-ratio
   if (ratio == 0.5){
     return "#ffff00";
   }
@@ -17,7 +18,6 @@ function getGradient(var ratio){
     if (green.length == 1) green = '0' + green;
 
     //this.item.color = '#'+red.toString(16).substring(0,2)+green.toString(16).substring(0,2)+"00";
-    console.log("Slider color changed to "+this.item.color);
     return '#'+red+green+"00";
   }
   else {
@@ -26,7 +26,6 @@ function getGradient(var ratio){
     let green = Math.round(255*r2).toString(16);
     if (green.length == 1) green = '0' + green;
 
-    console.log("Slider color changed to "+this.item.color);
     return '#ff'+green+"00";
   }
 }
