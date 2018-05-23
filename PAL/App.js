@@ -107,15 +107,75 @@ class HomeScreen extends React.Component {
 
 
 class ShirtStatus extends React.Component{
-  render() {
-    return (
-      <Text>
+  constructor(props){
+    super(props)
+    this.state = {
+ 
+    battery: 0.0,
+  
+    }
+  }
+  componentDidMount() {
+  
+    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
+    });
+  }
+  renderBattery() {
+    if (this.state.battery>.875) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-full"} size={20} color="#fff"/>
+      </Text>
+    }
+    else if (this.state.battery>.625) {
+      return <Text>
         <Image
           source={require('./resources/tshirt_white.png')}
           style= {{height: 20, width: 20}}
         />
         <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
       </Text>
+    }
+    else if (this.state.battery>.375) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-half"} size={20} color="#fff"/>
+      </Text>
+    }
+     else if (this.state.battery>.125) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-quarter"} size={20} color="#fff"/>
+      </Text>
+    }
+      else {
+        return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-empty"} size={20} color="#fff"/>
+      </Text>
+      }
+    
+
+
+  }
+  render() {
+    return (
+            <View >
+     {this.renderBattery()}
+        </View>
+
     );
   }
 };
