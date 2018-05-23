@@ -13,6 +13,8 @@ import * as firebase from 'firebase';
 import styles from './styles/home';
 import ScheduleScreen from './Schedule';
 import ReportsScreen from './Report';
+import { GetGradient } from './gradient';
+
 // Initialize Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
@@ -55,12 +57,6 @@ class HomeScreen extends React.Component {
   }
 
   _updateStatus = status =>{
-  	//change color
-  	var color = this._getGradient(status);
-
-  	
-  	this.setState({statusColor: color});
-
 
   	//change emoji
   	var img;
@@ -130,7 +126,7 @@ class HomeScreen extends React.Component {
               fill={100*this.state.progress}
               arcSweepAngle={180}
               rotation={270}
-              tintColor={this.state.statusColor}
+              tintColor= {GetGradient(this.state.progress)}
               backgroundColor="#666"
               onAnimationComplete={() => console.log('onAnimationComplete')}
             />
@@ -166,15 +162,75 @@ class HomeScreen extends React.Component {
 
 
 class ShirtStatus extends React.Component{
-  render() {
-    return (
-      <Text>
+  constructor(props){
+    super(props)
+    this.state = {
+ 
+    battery: 0.0,
+  
+    }
+  }
+  componentDidMount() {
+  
+    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
+    });
+  }
+  renderBattery() {
+    if (this.state.battery>.875) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-full"} size={20} color="#fff"/>
+      </Text>
+    }
+    else if (this.state.battery>.625) {
+      return <Text>
         <Image
           source={require('./resources/tshirt_white.png')}
           style= {{height: 20, width: 20}}
         />
         <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
       </Text>
+    }
+    else if (this.state.battery>.375) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-half"} size={20} color="#fff"/>
+      </Text>
+    }
+     else if (this.state.battery>.125) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-quarter"} size={20} color="#fff"/>
+      </Text>
+    }
+      else {
+        return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-empty"} size={20} color="#fff"/>
+      </Text>
+      }
+    
+
+
+  }
+  render() {
+    return (
+            <View >
+     {this.renderBattery()}
+        </View>
+
     );
   }
 };
