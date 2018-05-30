@@ -45,7 +45,9 @@ class HomeScreen extends React.Component {
     lng: "",
     address: "",
     visibleModal: null,
-    sliderValue: 0,
+    meltdown:{time:"",value:5},
+    heartRate:70,
+    temperature: 98,
     }
   }
 
@@ -126,10 +128,10 @@ class HomeScreen extends React.Component {
           minimumValue={0}
           maximumValue={5}
           step={1}
-          sliderValue={this.state.sliderValue}
+          sliderValue={this.state.meltdown['value']}
           onValueChange={(sliderValue) => this.setState({ sliderValue: sliderValue })}
         />
-        <Text>Severity: {this.state.sliderValue}</Text>
+        <Text>Severity: {this.state.meltdown['value']}</Text>
       </View>
       {this._renderButton('Submit', () => this.setState({ visibleModal: null }))}
       {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
