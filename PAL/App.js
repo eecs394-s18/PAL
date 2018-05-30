@@ -64,10 +64,8 @@ class HomeScreen extends React.Component {
   }
 
   _updateStatus = status =>{
-
   	//change emoji
   	var img;
-
   	if(status < 0.2){
   		var img = require('./resources/sad.png');
   	}else if(status < 0.4){
@@ -138,6 +136,15 @@ class HomeScreen extends React.Component {
   );
 
    render() {
+     const data = [
+       {id: 1, name: 'Message', icon: 'comments'},
+       {id: 2, name: 'History', icon: 'bar-chart'},
+       {id: 3, name: 'Share', icon:'share'},
+       {id: 4, name: 'Heart Rate' + '\n' + this.state.heartRate + 'bpm', icon:'heart'},
+       {id: 5, name: 'Send a Hug or Calming Technique'},
+       {id: 6, name: 'Body Temperature' + '\n' + this.state.temperature, icon: 'thermometer-0'},
+     ];
+
     return (
         <View style={{flex:1}}>
           <View>
@@ -197,7 +204,6 @@ class HomeScreen extends React.Component {
     );
   }
 }
-
 
 class ShirtStatus extends React.Component{
   constructor(props){
@@ -296,12 +302,4 @@ export default createBottomTabNavigator(
   }
 )
 
-const data = [
-  {id: 1, name: 'Message', icon: 'comments'},
-  {id: 2, name: 'History', icon: 'bar-chart'},
-  {id: 3, name: 'Share', icon:'share'},
-  {id: 4, name: 'Heart Rate', icon:'heart'},
-  {id: 5, name: 'Send a Hug or Calming Technique'},
-  {id: 6, name: 'Body Temperature', icon: 'thermometer-0'},
-];
 const numColumns = 3;

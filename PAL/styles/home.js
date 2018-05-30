@@ -7,6 +7,7 @@ export default StyleSheet.create({
   flatListContainer: {
     flex: 1,
     top: 150,
+    flexWrap:'wrap',
   },
   ButtonContainer: {
     flex: 1,
@@ -113,11 +114,11 @@ export default StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   modalContent: {
-    flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
+    height: '40%',
   },
 });
