@@ -45,7 +45,10 @@ class HomeScreen extends React.Component {
     lng: "",
     address: "",
     visibleModal: null,
-    sliderValue: 0,
+    meltdownTime: "",
+    meltdownVal: 0,
+    heartRate: 70,
+    temperature: 98.6,
     }
   }
 
@@ -120,18 +123,16 @@ class HomeScreen extends React.Component {
   _renderModalContent = () => (
     <View style={styles.modalContent}>
       <Text style={{fontWeight: 'bold', marginBottom:20}}>Record meltdown</Text>
-      <Text style={{marginBottom:20}}>Current time: {new Date().toLocaleString()}</Text>
-      <View style={styles.sliderContainer}>
+      <Text>Current time: {new Date().toLocaleString()}</Text>
         <Slider style={{width:300}}
           minimumValue={0}
           maximumValue={5}
           step={1}
-          sliderValue={this.state.sliderValue}
-          onValueChange={(sliderValue) => this.setState({ sliderValue: sliderValue })}
+          value={this.state.meltdownVal}
+          onValueChange={(newValue) => this.setState({ meltdownVal: newValue})}
         />
-        <Text>Severity: {this.state.sliderValue}</Text>
-      </View>
-      {this._renderButton('Submit', () => this.setState({ visibleModal: null }))}
+        <Text style={{marginBottom:20}}>Severity: {this.state.meltdownVal}</Text>
+      {this._renderButton('Submit', () => this.setState({ meltdownTime: new Date().toLocaleString(), visibleModal: null }))}
       {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
     </View>
   );
@@ -255,10 +256,7 @@ class ShirtStatus extends React.Component{
         />
         <Icon name={"battery-empty"} size={20} color="#fff"/>
       </Text>
-      }
-
-
-
+    }
   }
   render() {
     return (

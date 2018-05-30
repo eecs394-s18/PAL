@@ -115,19 +115,9 @@ export default StyleSheet.create({
   modalContent: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 22,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
-  },
-  bottomModal: {
-    justifyContent: 'flex-end',
-    margin: 0,
-  },
-  sliderContainer: {
-    flex: 1,
-    alignItems: "stretch",
-    justifyContent: "center",
   },
 });
