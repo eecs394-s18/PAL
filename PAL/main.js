@@ -19,21 +19,51 @@ import Slider from "react-native-slider";
 
 // Initialize Firebase
 const firebaseConfig = {
-   apiKey: "AIzaSyD98VQauhSLcjZKBlQ4zOfGjLr-U9_Yow0",
-    authDomain: "eecs394project2test.firebaseapp.com",
-    databaseURL: "https://eecs394project2test.firebaseio.com",
-    projectId: "eecs394project2test",
-    storageBucket: "eecs394project2test.appspot.com",
-    messagingSenderId: "837805240374"
+apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
+    authDomain: "pal394-a6f1f.firebaseapp.com",
+    databaseURL: "https://pal394-a6f1f.firebaseio.com",
+    projectId: "pal394-a6f1f",
+    storageBucket: "pal394-a6f1f.appspot.com",
+    messagingSenderId: "33475295035"
 };
+var name, email, photoUrl, uid, emailVerified;
 
+ var addressfirebase, statusfirebase, batfirebase, namefirebase;
 var curfirebase=firebase.initializeApp(firebaseConfig);
-var addressfirebase=curfirebase.database().ref("/Jason/address");
-var statusfirebase=curfirebase.database().ref("/Jason/status");
-var batfirebase=curfirebase.database().ref("/Jason/battery");
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    //signed in
+  name = user.displayName;
+  email = user.email;
+  emailVerified = user.emailVerified;
+  uid = user.uid;
+  //use these once we get firebase working with UID
+ //   addressfirebase=curfirebase.database().ref("/"+uid+"/address");
+ //  statusfirebase=curfirebase.database().ref("/"+uid+"/status");
+ // batfirebase=curfirebase.database().ref("/"+uid+"/battery");
+ //  namefirebase=curfirebase.database().ref("/"+uid+"/name");
+addressfirebase=curfirebase.database().ref("/Jason/address");
+ statusfirebase=curfirebase.database().ref("/Jason/status");
+ batfirebase=curfirebase.database().ref("/Jason/battery");
+  namefirebase=curfirebase.database().ref("/Jason/name");
+
+
+    } else {
+      //initalize with Jasons values
+addressfirebase=curfirebase.database().ref("/Jason/address");
+ statusfirebase=curfirebase.database().ref("/Jason/status");
+ batfirebase=curfirebase.database().ref("/Jason/battery");
+  namefirebase=curfirebase.database().ref("/Jason/name");  }
+});
+
+
 
 class HomeScreen extends React.Component {
   constructor(props){
+//     var curfirebase=firebase.initializeApp(firebaseConfig);
+// var addressfirebase=curfirebase.database().ref("/Jason/address");
+// var statusfirebase=curfirebase.database().ref("/Jason/status");
+// var batfirebase=curfirebase.database().ref("/Jason/battery");
     super(props)
     this.state = {
     progress: 0.5,
@@ -47,13 +77,14 @@ class HomeScreen extends React.Component {
     address: "",
     visibleModal: null,
     sliderValue: 0,
+    kidname: "",
     }
   }
 
   componentDidMount() {
-        const { currentUser } = firebase.auth()
-
-    this.setState({ currentUser })
+     namefirebase.on('value', snapshot => {this.setState({kidname: snapshot.val()})
+    });   
+    console.log("john" + this.state.kidname); 
     addressfirebase.on('value', snapshot => {this.setState({address: snapshot.val()})
     });
     statusfirebase.on('value', snapshot => {
@@ -153,7 +184,7 @@ class HomeScreen extends React.Component {
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
           <View>
-            <Text style={styles.statusTitle}>{"Jason's Current Status"}</Text>
+            <Text style={styles.statusTitle}>{  "Current Status"}</Text>
             <Text style={styles.statusGreen}>Green</Text>
             <AnimatedCircularProgress
               style = {styles.semiCircleContainer}
@@ -172,7 +203,7 @@ class HomeScreen extends React.Component {
               />
             </View>
               <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
-              <Text style = {{textAlign: 'center'}}> {currentUser && currentUser.email} is at {this.state.address}</Text>
+              <Text style = {{textAlign: 'center'}}> {this.state.kidname} is at {this.state.address}</Text>
               </View>
           </View>
           </View>
