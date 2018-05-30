@@ -43,7 +43,9 @@ class HomeScreen extends React.Component {
     battery: 0.0,
     lat: "",
     lng: "",
-    address: ""
+    address: "",
+    visibleModal: null,
+    sliderValue: 0,
     }
   }
 
@@ -107,11 +109,6 @@ class HomeScreen extends React.Component {
 	  }
 	}
 
-  state = {
-    visibleModal: null,
-    sliderValue: 0.2,
-  };
-
   _renderButton = (text, onPress) => (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.meltdownButton}>
@@ -122,16 +119,20 @@ class HomeScreen extends React.Component {
 
   _renderModalContent = () => (
     <View style={styles.modalContent}>
-      <Text style={{fontWeight: 'bold'}}>Record meltdown</Text>
-      <Text>Current time: {new Date().toLocaleString()}</Text>
+      <Text style={{fontWeight: 'bold', marginBottom:20}}>Record meltdown</Text>
+      <Text style={{marginBottom:20}}>Current time: {new Date().toLocaleString()}</Text>
       <View style={styles.sliderContainer}>
-        <Slider
-          value={this.state.sliderValue}
-          onValueChange={value => this.setState({ value })}
+        <Slider style={{width:300}}
+          minimumValue={0}
+          maximumValue={5}
+          step={1}
+          sliderValue={this.state.sliderValue}
+          onValueChange={(sliderValue) => this.setState({ sliderValue: sliderValue })}
         />
-        <Text>Value: {this.state.sliderValue}</Text>
+        <Text>Severity: {this.state.sliderValue}</Text>
       </View>
-      {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
+      {this._renderButton('Submit', () => this.setState({ visibleModal: null }))}
+      {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
     </View>
   );
 
@@ -201,9 +202,7 @@ class ShirtStatus extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-
     battery: 0.0,
-
     }
   }
   componentDidMount() {
@@ -263,14 +262,12 @@ class ShirtStatus extends React.Component{
   }
   render() {
     return (
-            <View >
+    <View >
      {this.renderBattery()}
-        </View>
-
+    </View>
     );
   }
 };
-
 
 export default createBottomTabNavigator(
   {

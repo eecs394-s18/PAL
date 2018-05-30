@@ -113,6 +113,7 @@ export default StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   modalContent: {
+    flex: 1,
     backgroundColor: 'white',
     padding: 22,
     justifyContent: 'center',
@@ -128,5 +129,5 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "stretch",
     justifyContent: "center",
-  }
+  },
 });
