@@ -13,6 +13,7 @@ import * as firebase from 'firebase';
 import styles from './styles/home';
 import ScheduleScreen from './Schedule';
 import ReportsScreen from './Report';
+import { GetGradient } from './gradient';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -34,6 +35,8 @@ class HomeScreen extends React.Component {
     super(props)
     this.state = {
     progress: 0.5,
+    statusColor: "#6fd865",
+    statusEmoji: require("./resources/smile.png"),
     opacity: 0.5,
     battery: 0.0,
     lat: "",
@@ -45,11 +48,63 @@ class HomeScreen extends React.Component {
   componentDidMount() {
     addressfirebase.on('value', snapshot => {this.setState({address: snapshot.val()})
     });
-    statusfirebase.on('value', snapshot => {this.setState({progress: snapshot.val()})
+    statusfirebase.on('value', snapshot => {
+    	this.setState({progress: snapshot.val()});
+    	this._updateStatus(snapshot.val());
     });
     batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
     });
   }
+
+  _updateStatus = status =>{
+
+  	//change emoji
+  	var img;
+
+  	if(status < 0.2){
+  		var img = require('./resources/sad.png');
+  	}else if(status < 0.4){
+  		img = require('./resources/angry.png');
+  	}else if(status < 0.6){
+  		img = require('./resources/normal.png');
+  	}else if(status < 0.8){
+  		var img = require('./resources/smile.png');
+  	}else{
+  		var img = require('./resources/happy.png');
+  	}
+		this.setState({statusEmoji: img});
+  }
+
+  _getGradient(ratio){
+  			ratio = 1 - ratio;
+	  // var red =     '#ff0000';
+	  // var yellow =  '#ffff00';
+	  // var green =   '#008000';
+	  if (ratio == 0.5){
+	    return "#ffff00";
+	  }
+
+	  else if(ratio < 0.5){
+	    let r = ratio/0.5;
+	    let r2 = 1-r;
+
+	    let red = Math.round(255*r).toString(16); // #ff
+	    let green = Math.round(255*r + 128*r2).toString(16); // #ff*r + #80*r2
+	    // blue is 00
+	    if (red.length == 1) red = '0'+red;
+	    if (green.length == 1) green = '0' + green;
+
+	    return '#'+red+green+"00";
+	  }
+	  else {
+	    let r2 = 1-((ratio-.5)/.5);
+
+	    let green = Math.round(255*r2).toString(16);
+	    if (green.length == 1) green = '0' + green;
+	    return '#ff'+green+"00";
+	  }
+	}
+
    render() {
     return (
         <View style={{flex:1}}>
@@ -71,13 +126,13 @@ class HomeScreen extends React.Component {
               fill={100*this.state.progress}
               arcSweepAngle={180}
               rotation={270}
-              tintColor="green"
+              tintColor= {GetGradient(this.state.progress)}
               backgroundColor="#666"
               onAnimationComplete={() => console.log('onAnimationComplete')}
             />
             <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
               <Image style={styles.face}
-                source={require('./resources/f2.png')}
+                source={this.state.statusEmoji}
               />
             </View>
               <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
@@ -107,15 +162,75 @@ class HomeScreen extends React.Component {
 
 
 class ShirtStatus extends React.Component{
-  render() {
-    return (
-      <Text>
+  constructor(props){
+    super(props)
+    this.state = {
+ 
+    battery: 0.0,
+  
+    }
+  }
+  componentDidMount() {
+  
+    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
+    });
+  }
+  renderBattery() {
+    if (this.state.battery>.875) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-full"} size={20} color="#fff"/>
+      </Text>
+    }
+    else if (this.state.battery>.625) {
+      return <Text>
         <Image
           source={require('./resources/tshirt_white.png')}
           style= {{height: 20, width: 20}}
         />
         <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
       </Text>
+    }
+    else if (this.state.battery>.375) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-half"} size={20} color="#fff"/>
+      </Text>
+    }
+     else if (this.state.battery>.125) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-quarter"} size={20} color="#fff"/>
+      </Text>
+    }
+      else {
+        return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-empty"} size={20} color="#fff"/>
+      </Text>
+      }
+    
+
+
+  }
+  render() {
+    return (
+            <View >
+     {this.renderBattery()}
+        </View>
+
     );
   }
 };

@@ -1,2 +1,2 @@
 # PAL
-Team Orange Client Project
+Team Orange Client Project for EECS 394
