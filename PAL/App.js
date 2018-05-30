@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert, Image} from 'react-native';
+import { TouchableHighlight, TouchableOpacity, StyleSheet, Text, View, StatusBar, FlatList, Alert, Image} from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,6 +14,7 @@ import styles from './styles/home';
 import ScheduleScreen from './Schedule';
 import ReportsScreen from './Report';
 import { GetGradient } from './gradient';
+import Modal from 'react-native-modal';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -105,6 +106,25 @@ class HomeScreen extends React.Component {
 	  }
 	}
 
+  state = {
+    visibleModal: null,
+  };
+
+  _renderButton = (text, onPress) => (
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.meltdownButton}>
+        <Text>{text}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  _renderModalContent = () => (
+    <View style={styles.modalContent}>
+      <Text>Hello!</Text>
+      {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
+    </View>
+  );
+
    render() {
     return (
         <View style={{flex:1}}>
@@ -155,6 +175,12 @@ class HomeScreen extends React.Component {
               keyExtractor={item => item.id}
               numColumns={numColumns}
             />
+            <View style={styles.meltdownContainer}>
+              {this._renderButton('Record Meltdown', () => this.setState({ visibleModal: 1 }))}
+              <Modal isVisible={this.state.visibleModal === 1}>
+                {this._renderModalContent()}
+              </Modal>
+            </View>
         </View>
     );
   }
@@ -165,13 +191,13 @@ class ShirtStatus extends React.Component{
   constructor(props){
     super(props)
     this.state = {
- 
+
     battery: 0.0,
-  
+
     }
   }
   componentDidMount() {
-  
+
     batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
     });
   }
@@ -221,7 +247,7 @@ class ShirtStatus extends React.Component{
         <Icon name={"battery-empty"} size={20} color="#fff"/>
       </Text>
       }
-    
+
 
 
   }
@@ -263,7 +289,7 @@ export default createBottomTabNavigator(
       inactiveTintColor: 'gray',
     },
   }
-);
+)
 
 const data = [
   {id: 1, name: 'Message', icon: 'comments'},
