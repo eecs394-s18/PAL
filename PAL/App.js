@@ -15,6 +15,7 @@ import ScheduleScreen from './Schedule';
 import ReportsScreen from './Report';
 import { GetGradient } from './gradient';
 import Modal from 'react-native-modal';
+import Slider from "react-native-slider";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -108,6 +109,7 @@ class HomeScreen extends React.Component {
 
   state = {
     visibleModal: null,
+    sliderValue: 0.2,
   };
 
   _renderButton = (text, onPress) => (
@@ -120,7 +122,15 @@ class HomeScreen extends React.Component {
 
   _renderModalContent = () => (
     <View style={styles.modalContent}>
-      <Text>Hello!</Text>
+      <Text style={{fontWeight: 'bold'}}>Record meltdown</Text>
+      <Text>Current time: {new Date().toLocaleString()}</Text>
+      <View style={styles.sliderContainer}>
+        <Slider
+          value={this.state.sliderValue}
+          onValueChange={value => this.setState({ value })}
+        />
+        <Text>Value: {this.state.sliderValue}</Text>
+      </View>
       {this._renderButton('Close', () => this.setState({ visibleModal: null }))}
     </View>
   );
