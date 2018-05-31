@@ -81,7 +81,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   namefirebase=curfirebase.database().ref("/Users/"+uid+"/name");
 HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
  temperaturfirebase=curfirebase.database().ref("/Users/"+uid+"/temperature");
-  meltdownfirebase=curfirebase.database().ref("/Users/"+uid+"meltdown");
+  meltdownfirebase=curfirebase.database().ref("/Users/"+uid+"/meltdown");
 
 
 } else {
