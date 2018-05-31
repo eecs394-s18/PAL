@@ -71,10 +71,8 @@ class HomeScreen extends React.Component {
   }
 
   _updateStatus = status =>{
-
   	//change emoji
   	var img;
-
   	if(status < 0.2){
   		var img = require('./resources/sad.png');
   	}else if(status < 0.4){
@@ -122,7 +120,7 @@ class HomeScreen extends React.Component {
   _renderButton = (text, onPress) => (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.meltdownButton}>
-        <Text>{text}</Text>
+        <Text style={{color: '#fff'}}>{text}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -130,12 +128,11 @@ class HomeScreen extends React.Component {
   _renderSubmitButton() {
       this.setState({ meltdownTime: new Date().toLocaleString(), visibleModal: null });
       meltdownfirebase.push({time: this.state.meltdownTime, value: this.state.meltdownVal});
-      this._renderButton('Submitted!', () => this.setState({ }));
   };
 
   _renderModalContent = () => (
     <View style={styles.modalContent}>
-      <Text style={{fontWeight: 'bold', marginBottom:20}}>Record meltdown</Text>
+      <Text style={{fontWeight: 'bold', marginBottom:20, color: '#fff'}}>Record meltdown</Text>
       <Text>Current time: {new Date().toLocaleString()}</Text>
         <Slider style={{width:300}}
           minimumValue={0}
@@ -152,14 +149,16 @@ class HomeScreen extends React.Component {
   );
 
    render() {
-    var data = [
-           {id: 1, name: 'Message', icon: 'comments'},
-           {id: 2, name: 'History', icon: 'bar-chart'},
-           {id: 3, name: 'Share', icon:'share'},
-           {id: 4, name: 'Heart Rate\n'+this.state.HeartRate+"bmp", icon:'heart'},
-           {id: 5, name: 'Send a Hug or Calming Technique'},
-           {id: 6, name: 'Body temperature'+this.state.temperature+'F', icon: 'thermometer-0'},
-       ];
+
+     const data = [
+       {id: 1, name: 'Message', icon: 'comments'},
+       {id: 2, name: 'History', icon: 'bar-chart'},
+       {id: 3, name: 'Share', icon:'share'},
+       {id: 4, name: 'Heart Rate' + '\n' + this.state.heartRate + ' bpm', icon:'heart'},
+       {id: 5, name: 'Send a Hug', icon: 'smile-o'},
+       {id: 6, name: 'Body Temp' + '\n' + this.state.temperature + ' F', icon: 'thermometer-0'},
+     ];
+
     return (
         <View style={{flex:1}}>
           <View>
@@ -189,7 +188,7 @@ class HomeScreen extends React.Component {
                 source={this.state.statusEmoji}
               />
             </View>
-              <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
+              <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#fff', borderColor: '#d3d3d3', borderWidth: 1}}>
               <Text style = {{textAlign: 'center'}}> Jason is at {this.state.address}</Text>
               </View>
           </View>
@@ -201,7 +200,7 @@ class HomeScreen extends React.Component {
                   activeOpacity={this.state.opacity}
                   underlayColor="#fff">
                   <View style={styles.itemContainer}>
-                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
+                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#ADD8E6" />
                     <Text style={styles.item}>{item.name}</Text>
                   </View>
                 </TouchableHighlight>
@@ -219,7 +218,6 @@ class HomeScreen extends React.Component {
     );
   }
 }
-
 
 class ShirtStatus extends React.Component{
   constructor(props){

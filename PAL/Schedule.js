@@ -23,11 +23,14 @@ export default class ScheduleScreen extends React.Component {
     );
   }
 
+
   loadItems(day) {
    setTimeout(() => {
-
-       const time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
-       const strTime = this.timeToString(time);
+     var strTime;
+     var time;
+     for (let i = 0; i < 1; i++) {
+       time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
+       strTime = this.timeToString(time);
        if (!this.state.items[strTime]) {
          this.state.items[strTime] = [];
            this.state.items[strTime].push({
@@ -36,6 +39,7 @@ export default class ScheduleScreen extends React.Component {
            });
 
        }
+     }
 
      const newItems = {};
      Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
@@ -43,7 +47,8 @@ export default class ScheduleScreen extends React.Component {
        items: newItems
      });
      delete this.state.items[strTime];
-   }, 1000);
+   }, 100);
+
  }
 
  renderItem(item) {
