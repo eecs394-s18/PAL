@@ -33,6 +33,17 @@ export default class ReportsScreen extends React.Component {
   }
 
   render() {
+    const button_data = [
+       {id: 1, name: 'Heart Rate', fn: this.changeHR},
+       {id: 2, name: 'XY', fn: this.changeXY},
+       {id: 3, name: 'EMG', fn: this.changeEMG},
+       {id: 4, name: 'Respiratory', fn: this.changeresp},
+       {id: 5, name: 'HGSR', fn: this.changehgsr},
+       {id: 6, name: 'Meltdowns', fn: this.changeHR},
+     ];
+
+    const numColumns = 3;
+
     return (
         <View>
           <Header
@@ -56,42 +67,20 @@ export default class ReportsScreen extends React.Component {
           <Chart ref = {Chart => {this._chart = Chart}} data = {data.XYcannedData}/>
 
           //Buttons to change Graph Data
-          <Button onPress={this.changeXY}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#2082d8"}}
-            title = "XY">
-          </Button>
-
-          <Button onPress={this.changeHR}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#f74259"}}
-            title = "HR">
-          </Button>
-            <Button onPress={this.changeEMG}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#8cd01b"}}
-            title = "EMG">
-          </Button>
-           <Button onPress={this.changeresp}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#33d1d8"}}
-            title = "Resp">
-          </Button>
-          <Button onPress={this.changehgsr}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#f59623"}}
-            title = "HGSR">
-          </Button>
+          <FlatList             data={button_data}
+            renderItem={({item}) => (
+              <TouchableHighlight onPress={item.fn}
+                activeOpacity={this.state.opacity}
+                underlayColor="#fff">
+                <View style={styles.reportsItemContainer}>
+                  <Icon style={styles.searchIcon} name={item.icon} size={20} color="#ADD8E6" />
+                  <Text style={styles.item}>{item.name}</Text>
+                </View>
+              </TouchableHighlight>
+            )}
+            keyExtractor={item => item.id}
+            numColumns={numColumns}
+          />
         </View>
     );
   }
