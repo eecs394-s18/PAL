@@ -80,7 +80,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 
 } else {
-      //initalize with Jasons values should never need to be used
+      //initalize with Jasons values if user doesnt exist
       addressfirebase=curfirebase.database().ref("/Jason/address");
       statusfirebase=curfirebase.database().ref("/Jason/status");
       batfirebase=curfirebase.database().ref("/Jason/battery");
@@ -112,6 +112,10 @@ this.state = {
   visibleModal: null,
   sliderValue: 0,
   kidname: "",
+  meltdownTime: "",
+  meltdownVal: 0,
+  heartRate: 70,
+  temperature: 98.6,
 }
 }
 
@@ -131,252 +135,242 @@ componentDidMount() {
 });
 }
 
-_updateStatus = status =>{
-
-  	//change emoji
-  	var img;
-
-  	if(status < 0.2){
-  		var img = require('./resources/sad.png');
-  	}else if(status < 0.4){
-  		img = require('./resources/angry.png');
-  	}else if(status < 0.6){
-  		img = require('./resources/normal.png');
-  	}else if(status < 0.8){
-  		var img = require('./resources/smile.png');
-  	}else{
-  		var img = require('./resources/happy.png');
-  	}
+  _updateStatus = status =>{
+    //change emoji
+    var img;
+    if(status < 0.2){
+      var img = require('./resources/sad.png');
+    }else if(status < 0.4){
+      img = require('./resources/angry.png');
+    }else if(status < 0.6){
+      img = require('./resources/normal.png');
+    }else if(status < 0.8){
+      var img = require('./resources/smile.png');
+    }else{
+      var img = require('./resources/happy.png');
+    }
     this.setState({statusEmoji: img});
   }
 
   _getGradient(ratio){
-   ratio = 1 - ratio;
-	  // var red =     '#ff0000';
-	  // var yellow =  '#ffff00';
-	  // var green =   '#008000';
-	  if (ratio == 0.5){
-     return "#ffff00";
-   }
+        ratio = 1 - ratio;
+    // var red =     '#ff0000';
+    // var yellow =  '#ffff00';
+    // var green =   '#008000';
+    if (ratio == 0.5){
+      return "#ffff00";
+    }
 
-   else if(ratio < 0.5){
-     let r = ratio/0.5;
-     let r2 = 1-r;
+    else if(ratio < 0.5){
+      let r = ratio/0.5;
+      let r2 = 1-r;
 
-	    let red = Math.round(255*r).toString(16); // #ff
-	    let green = Math.round(255*r + 128*r2).toString(16); // #ff*r + #80*r2
-	    // blue is 00
-	    if (red.length == 1) red = '0'+red;
-	    if (green.length == 1) green = '0' + green;
+      let red = Math.round(255*r).toString(16); // #ff
+      let green = Math.round(255*r + 128*r2).toString(16); // #ff*r + #80*r2
+      // blue is 00
+      if (red.length == 1) red = '0'+red;
+      if (green.length == 1) green = '0' + green;
 
-	    return '#'+red+green+"00";
-	  }
-	  else {
-     let r2 = 1-((ratio-.5)/.5);
+      return '#'+red+green+"00";
+    }
+    else {
+      let r2 = 1-((ratio-.5)/.5);
 
-     let green = Math.round(255*r2).toString(16);
-     if (green.length == 1) green = '0' + green;
-     return '#ff'+green+"00";
-   }
- }
+      let green = Math.round(255*r2).toString(16);
+      if (green.length == 1) green = '0' + green;
+      return '#ff'+green+"00";
+    }
+  }
 
- _renderButton = (text, onPress) => (
-  <TouchableOpacity onPress={onPress}>
-  <View style={styles.meltdownButton}>
-  <Text>{text}</Text>
-  </View>
-  </TouchableOpacity>
+  _renderButton = (text, onPress) => (
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.meltdownButton}>
+        <Text style={{color: '#fff'}}>{text}</Text>
+      </View>
+    </TouchableOpacity>
   );
 
   _renderModalContent = () => (
-  <View style={styles.modalContent}>
-  <Text style={{fontWeight: 'bold', marginBottom:20}}>Record meltdown</Text>
-  <Text style={{marginBottom:20}}>Current time: {new Date().toLocaleString()}</Text>
-  <View style={styles.sliderContainer}>
-  <Slider style={{width:300}}
-  minimumValue={0}
-  maximumValue={5}
-  step={1}
-  sliderValue={this.state.sliderValue}
-  onValueChange={(sliderValue) => this.setState({ sliderValue: sliderValue })}
-  />
-  <Text>Severity: {this.state.sliderValue}</Text>
-  </View>
-  {this._renderButton('Submit', () => this.setState({ visibleModal: null }))}
-  {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
-  </View>
+    <View style={styles.modalContent}>
+      <Text style={{fontWeight: 'bold', marginBottom:20, color: '#fff'}}>Record meltdown</Text>
+      <Text>Current time: {new Date().toLocaleString()}</Text>
+        <Slider style={{width:300}}
+          minimumValue={0}
+          maximumValue={5}
+          step={1}
+          value={this.state.meltdownVal}
+          onValueChange={(newValue) => this.setState({ meltdownVal: newValue})}
+        />
+        <Text style={{marginBottom:20}}>Severity: {this.state.meltdownVal}</Text>
+      {this._renderButton('Submit', () => this.setState({ meltdownTime: new Date().toLocaleString(), visibleModal: null }))}
+      {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
+    </View>
   );
 
-  render() {
-   const { currentUser } = this.state;
-   return (
-   <View style={{flex:1}}>
-   <View>
-   <Header
-   placement="left"
-   backgroundColor = "#ff1900"
-   leftComponent={< ShirtStatus />}
-   centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
-   rightComponent={{ icon: 'menu', color: '#fff' }}
-   />
-   <View>
-   <Text style={styles.statusTitle}>{  "Current Status"}</Text>
-   <Text style={styles.statusGreen}>Green</Text>
-   <AnimatedCircularProgress
-   style = {styles.semiCircleContainer}
-   size={Dimensions.get('window').width-100}
-   width={25}
-   fill={100*this.state.progress}
-   arcSweepAngle={180}
-   rotation={270}
-   tintColor= {GetGradient(this.state.progress)}
-   backgroundColor="#666"
-   onAnimationComplete={() => console.log('onAnimationComplete')}
-   />
-   <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
-   <Image style={styles.face}
-   source={this.state.statusEmoji}
-   />
-   </View>
-   <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
-   <Text style = {{textAlign: 'center'}}> {this.state.kidname} is at {this.state.address}</Text>
-   </View>
-   </View>
-   </View>
-   <FlatList style={styles.flatListContainer}
-   data={data}
-   renderItem={({item}) => (
-   <TouchableHighlight onPress={() => {}}
-   activeOpacity={this.state.opacity}
-   underlayColor="#fff">
-   <View style={styles.itemContainer}>
-   <Icon style={styles.searchIcon} name={item.icon} size={20} color="#000" />
-   <Text style={styles.item}>{item.name}</Text>
-   </View>
-   </TouchableHighlight>
-   )}
-   keyExtractor={item => item.id}
-   numColumns={numColumns}
-   />
-   <View style={styles.meltdownContainer}>
-   {this._renderButton('Record Meltdown', () => this.setState({ visibleModal: 1 }))}
-   <Modal isVisible={this.state.visibleModal === 1}>
-   {this._renderModalContent()}
-   </Modal>
-   </View>
-   </View>
-   );
- }
-}
+   render() {
+     const data = [
+       {id: 1, name: 'Message', icon: 'comments'},
+       {id: 2, name: 'History', icon: 'bar-chart'},
+       {id: 3, name: 'Share', icon:'share'},
+       {id: 4, name: 'Heart Rate' + '\n' + this.state.heartRate + ' bpm', icon:'heart'},
+       {id: 5, name: 'Send a Hug', icon: 'smile-o'},
+       {id: 6, name: 'Body Temp' + '\n' + this.state.temperature + ' F', icon: 'thermometer-0'},
+     ];
 
+    return (
+        <View style={{flex:1}}>
+          <View>
+            <Header
+            placement="left"
+            backgroundColor = "#ff1900"
+            leftComponent={< ShirtStatus />}
+            centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
+            rightComponent={{ icon: 'menu', color: '#fff' }}
+            />
+          <View>
+            <Text style={styles.statusTitle}>{"Current Status"}</Text>
+            <Text style={styles.statusGreen}>Green</Text>
+            <AnimatedCircularProgress
+              style = {styles.semiCircleContainer}
+              size={Dimensions.get('window').width-100}
+              width={25}
+              fill={100*this.state.progress}
+              arcSweepAngle={180}
+              rotation={270}
+              tintColor= {GetGradient(this.state.progress)}
+              backgroundColor="#666"
+              onAnimationComplete={() => console.log('onAnimationComplete')}
+            />
+            <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
+              <Image style={styles.face}
+                source={this.state.statusEmoji}
+              />
+            </View>
+              <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#fff', borderColor: '#d3d3d3', borderWidth: 1}}>
+ <Text style = {{textAlign: 'center'}}> {this.state.kidname} is at {this.state.address}</Text>              </View>
+          </View>
+          </View>
+          <FlatList style={styles.flatListContainer}
+              data={data}
+              renderItem={({item}) => (
+                <TouchableHighlight onPress={() => {}}
+                  activeOpacity={this.state.opacity}
+                  underlayColor="#fff">
+                  <View style={styles.itemContainer}>
+                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#ADD8E6" />
+                    <Text style={styles.item}>{item.name}</Text>
+                  </View>
+                </TouchableHighlight>
+              )}
+              keyExtractor={item => item.id}
+              numColumns={numColumns}
+            />
+            <View style={styles.meltdownContainer}>
+              {this._renderButton('Record Meltdown', () => this.setState({ visibleModal: 1 }))}
+              <Modal isVisible={this.state.visibleModal === 1}>
+                {this._renderModalContent()}
+              </Modal>
+            </View>
+        </View>
+    );
+  }
+}
 
 class ShirtStatus extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      battery: 0.0,
+    battery: 0.0,
     }
   }
   componentDidMount() {
 
     batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
-  });
-}
-renderBattery() {
-  //renders battery based on Firebase status to nearest 1/4th (from React Native logos)
-  if (this.state.battery>.875) {
-    return <Text>
-    <Image
-    source={require('./resources/tshirt_white.png')}
-    style= {{height: 20, width: 20}}
-    />
-    <Icon name={"battery-full"} size={20} color="#fff"/>
-    </Text>
+    });
   }
-  else if (this.state.battery>.625) {
-    return <Text>
-    <Image
-    source={require('./resources/tshirt_white.png')}
-    style= {{height: 20, width: 20}}
-    />
-    <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
-    </Text>
+  renderBattery() {
+    if (this.state.battery>.875) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-full"} size={20} color="#fff"/>
+      </Text>
+    }
+    else if (this.state.battery>.625) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
+      </Text>
+    }
+    else if (this.state.battery>.375) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-half"} size={20} color="#fff"/>
+      </Text>
+    }
+     else if (this.state.battery>.125) {
+      return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-quarter"} size={20} color="#fff"/>
+      </Text>
+    }
+      else {
+        return <Text>
+        <Image
+          source={require('./resources/tshirt_white.png')}
+          style= {{height: 20, width: 20}}
+        />
+        <Icon name={"battery-empty"} size={20} color="#fff"/>
+      </Text>
+    }
   }
-  else if (this.state.battery>.375) {
-    return <Text>
-    <Image
-    source={require('./resources/tshirt_white.png')}
-    style= {{height: 20, width: 20}}
-    />
-    <Icon name={"battery-half"} size={20} color="#fff"/>
-    </Text>
+  render() {
+    return (
+    <View >
+     {this.renderBattery()}
+    </View>
+    );
   }
-  else if (this.state.battery>.125) {
-    return <Text>
-    <Image
-    source={require('./resources/tshirt_white.png')}
-    style= {{height: 20, width: 20}}
-    />
-    <Icon name={"battery-quarter"} size={20} color="#fff"/>
-    </Text>
-  }
-  else {
-    return <Text>
-    <Image
-    source={require('./resources/tshirt_white.png')}
-    style= {{height: 20, width: 20}}
-    />
-    <Icon name={"battery-empty"} size={20} color="#fff"/>
-    </Text>
-  }
-
-
-
-}
-render() {
-  return (
-  <View >
-  {this.renderBattery()}
-  </View>
-  );
-}
 };
 
 export default createBottomTabNavigator(
-{
-  Home: HomeScreen,
-  Report: ReportsScreen,
-  Schedule: ScheduleScreen,
-},
-{
-  navigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, tintColor }) => {
-      const { routeName } = navigation.state;
-      let iconName;
-      if (routeName === 'Home') {
-        iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-      } else if (routeName === 'Report') {
-        iconName = `ios-options${focused ? '' : '-outline'}`;
-      }
-      else if (routeName === 'Schedule') {
-        iconName = `ios-people${focused ? '' : '-outline'}`;
-      }
-      return <Ionicons name={iconName} size={25} color={tintColor} />;
-    },
-  }),
-  tabBarOptions: {
-    activeTintColor: 'tomato',
-    inactiveTintColor: 'gray',
+  {
+    Home: HomeScreen,
+    Report: ReportsScreen,
+    Schedule: ScheduleScreen,
   },
-}
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === 'Home') {
+          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Report') {
+          iconName = `ios-options${focused ? '' : '-outline'}`;
+        }
+        else if (routeName === 'Schedule') {
+          iconName = `ios-people${focused ? '' : '-outline'}`;
+        }
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
+  }
 )
 
-const data = [
-{id: 1, name: 'Message', icon: 'comments'},
-{id: 2, name: 'History', icon: 'bar-chart'},
-{id: 3, name: 'Share', icon:'share'},
-{id: 4, name: 'Heart Rate', icon:'heart'},
-{id: 5, name: 'Send a Hug or Calming Technique'},
-{id: 6, name: 'Body Temperature', icon: 'thermometer-0'},
-];
 const numColumns = 3;
