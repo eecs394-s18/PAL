@@ -20,24 +20,11 @@ import { GetGradient } from './gradient';
 import Modal from 'react-native-modal';
 import Slider from "react-native-slider";
 
-//Initialize Firebase
-// const firebaseConfig = {
-//     apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
-//     authDomain: "pal394-a6f1f.firebaseapp.com",
-//     databaseURL: "https://pal394-a6f1f.firebaseio.com",
-//     projectId: "pal394-a6f1f",
-//     storageBucket: "",
-//     messagingSenderId: "33475295035"
-// };
-
-// var curfirebase=firebase.initializeApp(firebaseConfig);
-// var addressfirebase=curfirebase.database().ref("/Jason/address");
-// var statusfirebase=curfirebase.database().ref("/Jason/status");
-// var batfirebase=curfirebase.database().ref("/Jason/battery");
-
 
 //on app open sends us to loading.js which determines our login state
 const App = createSwitchNavigator(
+
+
   {
     Loading,
     SignUp,
@@ -50,4 +37,5 @@ const App = createSwitchNavigator(
 )
 
 export default App
+
 
