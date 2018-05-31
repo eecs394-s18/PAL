@@ -74,7 +74,6 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     borderColor: '#d3d3d3',
     borderWidth: 1,
-    top: 10,
   },
   item: {
     flex: 1,
