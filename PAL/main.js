@@ -26,31 +26,31 @@ const firebaseConfig = {
   storageBucket: "pal394-a6f1f.appspot.com",
   messagingSenderId: "33475295035"
 };
-var name, email, photoUrl, uid, emailVerified, existsornot;
-
+var name, email,  uid, emailVerified;
 var addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase;
 var curfirebase=firebase.initializeApp(firebaseConfig);
+  namefirebase=curfirebase.database().ref("/Jason/name"); 
 
+
+    addressfirebase=curfirebase.database().ref("/Jason/address");
+    statusfirebase=curfirebase.database().ref("/Jason/status");
+    batfirebase=curfirebase.database().ref("/Jason/battery");
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    //signed in
+    //signed in, gets users info
     name = user.displayName;
     email = user.email;
     emailVerified = user.emailVerified;
     uid = user.uid;
     userfirebase=curfirebase.database().ref("/Users/")
+    //checks if the current account exists in the database
     userfirebase.once('value', function(snapshot) {
       if (snapshot.hasChild(uid)) {
-        alert('yes exists');
-
-        addressfirebase=curfirebase.database().ref("/" +uid+"/address");
-        statusfirebase=curfirebase.database().ref("/" +uid+"/status");
-        batfirebase=curfirebase.database().ref("/" +uid+"/battery");
-        namefirebase=curfirebase.database().ref("/" +uid+"/battery");
+//do nothing if in database
+ 
       }
       else {
-
-        alert('no exists');
+//if not in database create new data
         curfirebase.database().ref('/Users/' + uid).set({
          "HeartRate" : 80,
          "address" : "2240 Campus Drive, Evanston",
@@ -60,7 +60,7 @@ firebase.auth().onAuthStateChanged(function(user) {
           "lng" : -87.6740707988094
         },
         "meltdown" : {
-          "time" : "5/30/2018, 3:40:26PM",
+          "time" : "",
           "value" : 3
         },
         "name" : "Jason",
@@ -68,35 +68,27 @@ firebase.auth().onAuthStateChanged(function(user) {
         "status" : 0.5,
         "temperature" : 98.2
       });
-        addressfirebase=curfirebase.database().ref("/" +uid+"/address");
-        statusfirebase=curfirebase.database().ref("/" +uid+"/status");
-        batfirebase=curfirebase.database().ref("/" +uid+"/battery");
-        namefirebase=curfirebase.database().ref("/" +uid+"/battery");
       }
+
     });
-  //use these once we get firebase working with UID
- //   addressfirebase=curfirebase.database().ref("/"+uid+"/address");
- //  statusfirebase=curfirebase.database().ref("/"+uid+"/status");
- // batfirebase=curfirebase.database().ref("/"+uid+"/battery");
- //  namefirebase=curfirebase.database().ref("/"+uid+"/name");
+//  now that we have confirmed whether the account is in database under users/UID (or we made a new entry we can pull from the USERS UID
+   addressfirebase=curfirebase.database().ref("/Users/"+uid+"/address");
+  statusfirebase=curfirebase.database().ref("/Users/"+uid+"/status");
+ batfirebase=curfirebase.database().ref("/Users/"+uid+"/battery");
+  namefirebase=curfirebase.database().ref("/Users/"+uid+"/name");
 
 
 
 } else {
-      //initalize with Jasons values
+      //initalize with Jasons values should never need to be used
       addressfirebase=curfirebase.database().ref("/Jason/address");
       statusfirebase=curfirebase.database().ref("/Jason/status");
       batfirebase=curfirebase.database().ref("/Jason/battery");
       namefirebase=curfirebase.database().ref("/Jason/name"); 
-       }
-      namefirebase=curfirebase.database().ref("/Jason/name"); 
+    }
 
 
-      addressfirebase=curfirebase.database().ref("/Jason/address");
- statusfirebase=curfirebase.database().ref("/Jason/status");
- batfirebase=curfirebase.database().ref("/Jason/battery");
-
-    });
+  });
 
 
 
@@ -124,10 +116,11 @@ this.state = {
 }
 
 componentDidMount() {
+
+
  namefirebase.on('value', snapshot => {this.setState({kidname: snapshot.val()})
 });   
 
- console.log("john" + this.state.kidname); 
  addressfirebase.on('value', snapshot => {this.setState({address: snapshot.val()})
 });
  statusfirebase.on('value', snapshot => {
