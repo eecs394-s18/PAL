@@ -31,6 +31,9 @@ var curfirebase=firebase.initializeApp(firebaseConfig);
 var addressfirebase=curfirebase.database().ref("/Jason/address");
 var statusfirebase=curfirebase.database().ref("/Jason/status");
 var batfirebase=curfirebase.database().ref("/Jason/battery");
+var HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
+var temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
+var meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
 
 class HomeScreen extends React.Component {
   constructor(props){
@@ -47,7 +50,7 @@ class HomeScreen extends React.Component {
     visibleModal: null,
     meltdownTime: "",
     meltdownVal: 0,
-    heartRate: 70,
+    HeartRate: 70,
     temperature: 98.6,
     }
   }
@@ -61,6 +64,10 @@ class HomeScreen extends React.Component {
     });
     batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
     });
+    HeartRatefirebase.on('value', snapshot => {this.setState({HeartRate: snapshot.val()})
+    });
+    temperaturfirebase.on('value', snapshot => {this.setState({temperature: snapshot.val()})})
+
   }
 
   _updateStatus = status =>{
@@ -120,6 +127,12 @@ class HomeScreen extends React.Component {
     </TouchableOpacity>
   );
 
+  _renderSubmitButton() {
+      this.setState({ meltdownTime: new Date().toLocaleString(), visibleModal: null });
+      meltdownfirebase.push({time: this.state.meltdownTime, value: this.state.meltdownVal});
+      this._renderButton('Submitted!', () => this.setState({ }));
+  };
+
   _renderModalContent = () => (
     <View style={styles.modalContent}>
       <Text style={{fontWeight: 'bold', marginBottom:20}}>Record meltdown</Text>
@@ -133,12 +146,20 @@ class HomeScreen extends React.Component {
           onValueChange={(newValue) => this.setState({ meltdownVal: newValue})}
         />
         <Text style={{marginBottom:20}}>Severity: {this.state.meltdownVal}</Text>
-      {this._renderButton('Submit', () => this.setState({ meltdownTime: new Date().toLocaleString(), visibleModal: null }))}
+      {this._renderButton('Submit', () => this._renderSubmitButton())}
       {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
     </View>
   );
 
    render() {
+    var data = [
+           {id: 1, name: 'Message', icon: 'comments'},
+           {id: 2, name: 'History', icon: 'bar-chart'},
+           {id: 3, name: 'Share', icon:'share'},
+           {id: 4, name: 'Heart Rate\n'+this.state.HeartRate+"bmp", icon:'heart'},
+           {id: 5, name: 'Send a Hug or Calming Technique'},
+           {id: 6, name: 'Body temperature'+this.state.temperature+'F', icon: 'thermometer-0'},
+       ];
     return (
         <View style={{flex:1}}>
           <View>
@@ -297,12 +318,4 @@ export default createBottomTabNavigator(
   }
 )
 
-const data = [
-  {id: 1, name: 'Message', icon: 'comments'},
-  {id: 2, name: 'History', icon: 'bar-chart'},
-  {id: 3, name: 'Share', icon:'share'},
-  {id: 4, name: 'Heart Rate', icon:'heart'},
-  {id: 5, name: 'Send a Hug or Calming Technique'},
-  {id: 6, name: 'Body Temperature', icon: 'thermometer-0'},
-];
 const numColumns = 3;
