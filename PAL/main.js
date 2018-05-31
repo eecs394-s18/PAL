@@ -283,6 +283,7 @@ class ShirtStatus extends React.Component{
   });
 }
 renderBattery() {
+  //renders battery based on Firebase status to nearest 1/4th (from React Native logos)
   if (this.state.battery>.875) {
     return <Text>
     <Image

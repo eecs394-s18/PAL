@@ -36,7 +36,7 @@ import Slider from "react-native-slider";
 // var batfirebase=curfirebase.database().ref("/Jason/battery");
 
 
-
+//on app open sends us to loading.js which determines our login state
 const App = createSwitchNavigator(
   {
     Loading,

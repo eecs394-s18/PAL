@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
 export default class Loading extends React.Component {
     componentDidMount() {
+      //determines if we are logged in or not if logged in it sends us to the app, if not sends us to sign up/sign in
     firebase.auth().onAuthStateChanged(user => {
       this.props.navigation.navigate(user ? 'Main' : 'SignUp')
     })
