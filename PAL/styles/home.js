@@ -5,8 +5,7 @@ const numColumns = 3;
 const size = Dimensions.get('window').width/numColumns;
 export default StyleSheet.create({
   flatListContainer: {
-    flex: 1,
-    top: 150,
+    top: 170,
     flexWrap:'wrap',
   },
   ButtonContainer: {
@@ -61,7 +60,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderColor: '#f18400',
+    borderColor: '#d3d3d3',
     borderWidth: 1,
     top: 10,
   },
@@ -102,10 +101,10 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    top: 70,
+    top: 25,
   },
   meltdownButton: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#ff1900',
     padding: 12,
     margin: 16,
     justifyContent: 'center',
