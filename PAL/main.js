@@ -27,7 +27,7 @@ const firebaseConfig = {
   messagingSenderId: "33475295035"
 };
 var name, email,  uid, emailVerified;
-var addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase;
+var addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase, HeartRatefirebase, temperaturfirebase, meltdownfirebase;
 var curfirebase=firebase.initializeApp(firebaseConfig);
   namefirebase=curfirebase.database().ref("/Jason/name"); 
 
@@ -35,6 +35,9 @@ var curfirebase=firebase.initializeApp(firebaseConfig);
     addressfirebase=curfirebase.database().ref("/Jason/address");
     statusfirebase=curfirebase.database().ref("/Jason/status");
     batfirebase=curfirebase.database().ref("/Jason/battery");
+    HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
+ temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
+  meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     //signed in, gets users info
@@ -76,7 +79,9 @@ firebase.auth().onAuthStateChanged(function(user) {
   statusfirebase=curfirebase.database().ref("/Users/"+uid+"/status");
  batfirebase=curfirebase.database().ref("/Users/"+uid+"/battery");
   namefirebase=curfirebase.database().ref("/Users/"+uid+"/name");
-
+HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
+ temperaturfirebase=curfirebase.database().ref("/Users/"+uid+"/temperature");
+  meltdownfirebase=curfirebase.database().ref("/Users/"+uid+"meltdown");
 
 
 } else {
@@ -85,6 +90,9 @@ firebase.auth().onAuthStateChanged(function(user) {
       statusfirebase=curfirebase.database().ref("/Jason/status");
       batfirebase=curfirebase.database().ref("/Jason/battery");
       namefirebase=curfirebase.database().ref("/Jason/name"); 
+          HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
+ temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
+  meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
     }
 
 
@@ -114,7 +122,7 @@ this.state = {
   kidname: "",
   meltdownTime: "",
   meltdownVal: 0,
-  heartRate: 70,
+  HeartRate: 70,
   temperature: 98.6,
 }
 }
@@ -133,9 +141,12 @@ componentDidMount() {
  });
  batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
 });
+  HeartRatefirebase.on('value', snapshot => {this.setState({HeartRate: snapshot.val()})
+   });
+    temperaturfirebase.on('value', snapshot => {this.setState({temperature: snapshot.val()})})
 }
 
-  _updateStatus = status =>{
+ _updateStatus = status =>{
     //change emoji
     var img;
     if(status < 0.2){
@@ -190,6 +201,11 @@ componentDidMount() {
     </TouchableOpacity>
   );
 
+  _renderSubmitButton() {
+      this.setState({ meltdownTime: new Date().toLocaleString(), visibleModal: null });
+      meltdownfirebase.push({time: this.state.meltdownTime, value: this.state.meltdownVal});
+  };
+
   _renderModalContent = () => (
     <View style={styles.modalContent}>
       <Text style={{fontWeight: 'bold', marginBottom:20, color: '#fff'}}>Record meltdown</Text>
@@ -198,21 +214,23 @@ componentDidMount() {
           minimumValue={0}
           maximumValue={5}
           step={1}
+
           value={this.state.meltdownVal}
           onValueChange={(newValue) => this.setState({ meltdownVal: newValue})}
         />
         <Text style={{marginBottom:20}}>Severity: {this.state.meltdownVal}</Text>
-      {this._renderButton('Submit', () => this.setState({ meltdownTime: new Date().toLocaleString(), visibleModal: null }))}
+      {this._renderButton('Submit', () => this._renderSubmitButton())}
       {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
     </View>
   );
 
    render() {
+
      const data = [
        {id: 1, name: 'Message', icon: 'comments'},
        {id: 2, name: 'History', icon: 'bar-chart'},
        {id: 3, name: 'Share', icon:'share'},
-       {id: 4, name: 'Heart Rate' + '\n' + this.state.heartRate + ' bpm', icon:'heart'},
+       {id: 4, name: 'Heart Rate' + '\n' + this.state.HeartRate + ' bpm', icon:'heart'},
        {id: 5, name: 'Send a Hug', icon: 'smile-o'},
        {id: 6, name: 'Body Temp' + '\n' + this.state.temperature + ' F', icon: 'thermometer-0'},
      ];
@@ -228,7 +246,7 @@ componentDidMount() {
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
           <View>
-            <Text style={styles.statusTitle}>{"Current Status"}</Text>
+            <Text style={styles.statusTitle}>{"Jason's Current Status"}</Text>
             <Text style={styles.statusGreen}>Green</Text>
             <AnimatedCircularProgress
               style = {styles.semiCircleContainer}
@@ -247,7 +265,7 @@ componentDidMount() {
               />
             </View>
               <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#fff', borderColor: '#d3d3d3', borderWidth: 1}}>
- <Text style = {{textAlign: 'center'}}> {this.state.kidname} is at {this.state.address}</Text>              </View>
+<Text style = {{textAlign: 'center'}}> {this.state.kidname} is at {this.state.address}</Text>                </View>
           </View>
           </View>
           <FlatList style={styles.flatListContainer}
