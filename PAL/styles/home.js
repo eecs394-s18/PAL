@@ -5,8 +5,8 @@ const numColumns = 3;
 const size = Dimensions.get('window').width/numColumns;
 export default StyleSheet.create({
   flatListContainer: {
-    flex: 1,
-    top: 150,
+    top: 170,
+    flexWrap:'wrap',
   },
   ButtonContainer: {
     flex: 1,
@@ -60,9 +60,20 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderColor: '#f18400',
+    borderColor: '#d3d3d3',
     borderWidth: 1,
     top: 10,
+  },
+  reportsItemContainer: {
+    width: size,
+    height: 100,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderColor: '#d3d3d3',
+    borderWidth: 1,
   },
   item: {
     flex: 1,
@@ -96,5 +107,28 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  }
+  },
+  meltdownContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 25,
+  },
+  meltdownButton: {
+    backgroundColor: '#ADD8E6',
+    padding: 12,
+    margin: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    height: '40%',
+  },
 });
