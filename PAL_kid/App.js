@@ -14,10 +14,12 @@ import * as firebase from 'firebase';
 import styles from './styles/home';
 import MyCircleScreen from './MyCircle';
 import ReportsScreen from './Report';
+import { GetGradient } from './gradient';
 
 import { Constants, Location, Permissions, MapView } from 'expo';
 
-
+//var txtFile = "c:/test.txt"
+//var file = new File(txtFile);
 
 
 // Initialize Firebase
@@ -45,6 +47,7 @@ class HomeScreen extends React.Component {
 	    progress: 0.5,
 	    opacity: 0.5,
 	    battery: 0.0,
+	    statusEmoji: require("./resources/smile.png"),
 	    lat: "",
 	    lng: "",
 	    locationName: "",
@@ -55,7 +58,8 @@ class HomeScreen extends React.Component {
 	    	latitudeDelta: 0.0922,
 			longitudeDelta: 0.0421
 	    	},
-	    locationResult: null
+	    locationResult: null,
+	    timeLineTop: null
 	};
 }
 
@@ -63,8 +67,38 @@ class HomeScreen extends React.Component {
 		Geocoder.init('AIzaSyDYBD9kcnAd-Zcf-hn5d_Aq9Y2vLgqDfsw');
 		this._getLocationAsync();
 		this._getInfoFromDatabase();
-
+		statusfirebase.on('value', snapshot => {
+		   this.setState({progress: snapshot.val()});
+		   this._updateStatus(snapshot.val());
+		 });
+		//setInterval( this._timer, 500);
 	}
+
+    _timer() { 
+	       let d = new Date();
+	       let result = d.getHours() + d.getMinutes() / 60;
+	       this.setState({
+	           timeLineTop: result
+	       });
+	       console.log(this.timeLineTop);
+	};
+
+	_updateStatus = status =>{
+    //change emoji
+    var img;
+    if(status < 0.2){
+      var img = require('./resources/sad.png');
+    }else if(status < 0.4){
+      img = require('./resources/angry.png');
+    }else if(status < 0.6){
+      img = require('./resources/normal.png');
+    }else if(status < 0.8){
+      var img = require('./resources/smile.png');
+    }else{
+      var img = require('./resources/happy.png');
+    }
+    this.setState({statusEmoji: img});
+  }
 
 	_updateLoactionName = location => {
  		let lat = location.coords.latitude;
@@ -162,13 +196,13 @@ class HomeScreen extends React.Component {
 		              fill={100*this.state.progress}
 		              arcSweepAngle={180}
 		              rotation={270}
-		              tintColor="green"
+		              tintColor={GetGradient(this.state.progress)}
 		              backgroundColor="#666"
 		              onAnimationComplete={() => console.log('onAnimationComplete')}
 		            />
 		            <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
 		              <Image style={styles.face}
-		                source={require('./resources/f2.png')}
+		                source={this.state.statusEmoji}
 		              />
 		            </View>
 
