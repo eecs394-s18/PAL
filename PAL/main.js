@@ -17,6 +17,8 @@ import { GetGradient } from './gradient';
 import Modal from 'react-native-modal';
 import Slider from "react-native-slider";
 
+import { openMap } from 'react-native-open-map';
+
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
@@ -27,18 +29,20 @@ const firebaseConfig = {
   messagingSenderId: "33475295035"
 };
 var name, email,  uid, emailVerified;
-var addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase, HeartRatefirebase, temperaturfirebase, meltdownfirebase;
+var latfirebase,lngfirebase, addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase, HeartRatefirebase, temperaturfirebase, meltdownfirebase;
 var curfirebase=firebase.initializeApp(firebaseConfig);
-  namefirebase=curfirebase.database().ref("/Jason/name"); 
+    namefirebase=curfirebase.database().ref("/Jason/name"); 
 
 
     addressfirebase=curfirebase.database().ref("/Jason/address");
     statusfirebase=curfirebase.database().ref("/Jason/status");
     batfirebase=curfirebase.database().ref("/Jason/battery");
     HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
- temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
-  meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
-firebase.auth().onAuthStateChanged(function(user) {
+    temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
+    meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
+    latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
+    lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
+    firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     //signed in, gets users info
     name = user.displayName;
@@ -82,7 +86,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
  temperaturfirebase=curfirebase.database().ref("/Users/"+uid+"/temperature");
   meltdownfirebase=curfirebase.database().ref("/Users/"+uid+"/meltdown");
-
+  latfirebase=curfirebase.database().ref("/Users/"+uid+"/coordinates/lat");
+      lngfirebase=curfirebase.database().ref("/Users/"+uid+"/coordinates/lng");
 
 } else {
       //initalize with Jasons values if user doesnt exist
@@ -90,9 +95,11 @@ HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
       statusfirebase=curfirebase.database().ref("/Jason/status");
       batfirebase=curfirebase.database().ref("/Jason/battery");
       namefirebase=curfirebase.database().ref("/Jason/name"); 
-          HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
- temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
-  meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
+      HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
+      temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
+      meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
+      latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
+      lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
     }
 
 
@@ -108,14 +115,15 @@ class HomeScreen extends React.Component {
 // var batfirebase=curfirebase.database().ref("/Jason/battery");
 super(props)
 this.state = {
+  parentLocation: null,
   progress: 0.5,
   statusColor: "#6fd865",
   statusEmoji: require("./resources/smile.png"),
   opacity: 0.5,
   battery: 0.0,
   currentUser: null, 
-  lat: "",
-  lng: "",
+  childLat: "",
+  childLng: "",
   address: "",
   visibleModal: null,
   sliderValue: 0,
@@ -123,7 +131,7 @@ this.state = {
   meltdownTime: "",
   meltdownVal: 0,
   HeartRate: 70,
-  temperature: 98.6,
+  temperature: 98.6
 }
 }
 
@@ -132,6 +140,10 @@ componentDidMount() {
 
  namefirebase.on('value', snapshot => {this.setState({kidname: snapshot.val()})
 });   
+ latfirebase.on('value', snapshot => {this.setState({childLat: snapshot.val()})
+});
+ lngfirebase.on('value', snapshot => {this.setState({childLng: snapshot.val()})
+});
 
  addressfirebase.on('value', snapshot => {this.setState({address: snapshot.val()})
 });
@@ -143,8 +155,9 @@ componentDidMount() {
 });
   HeartRatefirebase.on('value', snapshot => {this.setState({HeartRate: snapshot.val()})
    });
-    temperaturfirebase.on('value', snapshot => {this.setState({temperature: snapshot.val()})})
+    temperaturfirebase.on('value', snapshot => {this.setState({temperature: snapshot.val()})});
 }
+
 
  _updateStatus = status =>{
     //change emoji
@@ -204,7 +217,7 @@ componentDidMount() {
   _renderSubmitButton() {
       this.setState({ meltdownTime: new Date().toLocaleString(), visibleModal: null });
       meltdownfirebase.push({time: this.state.meltdownTime, value: this.state.meltdownVal});
-  };
+  }
 
   _renderModalContent = () => (
     <View style={styles.modalContent}>
@@ -222,7 +235,15 @@ componentDidMount() {
       {this._renderButton('Submit', () => this._renderSubmitButton())}
       {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
     </View>
-  );
+  )
+
+  getDirections = () => {
+    openMap({
+      latitude: this.state.childLat,
+      longitude: this.state.childLng,
+    });
+  }
+
 
    render() {
 
@@ -264,8 +285,15 @@ componentDidMount() {
                 source={this.state.statusEmoji}
               />
             </View>
-              <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#fff', borderColor: '#d3d3d3', borderWidth: 1}}>
-<Text style = {{textAlign: 'center'}}> {this.state.kidname} is at {this.state.address}</Text>                </View>
+            <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#fff', borderColor: '#d3d3d3', borderWidth: 1}}>
+                <Text onPress={this.getDirections} style = {{textAlign: 'center'}}> 
+                    {this.state.kidname} is at 
+                    <Text style={{fontWeight: "bold"}}> {this.state.address} </Text>
+                </Text>
+                <Text>
+
+                </Text>                
+            </View>
           </View>
           </View>
           <FlatList style={styles.flatListContainer}
