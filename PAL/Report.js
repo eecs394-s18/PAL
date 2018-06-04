@@ -25,9 +25,10 @@ export default class ReportsScreen extends React.Component {
     this.changeHR = this.changeHR.bind(this)
     this.changeXY = this.changeXY.bind(this)
     this.changeEMG = this.changeEMG.bind(this)
-    //resp is in breaths per minute from last breath 
+    //resp is in breaths per minute from last breath
     this.changeresp = this.changeresp.bind(this)
     this.changehgsr = this.changehgsr.bind(this)
+    this.changeMeltdown = this.changeMeltdown.bind(this)
 
 
   }
@@ -39,7 +40,7 @@ export default class ReportsScreen extends React.Component {
        {id: 3, name: 'EMG', fn: this.changeEMG},
        {id: 4, name: 'Respiratory', fn: this.changeresp},
        {id: 5, name: 'HGSR', fn: this.changehgsr},
-       {id: 6, name: 'Meltdowns', fn: this.changeHR},
+       {id: 6, name: 'Meltdowns', fn: this.changeMeltdown},
      ];
 
     const numColumns = 3;
@@ -100,6 +101,9 @@ export default class ReportsScreen extends React.Component {
    changehgsr() {
     this._chart.changehgsr(data.HGSRdata);
   }
+  changeMeltdown() {
+   this._chart.changeMeltdown(data.Meltdowndata);
+ }
 
 }
 
@@ -162,6 +166,12 @@ class Chart extends React.Component{
     chart_title = "HGSR"
     this.forceUpdate();
   }
+  changeMeltdown (new_data) {
+   Chart_data = new_data
+   data_color = "#551a8b"
+   chart_title = "Meltdowns"
+   this.forceUpdate();
+ }
   render() {
 
     return (
