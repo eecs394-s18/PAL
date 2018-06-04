@@ -115,7 +115,7 @@ export default StyleSheet.create({
     top: 25,
   },
   meltdownButton: {
-    backgroundColor: '#ADD8E6',
+    backgroundColor: '#5DBCD2',
     padding: 12,
     margin: 16,
     justifyContent: 'center',

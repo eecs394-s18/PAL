@@ -31,9 +31,8 @@ const firebaseConfig = {
 var name, email,  uid, emailVerified;
 var latfirebase,lngfirebase, addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase, HeartRatefirebase, temperaturfirebase, meltdownfirebase;
 var curfirebase=firebase.initializeApp(firebaseConfig);
+
     namefirebase=curfirebase.database().ref("/Jason/name"); 
-
-
     addressfirebase=curfirebase.database().ref("/Jason/address");
     statusfirebase=curfirebase.database().ref("/Jason/status");
     batfirebase=curfirebase.database().ref("/Jason/battery");
@@ -43,6 +42,7 @@ var curfirebase=firebase.initializeApp(firebaseConfig);
     latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
     lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
     firebase.auth().onAuthStateChanged(function(user) {
+
   if (user) {
     //signed in, gets users info
     name = user.displayName;
@@ -53,11 +53,10 @@ var curfirebase=firebase.initializeApp(firebaseConfig);
     //checks if the current account exists in the database
     userfirebase.once('value', function(snapshot) {
       if (snapshot.hasChild(uid)) {
-//do nothing if in database
- 
+        //do nothing if in database
       }
       else {
-//if not in database create new data
+        //if not in database create new data
         curfirebase.database().ref('/Users/' + uid).set({
          "HeartRate" : 80,
          "address" : "2240 Campus Drive, Evanston",
@@ -78,34 +77,33 @@ var curfirebase=firebase.initializeApp(firebaseConfig);
       }
 
     });
-//  now that we have confirmed whether the account is in database under users/UID (or we made a new entry we can pull from the USERS UID
+    //  now that we have confirmed whether the account is in database under users/UID (or we made a new entry we can pull from the USERS UID
    addressfirebase=curfirebase.database().ref("/Users/"+uid+"/address");
-  statusfirebase=curfirebase.database().ref("/Users/"+uid+"/status");
- batfirebase=curfirebase.database().ref("/Users/"+uid+"/battery");
+   statusfirebase=curfirebase.database().ref("/Users/"+uid+"/status");
+   batfirebase=curfirebase.database().ref("/Users/"+uid+"/battery");
   namefirebase=curfirebase.database().ref("/Users/"+uid+"/name");
-HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
- temperaturfirebase=curfirebase.database().ref("/Users/"+uid+"/temperature");
+  HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
+  temperaturfirebase=curfirebase.database().ref("/Users/"+uid+"/temperature");
   meltdownfirebase=curfirebase.database().ref("/Users/"+uid+"/meltdown");
   latfirebase=curfirebase.database().ref("/Users/"+uid+"/coordinates/lat");
       lngfirebase=curfirebase.database().ref("/Users/"+uid+"/coordinates/lng");
+
 
 } else {
       //initalize with Jasons values if user doesnt exist
       addressfirebase=curfirebase.database().ref("/Jason/address");
       statusfirebase=curfirebase.database().ref("/Jason/status");
       batfirebase=curfirebase.database().ref("/Jason/battery");
+
       namefirebase=curfirebase.database().ref("/Jason/name"); 
       HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
       temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
       meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
       latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
       lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
+
     }
-
-
   });
-
-
 
 class HomeScreen extends React.Component {
   constructor(props){
@@ -124,6 +122,7 @@ this.state = {
   currentUser: null, 
   childLat: "",
   childLng: "",
+
   address: "",
   visibleModal: null,
   sliderValue: 0,
@@ -222,12 +221,11 @@ componentDidMount() {
   _renderModalContent = () => (
     <View style={styles.modalContent}>
       <Text style={{fontWeight: 'bold', marginBottom:20, color: '#fff'}}>Record meltdown</Text>
-      <Text>Current time: {new Date().toLocaleString()}</Text>
+      <Text>Current time: {this.state.meltdownTime}</Text>
         <Slider style={{width:300}}
           minimumValue={0}
           maximumValue={5}
           step={1}
-
           value={this.state.meltdownVal}
           onValueChange={(newValue) => this.setState({ meltdownVal: newValue})}
         />
@@ -246,7 +244,6 @@ componentDidMount() {
 
 
    render() {
-
      const data = [
        {id: 1, name: 'Message', icon: 'comments'},
        {id: 2, name: 'History', icon: 'bar-chart'},
@@ -303,7 +300,7 @@ componentDidMount() {
                   activeOpacity={this.state.opacity}
                   underlayColor="#fff">
                   <View style={styles.itemContainer}>
-                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#ADD8E6" />
+                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#5DBCD2" />
                     <Text style={styles.item}>{item.name}</Text>
                   </View>
                 </TouchableHighlight>
@@ -312,7 +309,10 @@ componentDidMount() {
               numColumns={numColumns}
             />
             <View style={styles.meltdownContainer}>
-              {this._renderButton('Record Meltdown', () => this.setState({ visibleModal: 1 }))}
+              {this._renderButton('Record Meltdown', () => this.setState({
+                visibleModal: 1,
+                meltdownTime: new Date().toLocaleString()
+               }))}
               <Modal isVisible={this.state.visibleModal === 1}>
                 {this._renderModalContent()}
               </Modal>
