@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableHighlight, TouchableOpacity, StyleSheet, Text, View, StatusBar, FlatList, Alert, Image} from 'react-native';
+import { TouchableHighlight, TouchableOpacity, StyleSheet, Text, View, StatusBar, FlatList, Alert, AlertIOS, Image} from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,6 +9,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import * as firebase from 'firebase';
+
 
 import styles from './styles/home';
 import ScheduleScreen from './Schedule';
@@ -267,7 +268,12 @@ componentDidMount() {
   'PAL',
   'Settings',
   [
-    {text: 'Change Child Name', onPress: () => console.log('Ask me later pressed')},
+    {text: 'Change Child Name', onPress: () => AlertIOS.prompt(
+  'Child Name',
+  this.state.kidname,
+  text => curfirebase.database().ref('/Users/' + uid+ "/name").set(text
+      )
+)},
     {text: 'Return to App', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
     {text: 'Log Out', onPress: () => {
     firebase.auth().signOut().then(() => {
