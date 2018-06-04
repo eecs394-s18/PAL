@@ -1,6 +1,6 @@
 // Login.js
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, alert} from 'react-native'
 import * as firebase from 'firebase';
 
 export default class Login extends React.Component {
@@ -43,6 +43,16 @@ export default class Login extends React.Component {
         <Button
           title="Don't have an account? Sign Up"
           onPress={() => this.props.navigation.navigate('SignUp')}
+        />
+        <Button
+          title="Forgot your Password?"
+          onPress={() => firebase.auth().sendPasswordResetEmail(this.state.email).then(function() {
+            alert("Check your Email!")
+  // Email sent.
+}).catch(function(error) {
+  // An error happened.
+})
+        }
         />
       </View>
     )
