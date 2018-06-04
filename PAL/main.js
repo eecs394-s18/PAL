@@ -29,15 +29,14 @@ const firebaseConfig = {
 var name, email,  uid, emailVerified;
 var addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase, HeartRatefirebase, temperaturfirebase, meltdownfirebase;
 var curfirebase=firebase.initializeApp(firebaseConfig);
-  namefirebase=curfirebase.database().ref("/Jason/name"); 
-
-
-    addressfirebase=curfirebase.database().ref("/Jason/address");
-    statusfirebase=curfirebase.database().ref("/Jason/status");
-    batfirebase=curfirebase.database().ref("/Jason/battery");
-    HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
- temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
+  namefirebase=curfirebase.database().ref("/Jason/name");
+  addressfirebase=curfirebase.database().ref("/Jason/address");
+  statusfirebase=curfirebase.database().ref("/Jason/status");
+  batfirebase=curfirebase.database().ref("/Jason/battery");
+  HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
+  temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
   meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
+
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     //signed in, gets users info
@@ -49,11 +48,10 @@ firebase.auth().onAuthStateChanged(function(user) {
     //checks if the current account exists in the database
     userfirebase.once('value', function(snapshot) {
       if (snapshot.hasChild(uid)) {
-//do nothing if in database
- 
+        //do nothing if in database
       }
       else {
-//if not in database create new data
+        //if not in database create new data
         curfirebase.database().ref('/Users/' + uid).set({
          "HeartRate" : 80,
          "address" : "2240 Campus Drive, Evanston",
@@ -74,31 +72,26 @@ firebase.auth().onAuthStateChanged(function(user) {
       }
 
     });
-//  now that we have confirmed whether the account is in database under users/UID (or we made a new entry we can pull from the USERS UID
+    //  now that we have confirmed whether the account is in database under users/UID (or we made a new entry we can pull from the USERS UID
    addressfirebase=curfirebase.database().ref("/Users/"+uid+"/address");
-  statusfirebase=curfirebase.database().ref("/Users/"+uid+"/status");
- batfirebase=curfirebase.database().ref("/Users/"+uid+"/battery");
+   statusfirebase=curfirebase.database().ref("/Users/"+uid+"/status");
+   batfirebase=curfirebase.database().ref("/Users/"+uid+"/battery");
   namefirebase=curfirebase.database().ref("/Users/"+uid+"/name");
-HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
- temperaturfirebase=curfirebase.database().ref("/Users/"+uid+"/temperature");
+  HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
+  temperaturfirebase=curfirebase.database().ref("/Users/"+uid+"/temperature");
   meltdownfirebase=curfirebase.database().ref("/Users/"+uid+"/meltdown");
-
 
 } else {
       //initalize with Jasons values if user doesnt exist
       addressfirebase=curfirebase.database().ref("/Jason/address");
       statusfirebase=curfirebase.database().ref("/Jason/status");
       batfirebase=curfirebase.database().ref("/Jason/battery");
-      namefirebase=curfirebase.database().ref("/Jason/name"); 
-          HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
- temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
-  meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
+      namefirebase=curfirebase.database().ref("/Jason/name");
+      HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
+      temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
+      meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
     }
-
-
   });
-
-
 
 class HomeScreen extends React.Component {
   constructor(props){
@@ -113,7 +106,7 @@ this.state = {
   statusEmoji: require("./resources/smile.png"),
   opacity: 0.5,
   battery: 0.0,
-  currentUser: null, 
+  currentUser: null,
   lat: "",
   lng: "",
   address: "",
@@ -131,7 +124,7 @@ componentDidMount() {
 
 
  namefirebase.on('value', snapshot => {this.setState({kidname: snapshot.val()})
-});   
+});
 
  addressfirebase.on('value', snapshot => {this.setState({address: snapshot.val()})
 });
@@ -209,12 +202,11 @@ componentDidMount() {
   _renderModalContent = () => (
     <View style={styles.modalContent}>
       <Text style={{fontWeight: 'bold', marginBottom:20, color: '#fff'}}>Record meltdown</Text>
-      <Text>Current time: {new Date().toLocaleString()}</Text>
+      <Text>Current time: {this.state.meltdownTime}</Text>
         <Slider style={{width:300}}
           minimumValue={0}
           maximumValue={5}
           step={1}
-
           value={this.state.meltdownVal}
           onValueChange={(newValue) => this.setState({ meltdownVal: newValue})}
         />
@@ -225,7 +217,6 @@ componentDidMount() {
   );
 
    render() {
-
      const data = [
        {id: 1, name: 'Message', icon: 'comments'},
        {id: 2, name: 'History', icon: 'bar-chart'},
@@ -275,7 +266,7 @@ componentDidMount() {
                   activeOpacity={this.state.opacity}
                   underlayColor="#fff">
                   <View style={styles.itemContainer}>
-                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#ADD8E6" />
+                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#5DBCD2" />
                     <Text style={styles.item}>{item.name}</Text>
                   </View>
                 </TouchableHighlight>
@@ -284,7 +275,10 @@ componentDidMount() {
               numColumns={numColumns}
             />
             <View style={styles.meltdownContainer}>
-              {this._renderButton('Record Meltdown', () => this.setState({ visibleModal: 1 }))}
+              {this._renderButton('Record Meltdown', () => this.setState({
+                visibleModal: 1,
+                meltdownTime: new Date().toLocaleString()
+               }))}
               <Modal isVisible={this.state.visibleModal === 1}>
                 {this._renderModalContent()}
               </Modal>
