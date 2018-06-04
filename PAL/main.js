@@ -261,7 +261,24 @@ componentDidMount() {
             backgroundColor = "#ff1900"
             leftComponent={< ShirtStatus />}
             centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
-            rightComponent={{ icon: 'menu', color: '#fff' }}
+            rightComponent={{icon: 'menu',
+             color: '#fff',
+             onPress: () => Alert.alert(
+  'PAL',
+  'Settings',
+  [
+    {text: 'Change Child Name', onPress: () => console.log('Ask me later pressed')},
+    {text: 'Return to App', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    {text: 'Log Out', onPress: () => {
+    firebase.auth().signOut().then(() => {
+      this.props.navigator.push(Router.getRoute('goodbye'));
+}).catch(function(error) {
+  // An error happened.
+});
+  }},
+  ],
+  { cancelable: true }
+)}} 
             />
           <View>
             <Text style={styles.statusTitle}>{"Jason's Current Status"}</Text>
