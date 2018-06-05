@@ -16,6 +16,7 @@ export default class ScheduleScreen extends React.Component {
       <Agenda
         items={this.state.items}
         loadItemsForMonth={this.loadItems.bind(this)}
+        onDayPress={this.onDayPress.bind(this)}
         renderItem={this.renderItem.bind(this)}
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
@@ -29,14 +30,17 @@ export default class ScheduleScreen extends React.Component {
      var strTime;
      var time;
      for (let i = 0; i < 1; i++) {
-       time = day.timestamp + 0 * 24 * 60 * 60 * 1000;
+       time = day.timestamp;
        strTime = this.timeToString(time);
        if (!this.state.items[strTime]) {
          this.state.items[strTime] = [];
-           this.state.items[strTime].push({
-             name: 'Item for ' + strTime,
-             height: Math.max(50, Math.floor(Math.random() * 150))
-           });
+         const numItems = Math.floor(Math.random() * 5);
+           for (let j = 0; j < numItems; j++) {
+             this.state.items[strTime].push({
+               name: 'Item for ' + strTime,
+               height: Math.max(50, Math.floor(Math.random() * 150))
+             });
+         }
 
        }
      }
@@ -46,10 +50,41 @@ export default class ScheduleScreen extends React.Component {
      this.setState({
        items: newItems
      });
-     delete this.state.items[strTime];
    }, 100);
 
+
  }
+
+   onDayPress(day) {
+    this.state.items = {}
+    setTimeout(() => {
+      var strTime;
+      var time;
+      for (let i = 0; i < 1; i++) {
+        time = day.timestamp;
+        strTime = this.timeToString(time);
+        if (!this.state.items[strTime]) {
+          this.state.items[strTime] = [];
+          const numItems = Math.floor(Math.random() * 5);
+            for (let j = 0; j < numItems; j++) {
+              this.state.items[strTime].push({
+                name: 'Item for ' + strTime,
+                height: Math.max(50, Math.floor(Math.random() * 150))
+              });
+          }
+
+        }
+      }
+
+      const newItems = {};
+      Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+      this.setState({
+        items: newItems
+      });
+    }, 100);
+
+
+  }
 
  renderItem(item) {
    return (
