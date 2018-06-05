@@ -1,17 +1,12 @@
-import React, { Component } from 'react';
-import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert, Image} from 'react-native';
-import Dimensions from 'Dimensions';
-import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis } from "victory-native";
+import React from 'react';
+import { VictoryChart, VictoryLine, VictoryTheme,} from "victory-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Header, Button } from 'react-native-elements';
-import { createBottomTabNavigator } from 'react-navigation';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import CalendarStrip from 'react-native-calendar-strip';
-import moment from 'moment';
-import * as firebase from 'firebase';
+import {Text, View, Image} from 'react-native';
+import { Header, Button } from 'react-native-elements';
+import firebase from './FbApp';
 
-import styles from './styles/home';
+var meltdownfirebase = firebase.database().ref("/Jason/meltdown/");
 
 
 export default class ReportsScreen extends React.Component {
@@ -20,17 +15,33 @@ export default class ReportsScreen extends React.Component {
     this.state = {
           color: "#fff",
           opacity: 0.5,
+          meltdownArray: [],
     }
     //Binds functions, defines them
-    this.changeHR = this.changeHR.bind(this)
-    this.changeXY = this.changeXY.bind(this)
-    this.changeEMG = this.changeEMG.bind(this)
+    this.changeHR = this.changeHR.bind(this);
+    this.changeXY = this.changeXY.bind(this);
+    this.changeEMG = this.changeEMG.bind(this);
     //resp is in breaths per minute from last breath 
-    this.changeresp = this.changeresp.bind(this)
-    this.changehgsr = this.changehgsr.bind(this)
+    this.changeresp = this.changeresp.bind(this);
+    this.changehgsr = this.changehgsr.bind(this);
+    this.changeMeltdown = this.changeMeltdown.bind(this);
 
 
   }
+
+    componentDidMount() {
+        meltdownfirebase.on('value',snapshot => {
+            const task = [];
+            snapshot.forEach((childSnapshot) => {
+                task.push({
+                    time: childSnapshot.val()["time"],
+                    value: childSnapshot.val()["value"],
+                });
+            });
+            this.setState({meltdownArray: task})
+        })
+    }
+
 
   render() {
     return (
@@ -64,6 +75,15 @@ export default class ReportsScreen extends React.Component {
             title = "XY">
           </Button>
 
+            <Button onPress={this.changeMeltdown}
+                    buttonStyle={{borderColor: "transparent",
+                        borderWidth: 0,
+                        borderRadius: 5,
+                        backgroundColor: "#000"}}
+                    title = "Meltdown">
+            </Button>
+
+
           <Button onPress={this.changeHR}
             buttonStyle={{borderColor: "transparent",
                           borderWidth: 0,
@@ -71,6 +91,7 @@ export default class ReportsScreen extends React.Component {
                           backgroundColor: "#f74259"}}
             title = "HR">
           </Button>
+
             <Button onPress={this.changeEMG}
             buttonStyle={{borderColor: "transparent",
                           borderWidth: 0,
@@ -98,6 +119,7 @@ export default class ReportsScreen extends React.Component {
 
   changeHR() {
     this._chart.changeHR(data.HRcannedData);
+
   }
   changeXY() {
     this._chart.changeXY(data.XYcannedData);
@@ -108,14 +130,20 @@ export default class ReportsScreen extends React.Component {
   changeresp() {
     this._chart.changeresp(data.respcanneddata);
   }
-   changehgsr() {
+  changehgsr() {
     this._chart.changehgsr(data.HGSRdata);
+  }
+  changeMeltdown() {
+    this._chart.changeMeltdown(this.state.meltdownArray);
+  }
+  changeChartCoord() {
+      this._chart.changeChartCoord("time","value");
   }
 
 }
 
 // import data from JSON file
-var data = require("./data/exampledata.json")
+ data = require("./data/exampledata.json");
 
 class ShirtStatus extends React.Component{
   render() {
@@ -133,46 +161,70 @@ class ShirtStatus extends React.Component{
 
 
 //Chart Component
-Chart_data = data.XYcannedData
-data_color = "#2082d8"
-chart_title = "XY"
-
+data_color = "#2082d8";
+chart_title = "XY";
+data = require("./data/exampledata.json");
 
 class Chart extends React.Component{
   constructor(props){
     super(props)
+    this.state = {
+        meltdownArray: [],
+        Chart_data: data.XYcannedData,
+        x:"x",
+        y:"y",
+
+    }
   }
 
   changeHR (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#f74259"
     chart_title = "Heart Rate"
-    this.forceUpdate();
+    this.changeChartCoord("x","y")
+    this.forceUpdate()
   }
   changeXY (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#2082d8"
     chart_title = "XY"
-    this.forceUpdate();
+    this.changeChartCoord("x","y")
+    this.forceUpdate()
   }
     changeEMG (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#8cd01b"
     chart_title = "EMG"
+    this.changeChartCoord("x","y")
     this.forceUpdate();
   }
    changeresp (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#33d1d8"
     chart_title = "Respiratory"
+    this.changeChartCoord("x","y")
     this.forceUpdate();
   }
    changehgsr (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#f59623"
     chart_title = "HGSR"
+    this.changeChartCoord("x","y")
     this.forceUpdate();
   }
+
+  changeMeltdown(new_data) {
+      this.state.Chart_data = new_data
+      data_color = "#f59623"
+      chart_title = "Metldown"
+      this.changeChartCoord("time","value")
+      this.forceUpdate()
+  }
+  changeChartCoord(x, y) {
+      this.state.x = x;
+      this.state.y = y;
+  }
+
   render() {
 
     return (
@@ -184,12 +236,14 @@ class Chart extends React.Component{
             data: { stroke: data_color },
             parent: { border: "1px solid #ccc"}
           }}
-
-          data = {Chart_data}
+          data = {this.state.Chart_data}
+           x = {this.state.x}
+           y = {this.state.y}
             />
 
         </VictoryChart>
       </View>
     );
   }
-};
+}
+
