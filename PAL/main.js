@@ -33,16 +33,16 @@ var name, email,  uid, emailVerified;
 var latfirebase,lngfirebase, addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase, HeartRatefirebase, temperaturfirebase, meltdownfirebase;
 var curfirebase=firebase.initializeApp(firebaseConfig);
 
-    namefirebase=curfirebase.database().ref("/Jason/name"); 
-    addressfirebase=curfirebase.database().ref("/Jason/address");
-    statusfirebase=curfirebase.database().ref("/Jason/status");
-    batfirebase=curfirebase.database().ref("/Jason/battery");
-    HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
-    temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
-    meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
-    latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
-    lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
-    firebase.auth().onAuthStateChanged(function(user) {
+namefirebase=curfirebase.database().ref("/Jason/name"); 
+addressfirebase=curfirebase.database().ref("/Jason/address");
+statusfirebase=curfirebase.database().ref("/Jason/status");
+batfirebase=curfirebase.database().ref("/Jason/battery");
+HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
+temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
+meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
+latfirebase=curfirebase.database().ref("/Jason/coordinates/lat");
+lngfirebase=curfirebase.database().ref("/Jason/coordinates/lng");
+firebase.auth().onAuthStateChanged(function(user) {
 
   if (user) {
     //signed in, gets users info
@@ -79,18 +79,18 @@ var curfirebase=firebase.initializeApp(firebaseConfig);
 
     });
     //  now that we have confirmed whether the account is in database under users/UID (or we made a new entry we can pull from the USERS UID
-   addressfirebase=curfirebase.database().ref("/Users/"+uid+"/address");
-   statusfirebase=curfirebase.database().ref("/Users/"+uid+"/status");
-   batfirebase=curfirebase.database().ref("/Users/"+uid+"/battery");
-  namefirebase=curfirebase.database().ref("/Users/"+uid+"/name");
-  HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
-  temperaturfirebase=curfirebase.database().ref("/Users/"+uid+"/temperature");
-  meltdownfirebase=curfirebase.database().ref("/Users/"+uid+"/meltdown");
-  latfirebase=curfirebase.database().ref("/Users/"+uid+"/coordinates/lat");
-      lngfirebase=curfirebase.database().ref("/Users/"+uid+"/coordinates/lng");
+    addressfirebase=curfirebase.database().ref("/Users/"+uid+"/address");
+    statusfirebase=curfirebase.database().ref("/Users/"+uid+"/status");
+    batfirebase=curfirebase.database().ref("/Users/"+uid+"/battery");
+    namefirebase=curfirebase.database().ref("/Users/"+uid+"/name");
+    HeartRatefirebase=curfirebase.database().ref("/Users/"+uid+"/HeartRate");
+    temperaturfirebase=curfirebase.database().ref("/Users/"+uid+"/temperature");
+    meltdownfirebase=curfirebase.database().ref("/Users/"+uid+"/meltdown");
+    latfirebase=curfirebase.database().ref("/Users/"+uid+"/coordinates/lat");
+    lngfirebase=curfirebase.database().ref("/Users/"+uid+"/coordinates/lng");
 
 
-} else {
+  } else {
       //initalize with Jasons values if user doesnt exist
       addressfirebase=curfirebase.database().ref("/Jason/address");
       statusfirebase=curfirebase.database().ref("/Jason/status");
@@ -153,13 +153,13 @@ componentDidMount() {
  });
  batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
 });
-  HeartRatefirebase.on('value', snapshot => {this.setState({HeartRate: snapshot.val()})
-   });
-    temperaturfirebase.on('value', snapshot => {this.setState({temperature: snapshot.val()})});
+ HeartRatefirebase.on('value', snapshot => {this.setState({HeartRate: snapshot.val()})
+});
+ temperaturfirebase.on('value', snapshot => {this.setState({temperature: snapshot.val()})});
 }
 
 
- _updateStatus = status =>{
+_updateStatus = status =>{
     //change emoji
     var img;
     if(status < 0.2){
@@ -177,7 +177,7 @@ componentDidMount() {
   }
 
   _getGradient(ratio){
-        ratio = 1 - ratio;
+    ratio = 1 - ratio;
     // var red =     '#ff0000';
     // var yellow =  '#ffff00';
     // var green =   '#008000';
@@ -208,139 +208,139 @@ componentDidMount() {
 
   _renderButton = (text, onPress) => (
     <TouchableOpacity onPress={onPress}>
-      <View style={styles.meltdownButton}>
-        <Text style={{color: '#fff'}}>{text}</Text>
-      </View>
+    <View style={styles.meltdownButton}>
+    <Text style={{color: '#fff'}}>{text}</Text>
+    </View>
     </TouchableOpacity>
-  );
+    );
 
-  _renderSubmitButton() {
+    _renderSubmitButton() {
       this.setState({ meltdownTime: new Date().toLocaleString(), visibleModal: null });
       meltdownfirebase.push({time: this.state.meltdownTime, value: this.state.meltdownVal});
-  }
+    }
 
-  _renderModalContent = () => (
+    _renderModalContent = () => (
     <View style={styles.modalContent}>
-      <Text style={{fontWeight: 'bold', marginBottom:20, color: '#fff'}}>Record meltdown</Text>
-      <Text>Current time: {this.state.meltdownTime}</Text>
-        <Slider style={{width:300}}
-          minimumValue={0}
-          maximumValue={5}
-          step={1}
-          value={this.state.meltdownVal}
-          onValueChange={(newValue) => this.setState({ meltdownVal: newValue})}
-        />
-        <Text style={{marginBottom:20}}>Severity: {this.state.meltdownVal}</Text>
-      {this._renderButton('Submit', () => this._renderSubmitButton())}
-      {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
+    <Text style={{fontWeight: 'bold', marginBottom:20, color: '#fff'}}>Record meltdown</Text>
+    <Text>Current time: {this.state.meltdownTime}</Text>
+    <Slider style={{width:300}}
+    minimumValue={0}
+    maximumValue={5}
+    step={1}
+    value={this.state.meltdownVal}
+    onValueChange={(newValue) => this.setState({ meltdownVal: newValue})}
+    />
+    <Text style={{marginBottom:20}}>Severity: {this.state.meltdownVal}</Text>
+    {this._renderButton('Submit', () => this._renderSubmitButton())}
+    {this._renderButton('Cancel', () => this.setState({ visibleModal: null }))}
     </View>
-  )
+    )
 
-  getDirections = () => {
-    openMap({
-      latitude: this.state.childLat,
-      longitude: this.state.childLng,
-    });
-  }
+    getDirections = () => {
+      openMap({
+        latitude: this.state.childLat,
+        longitude: this.state.childLng,
+      });
+    }
 
 
-   render() {
+    render() {
      const data = [
-       {id: 1, name: 'Message', icon: 'comments'},
-       {id: 2, name: 'History', icon: 'bar-chart'},
-       {id: 3, name: 'Share', icon:'share'},
-       {id: 4, name: 'Heart Rate' + '\n' + this.state.HeartRate + ' bpm', icon:'heart'},
-       {id: 5, name: 'Send a Hug', icon: 'smile-o'},
-       {id: 6, name: 'Body Temp' + '\n' + this.state.temperature + ' F', icon: 'thermometer-0'},
+     {id: 1, name: 'Message', icon: 'comments'},
+     {id: 2, name: 'History', icon: 'bar-chart'},
+     {id: 3, name: 'Share', icon:'share'},
+     {id: 4, name: 'Heart Rate' + '\n' + this.state.HeartRate + ' bpm', icon:'heart'},
+     {id: 5, name: 'Send a Hug', icon: 'smile-o'},
+     {id: 6, name: 'Body Temp' + '\n' + this.state.temperature + ' F', icon: 'thermometer-0'},
      ];
 
-    return (
-        <View style={{flex:1}}>
-          <View>
-            <Header
-            placement="left"
-            backgroundColor = "#ff1900"
-            leftComponent={< ShirtStatus />}
-            centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
-            rightComponent={{icon: 'menu',
-             color: '#fff',
-             onPress: () => Alert.alert(
-  'PAL',
-  'Settings',
-  [
-    {text: 'Change Child Name', onPress: () => AlertIOS.prompt(
-  'Child Name',
-  this.state.kidname,
-  text => curfirebase.database().ref('/Users/' + uid+ "/name").set(text
-      )
-)},
-    {text: 'Return to App', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-    {text: 'Log Out', onPress: () => {
-    firebase.auth().signOut().then(() => {
-      this.props.navigator.push(Router.getRoute('goodbye'));
-}).catch(function(error) {
-  // An error happened.
-});
-  }},
-  ],
-  { cancelable: true }
-)}} 
-            />
-          <View>
-            <Text style={styles.statusTitle}>{"Jason's Current Status"}</Text>
-            <Text style={styles.statusGreen}>Green</Text>
-            <AnimatedCircularProgress
-              style = {styles.semiCircleContainer}
-              size={Dimensions.get('window').width-100}
-              width={25}
-              fill={100*this.state.progress}
-              arcSweepAngle={180}
-              rotation={270}
-              tintColor= {GetGradient(this.state.progress)}
-              backgroundColor="#666"
-              onAnimationComplete={() => console.log('onAnimationComplete')}
-            />
-            <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
-              <Image style={styles.face}
-                source={this.state.statusEmoji}
-              />
-            </View>
-            <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#fff', borderColor: '#d3d3d3', borderWidth: 1}}>
-                <Text onPress={this.getDirections} style = {{textAlign: 'center'}}> 
-                    {this.state.kidname} is at 
-                    <Text style={{fontWeight: "bold"}}> {this.state.address} </Text>
-                </Text>
-                <Text>
+     return (
+     <View style={{flex:1}}>
+     <View>
+     <Header
+     placement="left"
+     backgroundColor = "#ff1900"
+     leftComponent={< ShirtStatus />}
+     centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
+     rightComponent={{icon: 'menu',
+     color: '#fff',
+     onPress: () => Alert.alert(
+     'PAL',
+     'Settings',
+     [
+     {text: 'Change Child Name', onPress: () => AlertIOS.prompt(
+     'Child Name',
+     this.state.kidname,
+     text => curfirebase.database().ref('/Users/' + uid+ "/name").set(text
+     )
+     )},
+     {text: 'Return to App', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+     {text: 'Log Out', onPress: () => {
+      firebase.auth().signOut().then(() => {
+        this.props.navigator.push(Router.getRoute('goodbye'));
+      }).catch(function(error) {
+        // An error happened.
+      });
+    }},
+    ],
+    { cancelable: true }
+    )}} 
+    />
+    <View>
+    <Text style={styles.statusTitle}>{"Current Status"}</Text>
+    <Text style={styles.statusGreen}>Green</Text>
+    <AnimatedCircularProgress
+    style = {styles.semiCircleContainer}
+    size={Dimensions.get('window').width-100}
+    width={25}
+    fill={100*this.state.progress}
+    arcSweepAngle={180}
+    rotation={270}
+    tintColor= {GetGradient(this.state.progress)}
+    backgroundColor="#666"
+    onAnimationComplete={() => console.log('onAnimationComplete')}
+    />
+    <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
+    <Image style={styles.face}
+    source={this.state.statusEmoji}
+    />
+    </View>
+    <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#fff', borderColor: '#d3d3d3', borderWidth: 1}}>
+    <Text onPress={this.getDirections} style = {{textAlign: 'center'}}> 
+    {this.state.kidname} is at 
+    <Text style={{fontWeight: "bold"}}> {this.state.address} </Text>
+    </Text>
+    <Text>
 
-                </Text>                
-            </View>
-          </View>
-          </View>
-          <FlatList style={styles.flatListContainer}
-              data={data}
-              renderItem={({item}) => (
-                <TouchableHighlight onPress={() => {}}
-                  activeOpacity={this.state.opacity}
-                  underlayColor="#fff">
-                  <View style={styles.itemContainer}>
-                    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#5DBCD2" />
-                    <Text style={styles.item}>{item.name}</Text>
-                  </View>
-                </TouchableHighlight>
-              )}
-              keyExtractor={item => item.id}
-              numColumns={numColumns}
-            />
-            <View style={styles.meltdownContainer}>
-              {this._renderButton('Record Meltdown', () => this.setState({
-                visibleModal: 1,
-                meltdownTime: new Date().toLocaleString()
-               }))}
-              <Modal isVisible={this.state.visibleModal === 1}>
-                {this._renderModalContent()}
-              </Modal>
-            </View>
-        </View>
+    </Text>                
+    </View>
+    </View>
+    </View>
+    <FlatList style={styles.flatListContainer}
+    data={data}
+    renderItem={({item}) => (
+    <TouchableHighlight onPress={() => {}}
+    activeOpacity={this.state.opacity}
+    underlayColor="#fff">
+    <View style={styles.itemContainer}>
+    <Icon style={styles.searchIcon} name={item.icon} size={20} color="#5DBCD2" />
+    <Text style={styles.item}>{item.name}</Text>
+    </View>
+    </TouchableHighlight>
+    )}
+    keyExtractor={item => item.id}
+    numColumns={numColumns}
+    />
+    <View style={styles.meltdownContainer}>
+    {this._renderButton('Record Meltdown', () => this.setState({
+      visibleModal: 1,
+      meltdownTime: new Date().toLocaleString()
+    }))}
+    <Modal isVisible={this.state.visibleModal === 1}>
+    {this._renderModalContent()}
+    </Modal>
+    </View>
+    </View>
     );
   }
 }
@@ -349,97 +349,97 @@ class ShirtStatus extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-    battery: 0.0,
+      battery: 0.0,
     }
   }
   componentDidMount() {
 
     batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
-    });
+  });
+}
+renderBattery() {
+  if (this.state.battery>.875) {
+    return <Text>
+    <Image
+    source={require('./resources/tshirt_white.png')}
+    style= {{height: 20, width: 20}}
+    />
+    <Icon name={"battery-full"} size={20} color="#fff"/>
+    </Text>
   }
-  renderBattery() {
-    if (this.state.battery>.875) {
-      return <Text>
-        <Image
-          source={require('./resources/tshirt_white.png')}
-          style= {{height: 20, width: 20}}
-        />
-        <Icon name={"battery-full"} size={20} color="#fff"/>
-      </Text>
-    }
-    else if (this.state.battery>.625) {
-      return <Text>
-        <Image
-          source={require('./resources/tshirt_white.png')}
-          style= {{height: 20, width: 20}}
-        />
-        <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
-      </Text>
-    }
-    else if (this.state.battery>.375) {
-      return <Text>
-        <Image
-          source={require('./resources/tshirt_white.png')}
-          style= {{height: 20, width: 20}}
-        />
-        <Icon name={"battery-half"} size={20} color="#fff"/>
-      </Text>
-    }
-     else if (this.state.battery>.125) {
-      return <Text>
-        <Image
-          source={require('./resources/tshirt_white.png')}
-          style= {{height: 20, width: 20}}
-        />
-        <Icon name={"battery-quarter"} size={20} color="#fff"/>
-      </Text>
-    }
-      else {
-        return <Text>
-        <Image
-          source={require('./resources/tshirt_white.png')}
-          style= {{height: 20, width: 20}}
-        />
-        <Icon name={"battery-empty"} size={20} color="#fff"/>
-      </Text>
-    }
+  else if (this.state.battery>.625) {
+    return <Text>
+    <Image
+    source={require('./resources/tshirt_white.png')}
+    style= {{height: 20, width: 20}}
+    />
+    <Icon name={"battery-three-quarters"} size={20} color="#fff"/>
+    </Text>
   }
-  render() {
-    return (
-    <View >
-     {this.renderBattery()}
-    </View>
-    );
+  else if (this.state.battery>.375) {
+    return <Text>
+    <Image
+    source={require('./resources/tshirt_white.png')}
+    style= {{height: 20, width: 20}}
+    />
+    <Icon name={"battery-half"} size={20} color="#fff"/>
+    </Text>
   }
+  else if (this.state.battery>.125) {
+    return <Text>
+    <Image
+    source={require('./resources/tshirt_white.png')}
+    style= {{height: 20, width: 20}}
+    />
+    <Icon name={"battery-quarter"} size={20} color="#fff"/>
+    </Text>
+  }
+  else {
+    return <Text>
+    <Image
+    source={require('./resources/tshirt_white.png')}
+    style= {{height: 20, width: 20}}
+    />
+    <Icon name={"battery-empty"} size={20} color="#fff"/>
+    </Text>
+  }
+}
+render() {
+  return (
+  <View >
+  {this.renderBattery()}
+  </View>
+  );
+}
 };
 
 export default createBottomTabNavigator(
-  {
-    Home: HomeScreen,
-    Report: ReportsScreen,
-    Schedule: ScheduleScreen,
-  },
-  {
-    navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, tintColor }) => {
-        const { routeName } = navigation.state;
-        let iconName;
-        if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-        } else if (routeName === 'Report') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
-        }
-        else if (routeName === 'Schedule') {
-          iconName = `ios-people${focused ? '' : '-outline'}`;
-        }
-        return <Ionicons name={iconName} size={25} color={tintColor} />;
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
+{
+  Home: HomeScreen,
+  Report: ReportsScreen,
+  Schedule: ScheduleScreen,
+},
+{
+  navigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, tintColor }) => {
+      const { routeName } = navigation.state;
+      let iconName;
+      if (routeName === 'Home') {
+        iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+      } else if (routeName === 'Report') {
+        iconName = `ios-options${focused ? '' : '-outline'}`;
+      }
+      else if (routeName === 'Schedule') {
+        iconName = `ios-people${focused ? '' : '-outline'}`;
+      }
+      return <Ionicons name={iconName} size={25} color={tintColor} />;
     },
-  }
+  }),
+  tabBarOptions: {
+    activeTintColor: 'tomato',
+    inactiveTintColor: 'gray',
+  },
+}
 )
 
 const numColumns = 3;
