@@ -33,7 +33,7 @@ var name, email,  uid, emailVerified;
 var latfirebase,lngfirebase, addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase, HeartRatefirebase, temperaturfirebase, meltdownfirebase;
 var curfirebase=firebase.initializeApp(firebaseConfig);
 
-namefirebase=curfirebase.database().ref("/Jason/name"); 
+namefirebase=curfirebase.database().ref("/Jason/name");
 addressfirebase=curfirebase.database().ref("/Jason/address");
 statusfirebase=curfirebase.database().ref("/Jason/status");
 batfirebase=curfirebase.database().ref("/Jason/battery");
@@ -96,7 +96,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       statusfirebase=curfirebase.database().ref("/Jason/status");
       batfirebase=curfirebase.database().ref("/Jason/battery");
 
-      namefirebase=curfirebase.database().ref("/Jason/name"); 
+      namefirebase=curfirebase.database().ref("/Jason/name");
       HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
       temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
       meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
@@ -121,7 +121,7 @@ this.state = {
   statusDesc: "not bad",
   opacity: 0.5,
   battery: 0.0,
-  currentUser: null, 
+  currentUser: null,
   childLat: "",
   childLng: "",
 
@@ -140,7 +140,7 @@ componentDidMount() {
 
 
  namefirebase.on('value', snapshot => {this.setState({kidname: snapshot.val()})
-});   
+});
  latfirebase.on('value', snapshot => {this.setState({childLat: snapshot.val()})
 });
  lngfirebase.on('value', snapshot => {this.setState({childLng: snapshot.val()})
@@ -282,7 +282,7 @@ _updateStatus = status =>{
      text => curfirebase.database().ref('/Users/' + uid+ "/name").set(text
      )
      )},
-     {text: 'Return to App', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
      {text: 'Log Out', onPress: () => {
       firebase.auth().signOut().then(() => {
         this.props.navigator.push(Router.getRoute('goodbye'));
@@ -292,7 +292,7 @@ _updateStatus = status =>{
     }},
     ],
     { cancelable: true }
-    )}} 
+    )}}
     />
     <View>
     <Text style={styles.statusTitle}>{"Current Status"}</Text>
@@ -314,13 +314,13 @@ _updateStatus = status =>{
     />
     </View>
     <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#fff', borderColor: '#d3d3d3', borderWidth: 1}}>
-    <Text onPress={this.getDirections} style = {{textAlign: 'center'}}> 
-    {this.state.kidname} is at 
+    <Text onPress={this.getDirections} style = {{textAlign: 'center'}}>
+    {this.state.kidname} is at
     <Text style={{fontWeight: "bold"}}> {this.state.address} </Text>
     </Text>
     <Text>
 
-    </Text>                
+    </Text>
     </View>
     </View>
     </View>
