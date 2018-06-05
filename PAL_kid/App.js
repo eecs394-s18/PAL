@@ -11,7 +11,7 @@ import Geocoder from 'react-native-geocoding';
 import moment from 'moment';
 import * as firebase from 'firebase';
 
-import styles from './styles/home';
+import styles from './styles/kid_home_style';
 import MyCircleScreen from './MyCircle';
 import ReportsScreen from './Report';
 import { GetGradient } from './gradient';
@@ -42,7 +42,7 @@ var batfirebase=curfirebase.database().ref("/Jason/battery");
 var kidfirebase=curfirebase.database().ref("/Jason/");
 
 
-class HomeScreen extends React.Component {
+export default class HomeScreen extends React.Component {
     constructor(props){
 	super(props);
 
@@ -63,7 +63,8 @@ class HomeScreen extends React.Component {
 			longitudeDelta: 0.0421
 	    	},
 	    locationResult: null,
-	    timeLineTop: null
+	    timeLineTop: null,
+      todayDate: "",
 	};
 }
 
@@ -184,53 +185,20 @@ class HomeScreen extends React.Component {
     });
   }
 
-  loadItems(day) {
-   setTimeout(() => {
-     var strTime;
-     var time;
-     for (let i = 0; i < 1; i++) {
-       time = day.timestamp;
-       strTime = this.timeToString(time);
-       if (!this.state.items[strTime]) {
-         this.state.items[strTime] = [];
-         const numItems = Math.floor(Math.random() * 5);
-           for (let j = 0; j < numItems; j++) {
-             this.state.items[strTime].push({
-               name: 'Item for ' + strTime,
-               height: Math.max(50, Math.floor(Math.random() * 150))
-             });
-         }
+  // getTodayDate = () => {
+  //   var date = new Date().getDate();
+  //   var month = new Date().getMonth()+1;
+  //   var year = new Date().getFullYear();
+  //   var today = month + '/' + date + '/' + year;
+  //   this.state.todayDate = today;
+  // }
 
-       }
-     }
-
-     const newItems = {};
-     Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
-     this.setState({
-       items: newItems
-     });
-   }, 100);
-
-
- }
- renderItem(item) {
-   return (
-     <View style={[sched_styles.item, {height: item.height}]}><Text>{item.name}</Text></View>
-   );
- }
- renderEmptyDate() {
-   return (
-     <View style={sched_styles.emptyDate}><Text>This is empty date!</Text></View>
-   );
- }
- rowHasChanged(r1, r2) {
-   return r1.name !== r2.name;
- }
- timeToString(time) {
-   const date = new Date(time);
-   return date.toISOString().split('T')[0];
- }
    render() {
+     var date = new Date().getDate();
+     var month = new Date().getMonth()+1;
+     var year = new Date().getFullYear();
+     var today = month + '/' + date + '/' + year;
+     this.state.todayDate = today;
 
     return (
 
@@ -271,24 +239,31 @@ class HomeScreen extends React.Component {
                       </Text>
 	  				</View>
 
-            <View>
-	  					<MapView
-				          style={styles.map}
-				          region={this.state.mapRegion}
-				          onRegionChange={this._handleMapRegionChange}
-				        />
-	  				</View>
+            <View style={styles.dateContainer}>
+            <Text style = {{textAlign: 'center'}}>
+              Your schedule today:
+              <Text style={{fontWeight: "bold"}}> {this.state.todayDate}</Text>
+            </Text>
+            </View>
+
+            <View style={styles.container}>
+            <FlatList
+              data={[
+                {key: '9 AM: Breakfast'},
+                {key: '11 AM: Lunch'},
+                {key: '1 PM: Soccer'},
+                {key: '3 PM: Math'},
+                {key: '5 PM: Dinner'},
+                {key: '7 PM: Homework'},
+                {key: '9 PM: Go to bed'},
+              ]}
+              renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+            />
+          </View>
 
 	          </View>
           </View>
         </View>
-        // <Agenda
-        //   items={this.state.items}
-        //   loadItemsForMonth={this.loadItems.bind(this)}
-        //   renderItem={this.renderItem.bind(this)}
-        //   renderEmptyDate={this.renderEmptyDate.bind(this)}
-        //   rowHasChanged={this.rowHasChanged.bind(this)}
-        // />
     );
   }
 }
@@ -308,50 +283,35 @@ class ShirtStatus extends React.Component{
   }
 };
 
-const sched_styles = StyleSheet.create({
-  item: {
-    backgroundColor: 'white',
-    flex: 1,
-    borderRadius: 5,
-    padding: 10,
-    marginRight: 10,
-    marginTop: 17
-  },
-  emptyDate: {
-    height: 15,
-    flex:1,
-    paddingTop: 30
-  }
-});
 
 
-export default createBottomTabNavigator(
-  {
-    Home: HomeScreen,
-    Schedule: MyCircleScreen,
-  },
-  {
-    navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, tintColor }) => {
-        const { routeName } = navigation.state;
-        let iconName;
-        if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-        } else if (routeName === 'Report') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
-        }
-        else if (routeName === 'Schedule') {
-          iconName = `ios-people${focused ? '' : '-outline'}`;
-        }
-        return <Ionicons name={iconName} size={25} color={tintColor} />;
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
-    },
-  }
-);
+// export default createBottomTabNavigator(
+//   {
+//     Home: HomeScreen,
+//     Schedule: MyCircleScreen,
+//   },
+//   {
+//     navigationOptions: ({ navigation }) => ({
+//       tabBarIcon: ({ focused, tintColor }) => {
+//         const { routeName } = navigation.state;
+//         let iconName;
+//         if (routeName === 'Home') {
+//           iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+//         } else if (routeName === 'Report') {
+//           iconName = `ios-options${focused ? '' : '-outline'}`;
+//         }
+//         else if (routeName === 'Schedule') {
+//           iconName = `ios-people${focused ? '' : '-outline'}`;
+//         }
+//         return <Ionicons name={iconName} size={25} color={tintColor} />;
+//       },
+//     }),
+//     tabBarOptions: {
+//       activeTintColor: 'tomato',
+//       inactiveTintColor: 'gray',
+//     },
+//   }
+// );
 
 const data = [
   {id: 1, name: 'Message', icon: 'comments'},
