@@ -118,6 +118,7 @@ this.state = {
   progress: 0.5,
   statusColor: "#6fd865",
   statusEmoji: require("./resources/smile.png"),
+  statusDesc: "not bad",
   opacity: 0.5,
   battery: 0.0,
   currentUser: null, 
@@ -162,18 +163,25 @@ componentDidMount() {
 _updateStatus = status =>{
     //change emoji
     var img;
+    var desc;
     if(status < 0.2){
-      var img = require('./resources/sad.png');
+      desc = "meltdown";
+      img = require('./resources/sad.png');
     }else if(status < 0.4){
+      desc = "angry";
       img = require('./resources/angry.png');
     }else if(status < 0.6){
+      desc = "not bad";
       img = require('./resources/normal.png');
     }else if(status < 0.8){
-      var img = require('./resources/smile.png');
+      desc = "good";
+      img = require('./resources/smile.png');
     }else{
-      var img = require('./resources/happy.png');
+      desc = "happy";
+      img = require('./resources/happy.png');
     }
     this.setState({statusEmoji: img});
+    this.setState({statusDesc: desc});
   }
 
   _getGradient(ratio){
@@ -288,7 +296,7 @@ _updateStatus = status =>{
     />
     <View>
     <Text style={styles.statusTitle}>{"Current Status"}</Text>
-    <Text style={styles.statusGreen}>Green</Text>
+    <Text style={styles.statusGreen}>{this.state.statusDesc}</Text>
     <AnimatedCircularProgress
     style = {styles.semiCircleContainer}
     size={Dimensions.get('window').width-100}
