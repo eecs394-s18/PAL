@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "exp": "^54.0.1",
     "expo": "^27.0.1",
     "firebase": "^5.0.2",
     "npm": "^6.0.1",
@@ -36,6 +37,7 @@
     "react-native-navbar": "^2.1.0",
     "react-native-navigation-bar": "^0.2.1",
     "react-native-navigator": "^0.4.2",
+    "react-native-open-map": "^1.9.1",
     "react-native-slider": "^0.11.0",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.0.1",

@@ -1,11 +1,17 @@
-import React from 'react';
-import { VictoryChart, VictoryLine, VictoryTheme,} from "victory-native";
+import React, { Component } from 'react';
+import { TouchableHighlight, StyleSheet, Text, View, StatusBar, FlatList, Alert, Image} from 'react-native';
+import Dimensions from 'Dimensions';
+import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis } from "victory-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CalendarStrip from 'react-native-calendar-strip';
-import {Text, View, Image} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Header, Button } from 'react-native-elements';
-import firebase from './FbApp';
+import { createBottomTabNavigator } from 'react-navigation';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import CalendarStrip from 'react-native-calendar-strip';
+import moment from 'moment';
 
+import styles from './styles/home';
+import firebase from './FbApp';
 var meltdownfirebase = firebase.database().ref("/Jason/meltdown/");
 
 
@@ -18,13 +24,14 @@ export default class ReportsScreen extends React.Component {
           meltdownArray: [],
     }
     //Binds functions, defines them
-    this.changeHR = this.changeHR.bind(this);
-    this.changeXY = this.changeXY.bind(this);
-    this.changeEMG = this.changeEMG.bind(this);
-    //resp is in breaths per minute from last breath 
-    this.changeresp = this.changeresp.bind(this);
-    this.changehgsr = this.changehgsr.bind(this);
-    this.changeMeltdown = this.changeMeltdown.bind(this);
+
+    this.changeHR = this.changeHR.bind(this)
+    this.changeXY = this.changeXY.bind(this)
+    this.changeEMG = this.changeEMG.bind(this)
+    //resp is in breaths per minute from last breath
+    this.changeresp = this.changeresp.bind(this)
+    this.changehgsr = this.changehgsr.bind(this)
+    this.changeMeltdown = this.changeMeltdown.bind(this)
 
 
   }
@@ -44,6 +51,17 @@ export default class ReportsScreen extends React.Component {
 
 
   render() {
+    const button_data = [
+       {id: 1, name: 'Heart Rate', fn: this.changeHR},
+       {id: 2, name: 'XY', fn: this.changeXY},
+       {id: 3, name: 'EMG', fn: this.changeEMG},
+       {id: 4, name: 'Respiratory', fn: this.changeresp},
+       {id: 5, name: 'HGSR', fn: this.changehgsr},
+       {id: 6, name: 'Meltdowns', fn: this.changeMeltdown},
+     ];
+
+    const numColumns = 3;
+
     return (
         <View>
           <Header
@@ -56,63 +74,30 @@ export default class ReportsScreen extends React.Component {
           <CalendarStrip
               calendarAnimation={{type: 'sequence', duration: 30}}
               daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#9265DC'}}
-              style={{height:85, paddingTop: 5, paddingBottom: 5}}
+              style={{height:85, paddingTop: 5, paddingBottom: 5, marginTop:-1,}}
               calendarHeaderStyle={{color: 'white'}}
               calendarColor={'#7743CE'}
               dateNumberStyle={{color: 'white'}}
               dateNameStyle={{color: 'white'}}
               iconContainer={{flex: 0.1}}
           />
-          //Passes data to graph
           <Chart ref = {Chart => {this._chart = Chart}} data = {data.XYcannedData}/>
 
-          //Buttons to change Graph Data
-          <Button onPress={this.changeXY}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#2082d8"}}
-            title = "XY">
-          </Button>
-
-            <Button onPress={this.changeMeltdown}
-                    buttonStyle={{borderColor: "transparent",
-                        borderWidth: 0,
-                        borderRadius: 5,
-                        backgroundColor: "#000"}}
-                    title = "Meltdown">
-            </Button>
-
-
-          <Button onPress={this.changeHR}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#f74259"}}
-            title = "HR">
-          </Button>
-
-            <Button onPress={this.changeEMG}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#8cd01b"}}
-            title = "EMG">
-          </Button>
-           <Button onPress={this.changeresp}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#33d1d8"}}
-            title = "Resp">
-          </Button>
-          <Button onPress={this.changehgsr}
-            buttonStyle={{borderColor: "transparent",
-                          borderWidth: 0,
-                          borderRadius: 5,
-                          backgroundColor: "#f59623"}}
-            title = "HGSR">
-          </Button>
+          <FlatList
+            data={button_data}
+            renderItem={({item}) => (
+              <TouchableHighlight onPress={item.fn}
+                activeOpacity={this.state.opacity}
+                underlayColor="#fff">
+                <View style={styles.reportsItemContainer}>
+                  <Icon style={styles.searchIcon} name={item.icon} size={20} color="#ADD8E6" />
+                  <Text style={styles.item}>{item.name}</Text>
+                </View>
+              </TouchableHighlight>
+            )}
+            keyExtractor={item => item.id}
+            numColumns={numColumns}
+          />
         </View>
     );
   }
@@ -134,11 +119,9 @@ export default class ReportsScreen extends React.Component {
     this._chart.changehgsr(data.HGSRdata);
   }
   changeMeltdown() {
-    this._chart.changeMeltdown(this.state.meltdownArray);
-  }
-  changeChartCoord() {
-      this._chart.changeChartCoord("time","value");
-  }
+
+   this._chart.changeMeltdown(this.state.meltdownArray);
+ }
 
 }
 
@@ -215,7 +198,7 @@ class Chart extends React.Component{
 
   changeMeltdown(new_data) {
       this.state.Chart_data = new_data
-      data_color = "#f59623"
+      data_color = "#551a8b"
       chart_title = "Metldown"
       this.changeChartCoord("time","value")
       this.forceUpdate()

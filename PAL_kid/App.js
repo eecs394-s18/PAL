@@ -11,13 +11,18 @@ import Geocoder from 'react-native-geocoding';
 import moment from 'moment';
 import * as firebase from 'firebase';
 
-import styles from './styles/home';
+import styles from './styles/kid_home_style';
 import MyCircleScreen from './MyCircle';
 import ReportsScreen from './Report';
+import { GetGradient } from './gradient';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
 import { Constants, Location, Permissions, MapView } from 'expo';
 
+import { openMap } from 'react-native-open-map';
 
+//var txtFile = "c:/test.txt"
+//var file = new File(txtFile);
 
 
 // Initialize Firebase
@@ -37,7 +42,7 @@ var batfirebase=curfirebase.database().ref("/Jason/battery");
 var kidfirebase=curfirebase.database().ref("/Jason/");
 
 
-class HomeScreen extends React.Component {
+export default class HomeScreen extends React.Component {
     constructor(props){
 	super(props);
 
@@ -45,9 +50,11 @@ class HomeScreen extends React.Component {
 	    progress: 0.5,
 	    opacity: 0.5,
 	    battery: 0.0,
+	    statusEmoji: require("./resources/smile.png"),
 	    lat: "",
 	    lng: "",
 	    locationName: "",
+      items: {},
 
 	    mapRegion: {
 	    	latitude: 37.78825,
@@ -55,7 +62,9 @@ class HomeScreen extends React.Component {
 	    	latitudeDelta: 0.0922,
 			longitudeDelta: 0.0421
 	    	},
-	    locationResult: null
+	    locationResult: null,
+	    timeLineTop: null,
+      todayDate: "",
 	};
 }
 
@@ -63,8 +72,38 @@ class HomeScreen extends React.Component {
 		Geocoder.init('AIzaSyDYBD9kcnAd-Zcf-hn5d_Aq9Y2vLgqDfsw');
 		this._getLocationAsync();
 		this._getInfoFromDatabase();
-
+		statusfirebase.on('value', snapshot => {
+		   this.setState({progress: snapshot.val()});
+		   this._updateStatus(snapshot.val());
+		 });
+		//setInterval( this._timer, 500);
 	}
+
+    _timer() {
+	       let d = new Date();
+	       let result = d.getHours() + d.getMinutes() / 60;
+	       this.setState({
+	           timeLineTop: result
+	       });
+	       console.log(this.timeLineTop);
+	};
+
+	_updateStatus = status =>{
+    //change emoji
+    var img;
+    if(status < 0.2){
+      var img = require('./resources/sad.png');
+    }else if(status < 0.4){
+      img = require('./resources/angry.png');
+    }else if(status < 0.6){
+      img = require('./resources/normal.png');
+    }else if(status < 0.8){
+      var img = require('./resources/smile.png');
+    }else{
+      var img = require('./resources/happy.png');
+    }
+    this.setState({statusEmoji: img});
+  }
 
 	_updateLoactionName = location => {
  		let lat = location.coords.latitude;
@@ -138,7 +177,28 @@ class HomeScreen extends React.Component {
 	    batfirebase.on('value', snapshot => {this.setState({battery: snapshot.val()})
 	    });
 	}
+
+  getDirections = () => {
+    openMap({
+      latitude: this.state.lat,
+      longitude: this.state.lng,
+    });
+  }
+
+  // getTodayDate = () => {
+  //   var date = new Date().getDate();
+  //   var month = new Date().getMonth()+1;
+  //   var year = new Date().getFullYear();
+  //   var today = month + '/' + date + '/' + year;
+  //   this.state.todayDate = today;
+  // }
+
    render() {
+     var date = new Date().getDate();
+     var month = new Date().getMonth()+1;
+     var year = new Date().getFullYear();
+     var today = month + '/' + date + '/' + year;
+     this.state.todayDate = today;
 
     return (
 
@@ -162,27 +222,44 @@ class HomeScreen extends React.Component {
 		              fill={100*this.state.progress}
 		              arcSweepAngle={180}
 		              rotation={270}
-		              tintColor="green"
+		              tintColor={GetGradient(this.state.progress)}
 		              backgroundColor="#666"
 		              onAnimationComplete={() => console.log('onAnimationComplete')}
 		            />
 		            <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
 		              <Image style={styles.face}
-		                source={require('./resources/f2.png')}
+		                source={this.state.statusEmoji}
 		              />
 		            </View>
 
 	               <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#e4e4e4'}}>
-	                    <Text style = {{textAlign: 'center'}}> You are at {this.state.locationName}</Text>
+	                    <Text onPress={this.getDirections} style = {{textAlign: 'center'}}>
+                        You are at
+                        <Text style={{fontWeight: "bold"}}> {this.state.locationName}</Text>
+                      </Text>
 	  				</View>
 
-	  				<View>
-	  					<MapView
-				          style={styles.map}
-				          region={this.state.mapRegion}
-				          onRegionChange={this._handleMapRegionChange}
-				        />
-	  				</View>
+            <View style={styles.dateContainer}>
+            <Text style = {{textAlign: 'center'}}>
+              Your schedule today:
+              <Text style={{fontWeight: "bold"}}> {this.state.todayDate}</Text>
+            </Text>
+            </View>
+
+            <View style={styles.container}>
+            <FlatList
+              data={[
+                {key: '9 AM: Breakfast'},
+                {key: '11 AM: Lunch'},
+                {key: '1 PM: Soccer'},
+                {key: '3 PM: Math'},
+                {key: '5 PM: Dinner'},
+                {key: '7 PM: Homework'},
+                {key: '9 PM: Go to bed'},
+              ]}
+              renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+            />
+          </View>
 
 	          </View>
           </View>
@@ -207,34 +284,34 @@ class ShirtStatus extends React.Component{
 };
 
 
-export default createBottomTabNavigator(
-  {
-    Home: HomeScreen,
-    Report: ReportsScreen,
-    MyCircle: MyCircleScreen,
-  },
-  {
-    navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, tintColor }) => {
-        const { routeName } = navigation.state;
-        let iconName;
-        if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-        } else if (routeName === 'Report') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
-        }
-        else if (routeName === 'MyCircle') {
-          iconName = `ios-people${focused ? '' : '-outline'}`;
-        }
-        return <Ionicons name={iconName} size={25} color={tintColor} />;
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
-    },
-  }
-);
+
+// export default createBottomTabNavigator(
+//   {
+//     Home: HomeScreen,
+//     Schedule: MyCircleScreen,
+//   },
+//   {
+//     navigationOptions: ({ navigation }) => ({
+//       tabBarIcon: ({ focused, tintColor }) => {
+//         const { routeName } = navigation.state;
+//         let iconName;
+//         if (routeName === 'Home') {
+//           iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+//         } else if (routeName === 'Report') {
+//           iconName = `ios-options${focused ? '' : '-outline'}`;
+//         }
+//         else if (routeName === 'Schedule') {
+//           iconName = `ios-people${focused ? '' : '-outline'}`;
+//         }
+//         return <Ionicons name={iconName} size={25} color={tintColor} />;
+//       },
+//     }),
+//     tabBarOptions: {
+//       activeTintColor: 'tomato',
+//       inactiveTintColor: 'gray',
+//     },
+//   }
+// );
 
 const data = [
   {id: 1, name: 'Message', icon: 'comments'},

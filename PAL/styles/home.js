@@ -64,6 +64,17 @@ export default StyleSheet.create({
     borderWidth: 1,
     top: 10,
   },
+  reportsItemContainer: {
+    width: size,
+    height: 100,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderColor: '#d3d3d3',
+    borderWidth: 1,
+  },
   item: {
     flex: 1,
     textAlign: 'center',
@@ -104,7 +115,7 @@ export default StyleSheet.create({
     top: 25,
   },
   meltdownButton: {
-    backgroundColor: '#ADD8E6',
+    backgroundColor: '#5DBCD2',
     padding: 12,
     margin: 16,
     justifyContent: 'center',
@@ -120,4 +131,8 @@ export default StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)',
     height: '40%',
   },
+  map: {
+    flex:1,
+    top: 200,
+  }
 });
