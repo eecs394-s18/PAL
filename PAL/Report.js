@@ -66,17 +66,17 @@ export default class ReportsScreen extends React.Component {
         <View>
           <Header
             placement="left"
-            backgroundColor = "#ff1900"
+            backgroundColor = "#2e64ba"
             leftComponent={< ShirtStatus />}
             centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
             rightComponent={{ icon: 'menu', color: '#fff' }}
             />
           <CalendarStrip
               calendarAnimation={{type: 'sequence', duration: 30}}
-              daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#9265DC'}}
+              daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#2e64ba'}}
               style={{height:85, paddingTop: 5, paddingBottom: 5, marginTop:-1,}}
               calendarHeaderStyle={{color: 'white'}}
-              calendarColor={'#7743CE'}
+              calendarColor={'#5DBCD2'}
               dateNumberStyle={{color: 'white'}}
               dateNameStyle={{color: 'white'}}
               iconContainer={{flex: 0.1}}

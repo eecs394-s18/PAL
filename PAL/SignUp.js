@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button, ImageBackground } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, Image, ImageBackground } from 'react-native'
 import * as firebase from 'firebase';
+// import * as styles from './styles/login_styles.js'
 
 export default class SignUp extends React.Component {
   state = { email: '', password: '', errorMessage: null }
@@ -15,8 +16,8 @@ handleSignUp = () => {
 }
 render() {
     return (
-      <ImageBackground source={require('./resources/login_background.jpeg')} style={styles.background}>
-        <Text>Sign Up</Text>
+      <ImageBackground source={require('./resources/login_recolor.png')} style={styles.background}>
+        <Text style = {styles.whiteText}> Welcome to PAL! </Text>
         {this.state.errorMessage &&
           <Text style={{ color: 'red' }}>
             {this.state.errorMessage}
@@ -36,10 +37,19 @@ render() {
           onChangeText={password => this.setState({ password })}
           value={this.state.password}
         />
-        <Button title="Sign Up" onPress={this.handleSignUp} />
-        <Button
-          title="Already have an account? Login"
+        <Button 
+          title="Sign up"
+          onPress={this.handleSignUp}
+          color = 'white'
+        />
+        <Button 
+          title = 'Already have an account? Login'
           onPress={() => this.props.navigation.navigate('Login')}
+          color = 'white'
+        />
+        <Image 
+          source = {require('./resources/GIABlue.png')} 
+          style = {{marginTop: 100, width: 190, height: 170, opacity: .5}}
         />
       </ImageBackground>
     )
@@ -57,12 +67,27 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
+    margin: 0,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  whiteText: {
+    fontWeight: 'bold',
+    marginTop: 200,
+    color: 'white',
+    fontSize: 20,
+    textShadowColor: 'rgba(0, 0, 0, .9)',
+    textShadowRadius: 15,
+    opacity: 1
+  },
+  loginButton: {
+    color: 'red',
+    borderColor: 'black',
+    backgroundColor: 'black'
+  },
   textInput: {
     height: 40,
-    width: '90%',
+    width: '80%',
     backgroundColor: '#fff',
     opacity: .9,
     borderColor: 'gray',

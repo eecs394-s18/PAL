@@ -13,6 +13,8 @@ import ReportsScreen from './Report';
 import { GetGradient } from './gradient';
 import Modal from 'react-native-modal';
 import Slider from "react-native-slider";
+import {LinearGradient} from 'expo'
+
 
 import { openMap } from 'react-native-open-map';
 
@@ -253,7 +255,7 @@ _updateStatus = status =>{
      <View>
      <Header
      placement="left"
-     backgroundColor = "#ff1900"
+     backgroundColor = '#2e64ba'
      leftComponent={< ShirtStatus />}
      centerComponent={{ text: 'PAL', style: {color: '#fff', marginLeft: -30} }}
      rightComponent={{icon: 'menu',

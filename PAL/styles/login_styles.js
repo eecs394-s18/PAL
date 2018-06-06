@@ -3,19 +3,22 @@ import Dimensions from 'Dimensions';
 
 const numColumns = 3;
 const size = Dimensions.get('window').width/numColumns;
-export default StyleSheet.create({
-    container: {
+const styles = StyleSheet.create({
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: null
+    width: 100
   },
   background: {
     flex: 1,
-    width: null,
-    height: null,
+    width: 100,
+    height: 100,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  white_text: {
+    color: 'white',
   },
   textInput: {
     height: 40,
@@ -26,4 +29,4 @@ export default StyleSheet.create({
     borderWidth: 1,
     marginTop: 8
   }
-});
+})
