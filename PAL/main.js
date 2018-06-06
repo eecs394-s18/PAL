@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
-import { TouchableHighlight, TouchableOpacity, StyleSheet, Text, View, StatusBar, FlatList, Alert, AlertIOS, Image} from 'react-native';
+import React from 'react';
+import { TouchableHighlight, TouchableOpacity,  Text, View,  FlatList, Alert, AlertIOS, Image} from 'react-native';
 import Dimensions from 'Dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Header, Button } from 'react-native-elements';
 import { createBottomTabNavigator } from 'react-navigation';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import CalendarStrip from 'react-native-calendar-strip';
-import moment from 'moment';
-import * as firebase from 'firebase';
-
-
+import firebase from './FbApp';
 import styles from './styles/home';
 import ScheduleScreen from './Schedule';
 import ReportsScreen from './Report';
@@ -20,20 +16,10 @@ import Slider from "react-native-slider";
 
 import { openMap } from 'react-native-open-map';
 
-// Initialize Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyDA_RXtRHQI4IlCK-M2r9wgyBMYBFgs4m4",
-  authDomain: "pal394-a6f1f.firebaseapp.com",
-  databaseURL: "https://pal394-a6f1f.firebaseio.com",
-  projectId: "pal394-a6f1f",
-  storageBucket: "pal394-a6f1f.appspot.com",
-  messagingSenderId: "33475295035"
-};
 var name, email,  uid, emailVerified;
 var latfirebase,lngfirebase, addressfirebase, statusfirebase, batfirebase, namefirebase, userfirebase, HeartRatefirebase, temperaturfirebase, meltdownfirebase;
-var curfirebase=firebase.initializeApp(firebaseConfig);
-
-namefirebase=curfirebase.database().ref("/Jason/name"); 
+var curfirebase=firebase;
+namefirebase = curfirebase.database().ref("/Jason/name");
 addressfirebase=curfirebase.database().ref("/Jason/address");
 statusfirebase=curfirebase.database().ref("/Jason/status");
 batfirebase=curfirebase.database().ref("/Jason/battery");
@@ -96,7 +82,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       statusfirebase=curfirebase.database().ref("/Jason/status");
       batfirebase=curfirebase.database().ref("/Jason/battery");
 
-      namefirebase=curfirebase.database().ref("/Jason/name"); 
+      namefirebase=curfirebase.database().ref("/Jason/name");
       HeartRatefirebase=curfirebase.database().ref("/Jason/HeartRate");
       temperaturfirebase=curfirebase.database().ref("/Jason/temperature");
       meltdownfirebase=curfirebase.database().ref("/Jason/meltdown");
@@ -118,9 +104,10 @@ this.state = {
   progress: 0.5,
   statusColor: "#6fd865",
   statusEmoji: require("./resources/smile.png"),
+  statusDesc: "not bad",
   opacity: 0.5,
   battery: 0.0,
-  currentUser: null, 
+  currentUser: null,
   childLat: "",
   childLng: "",
 
@@ -139,7 +126,7 @@ componentDidMount() {
 
 
  namefirebase.on('value', snapshot => {this.setState({kidname: snapshot.val()})
-});   
+});
  latfirebase.on('value', snapshot => {this.setState({childLat: snapshot.val()})
 });
  lngfirebase.on('value', snapshot => {this.setState({childLng: snapshot.val()})
@@ -162,18 +149,25 @@ componentDidMount() {
 _updateStatus = status =>{
     //change emoji
     var img;
+    var desc;
     if(status < 0.2){
-      var img = require('./resources/sad.png');
+      desc = "meltdown";
+      img = require('./resources/sad.png');
     }else if(status < 0.4){
+      desc = "angry";
       img = require('./resources/angry.png');
     }else if(status < 0.6){
+      desc = "not bad";
       img = require('./resources/normal.png');
     }else if(status < 0.8){
-      var img = require('./resources/smile.png');
+      desc = "good";
+      img = require('./resources/smile.png');
     }else{
-      var img = require('./resources/happy.png');
+      desc = "happy";
+      img = require('./resources/happy.png');
     }
     this.setState({statusEmoji: img});
+    this.setState({statusDesc: desc});
   }
 
   _getGradient(ratio){
@@ -274,7 +268,7 @@ _updateStatus = status =>{
      text => curfirebase.database().ref('/Users/' + uid+ "/name").set(text
      )
      )},
-     {text: 'Return to App', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
      {text: 'Log Out', onPress: () => {
       firebase.auth().signOut().then(() => {
         this.props.navigator.push(Router.getRoute('goodbye'));
@@ -284,11 +278,11 @@ _updateStatus = status =>{
     }},
     ],
     { cancelable: true }
-    )}} 
+    )}}
     />
     <View>
     <Text style={styles.statusTitle}>{"Current Status"}</Text>
-    <Text style={styles.statusGreen}>Green</Text>
+    <Text style={styles.statusGreen}>{this.state.statusDesc}</Text>
     <AnimatedCircularProgress
     style = {styles.semiCircleContainer}
     size={Dimensions.get('window').width-100}
@@ -306,13 +300,13 @@ _updateStatus = status =>{
     />
     </View>
     <View style={{ justifyContent: 'center', top: 175, height: 75, backgroundColor: '#fff', borderColor: '#d3d3d3', borderWidth: 1}}>
-    <Text onPress={this.getDirections} style = {{textAlign: 'center'}}> 
-    {this.state.kidname} is at 
+    <Text onPress={this.getDirections} style = {{textAlign: 'center'}}>
+    {this.state.kidname} is at
     <Text style={{fontWeight: "bold"}}> {this.state.address} </Text>
     </Text>
     <Text>
 
-    </Text>                
+    </Text>
     </View>
     </View>
     </View>

@@ -131,4 +131,8 @@ export default StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)',
     height: '40%',
   },
+  map: {
+    flex:1,
+    top: 200,
+  }
 });

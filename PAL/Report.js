@@ -9,9 +9,10 @@ import { createBottomTabNavigator } from 'react-navigation';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
-import * as firebase from 'firebase';
 
 import styles from './styles/home';
+import firebase from './FbApp';
+var meltdownfirebase = firebase.database().ref("/Jason/meltdown/");
 
 
 export default class ReportsScreen extends React.Component {
@@ -20,8 +21,10 @@ export default class ReportsScreen extends React.Component {
     this.state = {
           color: "#fff",
           opacity: 0.5,
+          meltdownArray: [],
     }
     //Binds functions, defines them
+
     this.changeHR = this.changeHR.bind(this)
     this.changeXY = this.changeXY.bind(this)
     this.changeEMG = this.changeEMG.bind(this)
@@ -32,6 +35,20 @@ export default class ReportsScreen extends React.Component {
 
 
   }
+
+    componentDidMount() {
+        meltdownfirebase.on('value',snapshot => {
+            const task = [];
+            snapshot.forEach((childSnapshot) => {
+                task.push({
+                    time: childSnapshot.val()["time"],
+                    value: childSnapshot.val()["value"],
+                });
+            });
+            this.setState({meltdownArray: task})
+        })
+    }
+
 
   render() {
     const button_data = [
@@ -57,18 +74,17 @@ export default class ReportsScreen extends React.Component {
           <CalendarStrip
               calendarAnimation={{type: 'sequence', duration: 30}}
               daySelectionAnimation={{type: 'background', duration: 300, highlightColor: '#9265DC'}}
-              style={{height:85, paddingTop: 5, paddingBottom: 5}}
+              style={{height:85, paddingTop: 5, paddingBottom: 5, marginTop:-1,}}
               calendarHeaderStyle={{color: 'white'}}
               calendarColor={'#7743CE'}
               dateNumberStyle={{color: 'white'}}
               dateNameStyle={{color: 'white'}}
               iconContainer={{flex: 0.1}}
           />
-          //Passes data to graph
           <Chart ref = {Chart => {this._chart = Chart}} data = {data.XYcannedData}/>
 
-          //Buttons to change Graph Data
-          <FlatList             data={button_data}
+          <FlatList
+            data={button_data}
             renderItem={({item}) => (
               <TouchableHighlight onPress={item.fn}
                 activeOpacity={this.state.opacity}
@@ -88,6 +104,7 @@ export default class ReportsScreen extends React.Component {
 
   changeHR() {
     this._chart.changeHR(data.HRcannedData);
+
   }
   changeXY() {
     this._chart.changeXY(data.XYcannedData);
@@ -98,17 +115,18 @@ export default class ReportsScreen extends React.Component {
   changeresp() {
     this._chart.changeresp(data.respcanneddata);
   }
-   changehgsr() {
+  changehgsr() {
     this._chart.changehgsr(data.HGSRdata);
   }
   changeMeltdown() {
-   this._chart.changeMeltdown(data.Meltdowndata);
+
+   this._chart.changeMeltdown(this.state.meltdownArray);
  }
 
 }
 
 // import data from JSON file
-var data = require("./data/exampledata.json")
+ data = require("./data/exampledata.json");
 
 class ShirtStatus extends React.Component{
   render() {
@@ -126,52 +144,70 @@ class ShirtStatus extends React.Component{
 
 
 //Chart Component
-Chart_data = data.XYcannedData
-data_color = "#2082d8"
-chart_title = "XY"
-
+data_color = "#2082d8";
+chart_title = "XY";
+data = require("./data/exampledata.json");
 
 class Chart extends React.Component{
   constructor(props){
     super(props)
+    this.state = {
+        meltdownArray: [],
+        Chart_data: data.XYcannedData,
+        x:"x",
+        y:"y",
+
+    }
   }
 
   changeHR (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#f74259"
     chart_title = "Heart Rate"
-    this.forceUpdate();
+    this.changeChartCoord("x","y")
+    this.forceUpdate()
   }
   changeXY (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#2082d8"
     chart_title = "XY"
-    this.forceUpdate();
+    this.changeChartCoord("x","y")
+    this.forceUpdate()
   }
     changeEMG (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#8cd01b"
     chart_title = "EMG"
+    this.changeChartCoord("x","y")
     this.forceUpdate();
   }
    changeresp (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#33d1d8"
     chart_title = "Respiratory"
+    this.changeChartCoord("x","y")
     this.forceUpdate();
   }
    changehgsr (new_data) {
-    Chart_data = new_data
+    this.state.Chart_data = new_data
     data_color = "#f59623"
     chart_title = "HGSR"
+    this.changeChartCoord("x","y")
     this.forceUpdate();
   }
-  changeMeltdown (new_data) {
-   Chart_data = new_data
-   data_color = "#551a8b"
-   chart_title = "Meltdowns"
-   this.forceUpdate();
- }
+
+  changeMeltdown(new_data) {
+      this.state.Chart_data = new_data
+      data_color = "#551a8b"
+      chart_title = "Metldown"
+      this.changeChartCoord("time","value")
+      this.forceUpdate()
+  }
+  changeChartCoord(x, y) {
+      this.state.x = x;
+      this.state.y = y;
+  }
+
   render() {
 
     return (
@@ -183,12 +219,14 @@ class Chart extends React.Component{
             data: { stroke: data_color },
             parent: { border: "1px solid #ccc"}
           }}
-
-          data = {Chart_data}
+          data = {this.state.Chart_data}
+           x = {this.state.x}
+           y = {this.state.y}
             />
 
         </VictoryChart>
       </View>
     );
   }
-};
+}
+

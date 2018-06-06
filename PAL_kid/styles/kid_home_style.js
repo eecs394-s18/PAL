@@ -83,7 +83,24 @@ export default StyleSheet.create({
   },
   map:{
     top: 175,
-    alignSelf: 'stretch', 
-    height: 300 
-  }
+    alignSelf: 'stretch',
+    height: 300
+  },
+  dateContainer: {
+  justifyContent: 'center',
+  top: 175,
+  height: 75,
+  backgroundColor: '#FFC966'
+ },
+  container: {
+   alignItems: 'center',
+   justifyContent: 'center',
+   top: 170,
+   paddingTop: 22
+  },
+  item: {
+    padding: 10,
+    fontSize: 15,
+    height: 44,
+  },
 });
