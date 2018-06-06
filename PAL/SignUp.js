@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, ImageBackground } from 'react-native'
 import * as firebase from 'firebase';
 
 export default class SignUp extends React.Component {
@@ -15,7 +15,7 @@ handleSignUp = () => {
 }
 render() {
     return (
-      <View style={styles.container}>
+      <ImageBackground source={require('./resources/login_background.jpeg')} style={styles.background}>
         <Text>Sign Up</Text>
         {this.state.errorMessage &&
           <Text style={{ color: 'red' }}>
@@ -41,19 +41,30 @@ render() {
           title="Already have an account? Login"
           onPress={() => this.props.navigation.navigate('Login')}
         />
-      </View>
+      </ImageBackground>
     )
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: null
+  },
+  background: {
+    flex: 1,
+    width: null,
+    height: null,
     justifyContent: 'center',
     alignItems: 'center'
   },
   textInput: {
     height: 40,
     width: '90%',
+    backgroundColor: '#fff',
+    opacity: .9,
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 8
