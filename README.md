@@ -23,7 +23,7 @@ After going to PAL folder that is created after cloning, go to PAL folder or PAL
 * `../PAL/PAL_child`: child app
 
 Once you're at the right path, you will see `package.json` that tells you what to install to run it.
-Running `npm i --save` will help you install all libraries and dependencies and `save` keyword will prevent you from repeating installation of same libraries. After this, you will see a new `package-lock.json` file.
+Running `npm i --save` (within both the Pal and Pal_Child sub directory) will help you install all libraries and dependencies and `save` keyword will prevent you from repeating installation of same libraries. After this, you will see a new `package-lock.json` file.
 
 ## Running
 
@@ -65,6 +65,8 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 ## Implementation Details
 
 ### Firebase
+
+The backend of this app (such as user accounts and the database) runs on Firebase. In order to implement this and continue development, you will have to set up your own Firebase account. This is a quick process and can be done here https://console.firebase.google.com/u/1/. Once set-up go to Authentication--> Sign-In Method and ENABLE "Email/Password" to setup the back end of the Firebase and Import our old database from the following JSON (https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json) 
 
 ### Home page
 
@@ -135,7 +137,7 @@ Below are several new features we could not implement because of time constraint
 * Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
 * Yuze Li
 * Bruce Chen
-* Nick David
+* Nick David - [Github](https://github.com/dayeonhwang), https://github.com/NickDavidNU
 * Ben Kresge
 * Kevin Mui
 * Ben Kalish
