@@ -23,7 +23,7 @@ After going to PAL folder that is created after cloning, go to PAL folder or PAL
 * `../PAL/PAL_child`: child app
 
 Once you're at the right path, you will see `package.json` that tells you what to install to run it.
-Running `npm i --save` (within both the Pal and Pal_Child sub directory) will help you install all libraries and dependencies and `save` keyword will prevent you from repeating installation of same libraries. After this, you will see a new `package-lock.json` file.
+Running `npm i --save` will help you install all libraries and dependencies and `save` keyword will prevent you from repeating installation of same libraries. After this, you will see a new `package-lock.json` file.
 
 ## Running
 
@@ -66,8 +66,6 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 
 ### Firebase
 
-The backend of this app (such as user accounts and the database) runs on Firebase. In order to implement this and continue development, you will have to set up your own Firebase account. This is a quick process and can be done here https://console.firebase.google.com/u/1/. Once set-up go to Authentication--> Sign-In Method and ENABLE "Email/Password" to setup the back end of the Firebase and Import our old database from the following JSON (https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json) 
-
 ### Home page
 
 #### State
@@ -106,7 +104,39 @@ class HomeScreen extends React.Component {
 We made a modal to pop up after clicking 'Record Meltdown' button, and we used React Native's Slider component to render a slider and choose a severity of meltdown ranging from 0 to 5.
 
 ### Report Page
+We used Victory Chart Component of [Victory Native Module] (https://github.com/FormidableLabs/victory-native). This was to display data in a graph form on the `../PAL/Report.js` page.
+```
+      <View style={{ alignItems: 'center', }}>
+        <Text style={{marginTop: 10, marginBottom: -30, fontSize: 20, fontWeight: 'bold'}}>{chart_title}</Text>
+        <VictoryChart theme={VictoryTheme.material}>
+          <VictoryLine
+          style={{
+            data: { stroke: data_color },
+            parent: { border: "1px solid #ccc"}
+          }}
+          data = {this.state.Chart_data}
+           x = {this.state.x}
+           y = {this.state.y}
+            />
+
+        </VictoryChart>
+      </View>
+```
+
+
 #### Biometrics Graphs
+The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data. Requirements: An array with dictionary key values of 'x' and 'y'.
+```
+"{ HRcannedData": [
+  {"x": 0, "y": 90 },
+  {"x": 1, "y": 90 },
+  {"x": 2, "y": 88 },
+  {"x": 3, "y": 86 },
+  {"x": 4, "y": 85 },
+  {"x": 5, "y": 93 },
+  ]
+ }
+```
 
 ### Schedule Page
 We used Agenda Component of [React Native Calendars Module](https://github.com/wix/react-native-calendars).
@@ -137,7 +167,7 @@ Below are several new features we could not implement because of time constraint
 * Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
 * Yuze Li
 * Bruce Chen
-* Nick David - [Github](https://github.com/dayeonhwang), nicholasdavid2019@u.northwestern.edu
+* Nick David
 * Ben Kresge
-* Kevin Mui
+* Kevin Mui - [Github](https://github.com/kekamui), kevinmui2020@u.northwestern.edu
 * Ben Kalish
