@@ -1,2 +1,141 @@
 # PAL
-Team Orange Client Project for EECS 394
+This project is Team Orange Client Project for EECS 394.
+
+Below you'll find information about installing, running app, troubleshooting and implementation details.
+
+## Table of Contents
+* [Installing](#installing)
+* [Running](#running)
+* [Troubleshooting](#troubleshooting)
+* [Implementation Details](#implementation)
+* [Next Steps](#nextsteps)
+* [Contributors](#contributors)
+
+## Installing
+
+Download our app's code by cloning our git repository on your laptop's terminal.
+```
+git clone https://github.com/eecs394-s18/PAL.git
+```
+
+After going to PAL folder that is created after cloning, go to PAL folder or PAL_child folder.
+* `../PAL/PAL`: parent app
+* `../PAL/PAL_child`: child app
+
+Once you're at the right path, you will see `package.json` that tells you what to install to run it.
+Running `npm i --save` will help you install all libraries and dependencies and `save` keyword will prevent you from repeating installation of same libraries. After this, you will see a new `package-lock.json` file.
+
+## Running
+
+### `npm start`
+
+Runs your app in development mode.
+
+Open it in the [Expo app](https://expo.io) on your phone to view it. It will reload if you save edits to your files, and you will see build errors and logs in the terminal.
+
+Sometimes you may need to reset or clear the React Native packager's cache. To do so, you can pass the `--reset-cache` flag to the start script:
+
+```
+npm start --reset-cache
+# or
+yarn start --reset-cache
+```
+
+#### `npm run ios`
+
+Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
+
+#### `npm run android`
+
+Like `npm start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup). We also recommend installing Genymotion as your Android emulator. Once you've finished setting up the native build environment, there are two options for making the right copy of `adb` available to Create React Native App:
+
+##### Using Android Studio's `adb`
+
+1. Make sure that you can run adb from your terminal.
+2. Open Genymotion and navigate to `Settings -> ADB`. Select “Use custom Android SDK tools” and update with your [Android SDK directory](https://stackoverflow.com/questions/25176594/android-sdk-location).
+
+##### Using Genymotion's `adb`
+
+1. Find Genymotion’s copy of adb. On macOS for example, this is normally `/Applications/Genymotion.app/Contents/MacOS/tools/`.
+2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
+3. Make sure that you can run adb from your terminal.
+
+## Troubleshooting
+
+## Implementation Details
+
+### Firebase
+
+### Home page
+
+#### State
+Below is a list of fields of HomeScreen class's state that we used and updated throughout our app.
+```
+class HomeScreen extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      parentLocation: null,
+      progress: 0.5,
+      statusColor: "#6fd865",
+      statusEmoji: require("./resources/smile.png"),
+      statusDesc: "not bad",
+      opacity: 0.5,
+      battery: 0.0,
+      currentUser: null,
+      childLat: "",
+      childLng: "",
+      address: "",
+      visibleModal: null,
+      sliderValue: 0,
+      kidname: "",
+      meltdownTime: "",
+      meltdownVal: 0,
+      HeartRate: 70,
+      temperature: 98.6
+    }
+}
+```
+#### Login
+
+#### Status Circular Bar
+
+#### Meltdown
+We made a modal to pop up after clicking 'Record Meltdown' button, and we used React Native's Slider component to render a slider and choose a severity of meltdown ranging from 0 to 5.
+
+### Report Page
+#### Biometrics Graphs
+
+### Schedule Page
+We used Agenda Component of [React Native Calendars Module](https://github.com/wix/react-native-calendars).
+We put down temporary random data for each date's schedule, but those can be easily replaced.
+```
+<Agenda
+  // the list of items that have to be displayed in agenda. If you want to render item as empty date
+  // the value of date key has to be an empty array []. If there exists no value for date key it is
+  // considered that the date in question is not yet loaded
+  items={
+    {'2018-06-10': [{text: 'item 1'}],
+     '2018-06-11': [{text: 'item 2'}],
+     '2018-06-12': [],
+    }}
+  ...
+/>
+```
+
+## Next Steps
+Below are several new features we could not implement because of time constraints of the class:
+* Social features - Message and share with community including family, doctors, friends, etc  
+* Push notifications for meltdowns
+* Integrate with Google Calendar
+* Integrate with hardware
+* Deploy to app stores
+
+## Contributors
+* Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
+* Yuze Li
+* Bruce Chen
+* Nick David
+* Ben Kresge
+* Kevin Mui
+* Ben Kalish
