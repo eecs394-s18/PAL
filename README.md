@@ -107,21 +107,21 @@ We made a modal to pop up after clicking 'Record Meltdown' button, and we used R
 ### Report Page
 We used Victory Chart Component of [Victory Native Module] (https://github.com/FormidableLabs/victory-native). This was to display data in a graph form on the `../PAL/Report.js` page.
 ```
-      <View style={{ alignItems: 'center', }}>
-        <Text style={{marginTop: 10, marginBottom: -30, fontSize: 20, fontWeight: 'bold'}}>{chart_title}</Text>
-        <VictoryChart theme={VictoryTheme.material}>
-          <VictoryLine
-          style={{
-            data: { stroke: data_color },
-            parent: { border: "1px solid #ccc"}
-          }}
-          data = {this.state.Chart_data}
-           x = {this.state.x}
-           y = {this.state.y}
-            />
+<View style={{ alignItems: 'center', }}>
+  <Text style={{marginTop: 10, marginBottom: -30, fontSize: 20, fontWeight: 'bold'}}>{chart_title}</Text>
+  <VictoryChart theme={VictoryTheme.material}>
+    <VictoryLine
+    style={{
+      data: { stroke: data_color },
+      parent: { border: "1px solid #ccc"}
+    }}
+    data = {this.state.Chart_data}
+     x = {this.state.x}
+     y = {this.state.y}
+      />
 
-        </VictoryChart>
-      </View>
+  </VictoryChart>
+</View>
 ```
 
 
@@ -137,6 +137,7 @@ The graph data is stored in `../data/exampledata.json` but it is possible to pas
   {"x": 5, "y": 93 },
   ]
  }
+"
 ```
 
 ### Schedule Page
