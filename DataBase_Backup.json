@@ -1,0 +1,679 @@
+{
+  "Jason" : {
+    "HeartRate" : 90,
+    "address" : "2220 Campus Drive, Evanston",
+    "battery" : 0.8,
+    "coordinates" : {
+      "lat" : 42.058075007213446,
+      "lng" : -87.67338610479071
+    },
+    "meltdown" : {
+      "-LDr4vfGCdxz9jYWmN-N" : {
+        "time" : 8,
+        "value" : 4
+      },
+      "-LDr5SRWus85EwEaSS1W" : {
+        "time" : 9,
+        "value" : 3
+      },
+      "-LDr6ZafrtrKONfycyrG" : {
+        "time" : 11,
+        "value" : 1
+      },
+      "-LDr6boq7SH0fPmPF0Hv" : {
+        "time" : 14,
+        "value" : 3
+      },
+      "-LDr6xjQWxargobui0Xo" : {
+        "time" : 18,
+        "value" : 5
+      },
+      "-LDrD5sWhRuXvv0WAT-B" : {
+        "time" : 20,
+        "value" : 2
+      },
+      "-LDrF5MNz3sW3p33NvFi" : {
+        "time" : 21,
+        "value" : 3
+      },
+      "asdasdada123" : {
+        "time" : 22,
+        "value" : 4
+      },
+      "qdwqdqwd" : {
+        "time" : 24,
+        "value" : 5
+      }
+    },
+    "name" : "Jason",
+    "password" : 123456,
+    "status" : 0.3,
+    "temperature" : 100
+  },
+  "Users" : {
+    "2BEd2fPWwVOAoo5Lgpuwk1bdG2l2" : {
+      "HeartRate" : 80,
+      "address" : "Northwestern University",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "tom",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "3jYoSHyVGLTmqsH093CCcTInmkD2" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jim",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "5tzQRatTgXOkFadRkwTNsGSKv2j1" : {
+      "HeartRate" : 80,
+      "address" : "2307 Sheridan Rd, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Steve",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "5uF3u7nUWtQMd0gHqWGvBO4ID2F3" : {
+      "HeartRate" : 100,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "-LEH0FnbSlFqOZTZX2yw" : {
+          "time" : "6/5/2018, 5:15:32 PM",
+          "value" : 2
+        },
+        "-LEH0LLWNWBdFKED_aam" : {
+          "time" : "6/5/2018, 5:15:57 PM",
+          "value" : 2
+        },
+        "-LEIGjJ9o7C5SV3aEZmF" : {
+          "time" : "6/5/2018, 11:07:10 PM",
+          "value" : 0
+        },
+        "-LEIGvmwPVGHycteqvtn" : {
+          "time" : "6/5/2018, 11:08:02 PM",
+          "value" : 0
+        },
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.1,
+      "temperature" : 90.2
+    },
+    "6BU9Ti3R5KX1gNE7KoCgkSHrPzF3" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Todd",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "8d9lY8jjG6dNGF3SB8Go8VNy37s1" : {
+      "HeartRate" : 80,
+      "address" : "Washburne Middle School, Winnetka,IL",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "-LEFobLZLOoDu3awh2O9" : {
+          "time" : "6/5/2018, 11:40:41 AM",
+          "value" : 3
+        },
+        "-LEFockcOi3z5uFoF9d8" : {
+          "time" : "6/5/2018, 11:40:47 AM",
+          "value" : 5
+        },
+        "-LEG5e2neZQuWschBZvU" : {
+          "time" : "6/5/2018, 12:59:30 PM",
+          "value" : 4
+        },
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Todd",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "FSEtAn79BIOiwBuSYYgecE8uzBu1" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.1,
+      "temperature" : 98.2
+    },
+    "HyU9jKqzjJcsfDbiEOHJpb6OFvy1" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "JPX0O416F3fo0PDW0AgEp7I8E083" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "Jjyag4Oio5eS43biiz6hJxgCaHY2" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "-LEPyr7k6F8u66HDkcjO" : {
+          "time" : "6/7/2018, 11:01:39 AM",
+          "value" : 4
+        },
+        "-LEPywmEljes05ooVnXk" : {
+          "time" : "6/7/2018, 11:02:03 AM",
+          "value" : 1
+        },
+        "-LEQ61oF_JwGFpZEiZFL" : {
+          "time" : "6/7/2018, 11:37:25 AM",
+          "value" : 3
+        },
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jeff",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "JqAYYyxEAWZGpSG3vTggxqaFg5z2" : {
+      "HeartRate" : 95,
+      "address" : "Washburne Middle School, Winnetka",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "-LDx9TjDqgPmuoG86sta" : {
+          "time" : "",
+          "value" : 2
+        },
+        "-LDxAHm7NiaM9QG8Vyan" : {
+          "time" : "",
+          "value" : 3
+        },
+        "-LDxAIvR6LTmXfz6_m45" : {
+          "time" : "6/1/2018, 4:07:24 PM",
+          "value" : 3
+        },
+        "-LDxAJVyJ0UDlPWE9gnw" : {
+          "time" : "6/1/2018, 4:07:29 PM",
+          "value" : 3
+        },
+        "-LDxAJtaUYOUsH-nGwwp" : {
+          "time" : "6/1/2018, 4:07:31 PM",
+          "value" : 3
+        },
+        "-LDxCXDxuAN7uWSrKtEW" : {
+          "time" : "6/1/2018, 4:07:33 PM",
+          "value" : 2
+        },
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Sam",
+      "password" : 123456,
+      "status" : 1,
+      "temperature" : 98.2
+    },
+    "MQMW2X7zq8P9VV0ODkksgmdk9Iv1" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Daniel",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "T6Ozv1X0McQwJJ566HMA4gDAdOF3" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "U8ERfDFrXlPjqSUV8GycbCJ9Man2" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "U8tYaNBVK9QTu8tVNgqvvwDtXzP2" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "-LEQ6bgqNKcbEpMsdvVv" : {
+          "time" : "6/7/2018, 11:39:49 AM",
+          "value" : 2
+        },
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "UpY4ZxdcP2ZEH3O6AmrFvuNbZ862" : {
+      "HeartRate" : 80,
+      "address" : "3314 Sheridan, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "-LDrSt0OGhlruOI4phfv" : {
+          "time" : "",
+          "value" : 3
+        },
+        "-LDrWRQuc7hck1xexL5m" : {
+          "time" : "5/31/2018, 1:30:56 PM",
+          "value" : 2
+        },
+        "-LDrXtIak-PNVGy2Np_s" : {
+          "time" : "5/31/2018, 1:46:27 PM",
+          "value" : 5
+        },
+        "-LDrYA3mxA0H1aOoA6xK" : {
+          "time" : "5/31/2018, 1:52:48 PM",
+          "value" : 2
+        },
+        "-LDrZxRVcLV1lzK-ulAi" : {
+          "time" : "",
+          "value" : 4
+        },
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : ".1",
+      "temperature" : 98.2
+    },
+    "XHt2wMhqbvOL4qkH1jQDLIYXo4Y2" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "YzECTKq2P7ROG0JjyF6bHsd7a3q1" : {
+      "HeartRate" : 80,
+      "address" : "3314 Sheridan",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "5/30/2018, 3:40:26PM",
+        "value" : 3
+      },
+      "name" : "Jim",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "ZgwfGe4XihVoE6JauaWlVScRqKH3" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "azv5RkjsvccFugOO5dMu4GBslmB2" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "-LDr_02MiXdBgF0RsGVG" : {
+          "time" : "",
+          "value" : 3
+        },
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Hello",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "eO6GdJon4Lhoumm6jCuxnMIZr5d2" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "-LEG9P3ZXKckMiSKS2rk" : {
+          "time" : "6/5/2018, 1:15:54 PM",
+          "value" : 4
+        },
+        "-LEG9PM8Xo3tGZpVYm1b" : {
+          "time" : "6/5/2018, 1:15:56 PM",
+          "value" : 4
+        },
+        "-LEG9PdWBJMfwV2o5EH8" : {
+          "time" : "6/5/2018, 1:15:58 PM",
+          "value" : 4
+        },
+        "-LEG9QEw7aujdlycGAdf" : {
+          "time" : "6/5/2018, 1:15:59 PM",
+          "value" : 2
+        },
+        "-LEG9QpBGgPedsbt7cyu" : {
+          "time" : "6/5/2018, 1:16:01 PM",
+          "value" : 3
+        },
+        "-LEG9REeeJg8Uh_I0sRq" : {
+          "time" : "6/5/2018, 1:16:04 PM",
+          "value" : 0
+        },
+        "-LEG9Tu7gi7MImNBHcsi" : {
+          "time" : "6/5/2018, 1:16:05 PM",
+          "value" : 4
+        },
+        "-LEG9jQga3P9HojvsuMW" : {
+          "time" : "6/5/2018, 1:17:22 PM",
+          "value" : 4
+        },
+        "-LEG9k1CFUCUkEVgUHpy" : {
+          "time" : "6/5/2018, 1:17:24 PM",
+          "value" : 3
+        },
+        "-LEG9kN-cIg652_Nb2gj" : {
+          "time" : "6/5/2018, 1:17:27 PM",
+          "value" : 3
+        },
+        "-LEG9keb3CCc4j6BHFbt" : {
+          "time" : "6/5/2018, 1:17:28 PM",
+          "value" : 3
+        },
+        "-LEG9l6hw6lJuLMUynex" : {
+          "time" : "6/5/2018, 1:17:30 PM",
+          "value" : 3
+        },
+        "-LEG9lOyfCQUSYED_CPh" : {
+          "time" : "6/5/2018, 1:17:31 PM",
+          "value" : 3
+        },
+        "-LEG9lgSAblMURZogiBB" : {
+          "time" : "6/5/2018, 1:17:32 PM",
+          "value" : 3
+        },
+        "-LEG9lxazwZ8ffj4GSRU" : {
+          "time" : "6/5/2018, 1:17:33 PM",
+          "value" : 3
+        },
+        "-LEG9mCXI7LpMQYL9Z1J" : {
+          "time" : "6/5/2018, 1:17:34 PM",
+          "value" : 3
+        },
+        "-LEG9mZ-Lm25bGR9imVR" : {
+          "time" : "6/5/2018, 1:17:36 PM",
+          "value" : 3
+        },
+        "-LEG9mwnS9e0HdsHLIwQ" : {
+          "time" : "6/5/2018, 1:17:37 PM",
+          "value" : 3
+        },
+        "-LEG9nFVyxhrVXsEC-ZN" : {
+          "time" : "6/5/2018, 1:17:38 PM",
+          "value" : 3
+        },
+        "-LEG9nY_iNa8CHNDjOXm" : {
+          "time" : "6/5/2018, 1:17:40 PM",
+          "value" : 3
+        },
+        "-LEG9nqf83oYwLe48ijW" : {
+          "time" : "6/5/2018, 1:17:41 PM",
+          "value" : 3
+        },
+        "-LEG9o7pspuGWvvMNa-O" : {
+          "time" : "6/5/2018, 1:17:42 PM",
+          "value" : 3
+        },
+        "-LEG9oPWgaxlvw0iqsMK" : {
+          "time" : "6/5/2018, 1:17:43 PM",
+          "value" : 3
+        },
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "fIuf71rOXvNLzFJPcIgdXQy0C5Q2" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "gk2UoYEAVRe6FL1LaizC1un2Mb82" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "-LELYxlzjI-Etc1GG5Lj" : {
+          "time" : "6/6/2018, 2:25:39 PM",
+          "value" : 4
+        },
+        "-LELi_KVsG0J3Vfure4Q" : {
+          "time" : "6/6/2018, 3:12:00 PM",
+          "value" : 1
+        },
+        "-LELidQQvToe4xebmgY9" : {
+          "time" : "6/6/2018, 3:12:19 PM",
+          "value" : 1
+        },
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Laura",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "oL79aFRmR3PvMtRwGeGdjZWf8Y23" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.5,
+      "temperature" : 98.2
+    },
+    "rpzf4DnHVWVveSgZLK6JT3Ezy4N2" : {
+      "HeartRate" : 80,
+      "address" : "2240 Campus Drive, Evanston",
+      "battery" : 0.2,
+      "coordinates" : {
+        "lat" : 42.05819462388442,
+        "lng" : -87.6740707988094
+      },
+      "meltdown" : {
+        "time" : "",
+        "value" : 3
+      },
+      "name" : "Jason",
+      "password" : 123456,
+      "status" : 0.8,
+      "temperature" : 98.2
+    },
+    "wL8nECJwZAhgO5Tn1Y9Vl8u2F9v1" : {
+      "name" : "dan"
+    }
+  }
+}
