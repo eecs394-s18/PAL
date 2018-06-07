@@ -126,7 +126,8 @@ We used Victory Chart Component of [Victory Native Module] (https://github.com/F
 
 
 #### Biometrics Graphs
-The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data. Requirements: An array with dictionary key values of 'x' and 'y'.
+The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data. 
+Data requirements: An array with dictionary key values of 'x' and 'y'.
 ```
 "{ HRcannedData": [
   {"x": 0, "y": 90 },
