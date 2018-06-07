@@ -169,7 +169,7 @@ Below are several new features we could not implement because of time constraint
 * Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
 * Yuze Li
 * Bruce Chen
-* Nick David - [Github](https://github.com/dayeonhwang), nicholasdavid2019@u.northwestern.edu
+* Nick David - [Github](https://github.com/NickDavidNU), nicholasdavid2019@u.northwestern.edu
 * Ben Kresge
 * Kevin Mui - [Github](https://github.com/kekamui), kevinmui2020@u.northwestern.edu
 * Ben Kalish
