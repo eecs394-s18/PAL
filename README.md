@@ -8,6 +8,8 @@ Below you'll find information about installing, running app, troubleshooting and
 * [Running](#running)
 * [Troubleshooting](#troubleshooting)
 * [Implementation Details](#implementation)
+* [Next Steps](#nextsteps)
+* [Contributors](#contributors)
 
 ## Installing
 
@@ -17,14 +19,11 @@ git clone https://github.com/eecs394-s18/PAL.git
 ```
 
 After going to PAL folder that is created after cloning, go to PAL folder or PAL_child folder.
-* ../PAL/PAL: parent app
-* ../PAL/PAL_child: child app
+* `../PAL/PAL`: parent app
+* `../PAL/PAL_child`: child app
 
-Once you're at the right path, you will see 'package.json' that tells you what to install to run it.
-Running this command will help you install all libraries and dependencies and 'save' keyword will prevent you from repeating installation of same libraries. After this, you will see a new 'package-lock.json' file.
-```
-npm i --save
-```
+Once you're at the right path, you will see `package.json` that tells you what to install to run it.
+Running `npm i --save` will help you install all libraries and dependencies and `save` keyword will prevent you from repeating installation of same libraries. After this, you will see a new `package-lock.json` file.
 
 ## Running
 
@@ -63,4 +62,80 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 
 ## Troubleshooting
 
-## Implementation
+## Implementation Details
+
+### Firebase
+
+### Home page
+
+#### State
+Below is a list of fields of HomeScreen class's state that we used and updated throughout our app.
+```
+class HomeScreen extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      parentLocation: null,
+      progress: 0.5,
+      statusColor: "#6fd865",
+      statusEmoji: require("./resources/smile.png"),
+      statusDesc: "not bad",
+      opacity: 0.5,
+      battery: 0.0,
+      currentUser: null,
+      childLat: "",
+      childLng: "",
+      address: "",
+      visibleModal: null,
+      sliderValue: 0,
+      kidname: "",
+      meltdownTime: "",
+      meltdownVal: 0,
+      HeartRate: 70,
+      temperature: 98.6
+    }
+}
+```
+#### Login
+
+#### Status Circular Bar
+
+#### Meltdown
+We made a modal to pop up after clicking 'Record Meltdown' button, and we used React Native's Slider component to render a slider and choose a severity of meltdown ranging from 0 to 5.
+
+### Report Page
+#### Biometrics Graphs
+
+### Schedule Page
+We used Agenda Component of [React Native Calendars Module](https://github.com/wix/react-native-calendars).
+We put down temporary random data for each date's schedule, but those can be easily replaced.
+```
+<Agenda
+  // the list of items that have to be displayed in agenda. If you want to render item as empty date
+  // the value of date key has to be an empty array []. If there exists no value for date key it is
+  // considered that the date in question is not yet loaded
+  items={
+    {'2018-06-10': [{text: 'item 1'}],
+     '2018-06-11': [{text: 'item 2'}],
+     '2018-06-12': [],
+    }}
+  ...
+/>
+```
+
+## Next Steps
+Below are several new features we could not implement because of time constraints of the class:
+* Social features - Message and share with community including family, doctors, friends, etc  
+* Push notifications for meltdowns
+* Integrate with Google Calendar
+* Integrate with hardware
+* Deploy to app stores
+
+## Contributors
+* Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
+* Yuze Li
+* Bruce Chen
+* Nick David
+* Ben Kresge
+* Kevin Mui
+* Ben Kalish
