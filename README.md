@@ -25,7 +25,6 @@ Below you'll find information about installing, running app, troubleshooting and
 * [Running](#running)
 * [Implementation Details](#implementation)
 * [Next Steps](#nextsteps)
-* [Contributors](#contributors)
 
 ## Installing
 
