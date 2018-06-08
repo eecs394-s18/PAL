@@ -86,9 +86,9 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 ### Firebase
 The backend of this app (such as user accounts and the database) runs on Firebase.
 
- In order to implement this and continue development, you will have to set up your own Firebase account. This is a quick process and can be done here https://console.firebase.google.com/u/1/. Once set-up go to Authentication--> Sign-In Method and ENABLE "Email/Password." Feel free to add our previous database contents from (https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json).
-Finally, enter your credentials into FbApp.js in the PAL directory.
+  In order to implement this and continue development, you will have to set up your own Firebase account. This is a quick process and can be done here https://console.firebase.google.com/u/1/. Once set-up go to Authentication--> Sign-In Method and ENABLE "Email/Password." Feel free to add our previous database contents from (https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json).
 
+  Finally, enter your credentials into FbApp.js in the PAL directory.
 
 ### Home page
 
@@ -123,6 +123,8 @@ class HomeScreen extends React.Component {
 
 #### Login
 
+Implemented with Firebase
+
 #### Semi-Circle Status Bar
 The status bar is actually a AnimatedCircularProgress component. Its three color gradient is created with proprietary code in GetGradient, but Expo's LinearGradient may also work.
 
@@ -130,7 +132,7 @@ The status bar is actually a AnimatedCircularProgress component. Its three color
 We made a modal to pop up after clicking 'Record Meltdown' button, and we used React Native's Slider component to render a slider and choose a severity of meltdown ranging from 0 to 5.
 
 ### Report Page
-We used Victory Chart Component of [Victory Native Module] (https://github.com/FormidableLabs/victory-native). This was to display data in a graph form on the `../PAL/Report.js` page.
+We used Victory Chart Component of [Victory Native Module](https://github.com/FormidableLabs/victory-native). This was to display data in a graph form on the `../PAL/Report.js` page.
 ```
 <View style={{ alignItems: 'center', }}>
   <Text style={{marginTop: 10, marginBottom: -30, fontSize: 20, fontWeight: 'bold'}}>{chart_title}</Text>
@@ -149,9 +151,11 @@ We used Victory Chart Component of [Victory Native Module] (https://github.com/F
 </View>
 ```
 
-
 #### Biometrics Graphs
 The graph data is stored in `../data/exampledata.json` but it would be easy to pass in dynamically loaded data from Firebase. Functions in `../PAL/Report.js` were created to switch graph display data. 
+
+The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data.
+>>>>>>> ccf839b87dd7cc94618d1f9c32ba0f09a70d6b94
 Data requirements: An array with dictionary key values of 'x' and 'y'.
 ```
 "{ HRcannedData": [
@@ -189,14 +193,5 @@ Below are several new features we could not implement because of time constraint
 * Push notifications for meltdowns
 * Integrate with Google Calendar
 * Integrate with hardware
-* Send hardware data from child app to Firebase, and track them on the parent app (currently we are using canned data on the parent app).
+* Send hardware data from child app to Firebase.
 * Deploy to app stores
-
-## Contributors
-* Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
-* Yuze Li
-* Bruce Chen
-* Nick David - [Github](https://github.com/NickDavidNU), nicholasdavid2019@u.northwestern.edu
-* Ben Kresge
-* Kevin Mui - [Github](https://github.com/kekamui), kevinmui2020@u.northwestern.edu
-* Ben Kalish
