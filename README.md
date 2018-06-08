@@ -19,7 +19,6 @@ The child app includes the most important information for children with ASD to h
 ## Pal Parent App 
 The parent app provides the parent with all the tools to be aware of his or her child's wellbeing during her day. The dashboard is the primary landing pad, and the child's status, and biometric data can seen at a glance. Here, the parent can also report a meltdown. If the parent is interested in how a child's day really went, he or she navigate to the reports page, where all the biometric data is displayed is line graphs.
 
-Below you'll find information about installing, running app, troubleshooting and implementation details.
 ## Table of Contents
 * [Installing](#installing)
 * [Running](#running)
