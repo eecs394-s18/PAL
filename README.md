@@ -1,8 +1,25 @@
 # PAL
-This project is Team Orange Client Project for EECS 394.
+
+PAL is a pair of React Native applications for parents with children with Autism Spectrum Disorder. 
+This project was built in conjunction with Gaia LCC as Team Orange's Client Project for EECS 394.
+
+## Contributors
+* Bruce Chen
+* Nick David - [Github](https://github.com/NickDavidNU), nicholasdavid2019@u.northwestern.edu
+* Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
+* Ben Kalish
+* Ben Krege - [Github](https://github.com/JBKrege), johnkrege2018@u.northwestern.edu
+* Yuze Li
+* Kevin Mui - [Github](https://github.com/kekamui), kevinmui2020@u.northwestern.edu
+
+
+##Pal Child App
+The child app includes the most important information for children with ASD to have during their day, including their schedule, a map, and Pal's status. The mobile app will recieve data from wearable technology that detects a variety of biometric data from the child. Then, the app will send the data to a Firebase.
+
+##Pal Parent App 
+The parent app provides the parent with all the tools to be aware of his or her child's wellbeing during her day. The dashboard is the primary landing pad, and the child's status, and biometric data can seen at a glance. Here, the parent can also report a meltdown. If the parent is interested in how a child's day really went, he or she navigate to the reports page, where all the biometric data is displayed is line graphs.
 
 Below you'll find information about installing, running app, troubleshooting and implementation details.
-
 ## Table of Contents
 * [Installing](#installing)
 * [Running](#running)
@@ -31,7 +48,9 @@ Running `npm i --save` (within both the Pal and Pal_Child sub directory) will he
 
 Runs your app in development mode.
 
-Open it in the [Expo app](https://expo.io) on your phone to view it. It will reload if you save edits to your files, and you will see build errors and logs in the terminal.
+If you have Xcode or Android Build Tools you can simply press i or a to run the simulator.
+
+To run on your phone, first download the [Expo app](https://expo.io). It will reload dynamically as you save edits to your files, and you can see build errors and logs in the terminal.
 
 Sometimes you may need to reset or clear the React Native packager's cache. To do so, you can pass the `--reset-cache` flag to the start script:
 
@@ -65,7 +84,11 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 ## Implementation Details
 
 ### Firebase
-The backend of this app (such as user accounts and the database) runs on Firebase. In order to implement this and continue development, you will have to set up your own Firebase account. This is a quick process and can be done here https://console.firebase.google.com/u/1/. Once set-up go to Authentication--> Sign-In Method and ENABLE "Email/Password" to setup the back end of the Firebase and Import our old database from the following JSON (https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json) 
+The backend of this app (such as user accounts and the database) runs on Firebase.
+
+ In order to implement this and continue development, you will have to set up your own Firebase account. This is a quick process and can be done here https://console.firebase.google.com/u/1/. Once set-up go to Authentication--> Sign-In Method and ENABLE "Email/Password." Feel free to add our previous database contents from (https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json).
+Finally, enter your credentials into FbApp.js in the PAL directory.
+
 
 ### Home page
 
@@ -96,10 +119,12 @@ class HomeScreen extends React.Component {
       temperature: 98.6
     }
 }
-```
+``` 
+
 #### Login
 
-#### Status Circular Bar
+#### Semi-Circle Status Bar
+The status bar is actually a AnimatedCircularProgress component. Its three color gradient is created with proprietary code in GetGradient, but Expo's LinearGradient may also work.
 
 #### Meltdown
 We made a modal to pop up after clicking 'Record Meltdown' button, and we used React Native's Slider component to render a slider and choose a severity of meltdown ranging from 0 to 5.
@@ -126,7 +151,7 @@ We used Victory Chart Component of [Victory Native Module] (https://github.com/F
 
 
 #### Biometrics Graphs
-The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data. 
+The graph data is stored in `../data/exampledata.json` but it would be easy to pass in dynamically loaded data from Firebase. Functions in `../PAL/Report.js` were created to switch graph display data. 
 Data requirements: An array with dictionary key values of 'x' and 'y'.
 ```
 "{ HRcannedData": [
@@ -164,6 +189,7 @@ Below are several new features we could not implement because of time constraint
 * Push notifications for meltdowns
 * Integrate with Google Calendar
 * Integrate with hardware
+* Send hardware data from child app to Firebase, and track them on the parent app (currently we are using canned data on the parent app).
 * Deploy to app stores
 
 ## Contributors
