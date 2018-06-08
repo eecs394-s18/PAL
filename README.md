@@ -59,7 +59,7 @@ yarn start --reset-cache
 
 #### `npm run ios`
 
-Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
+Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it (Xcode) installed.
 
 #### `npm run android`
 
@@ -82,9 +82,11 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 ### Firebase
 The backend of this app (such as user accounts and the database) runs on Firebase.
 
-  In order to implement this and continue development, you will have to set up your own Firebase account. This is a quick process and can be done here https://console.firebase.google.com/u/1/. Once set-up go to Authentication--> Sign-In Method and ENABLE "Email/Password." Feel free to add our previous database contents from (https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json).
+  In order to implement this and continue development, you will have to set up your own Firebase account. This is a quick (and free) process and can be done  [here](https://console.firebase.google.com/u/1/). Once set-up go to `Authentication` -> `Sign-In Method` and enable `Email/Password`. Additionally, feel free to import our old database from the following [JSON](https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json) as the app is currently setup to the strucuture of our database.   All user data is stored under Users/UID (UIDs can be viewed from the `Authentication` tab from which you can see all emails registered).
 
-  Finally, enter your credentials into FbApp.js in the PAL directory.
+
+  Finally, enter your credentials into FbApp.js in the PAL directory by replace our existing "const config" with the contents of your Firebase's Setup. This can be optained from the firebase homescreen by clicking "Add Firebase to your web app"/
+  
 
 ### Home page
 
