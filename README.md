@@ -153,7 +153,7 @@ We used Victory Chart Component of [Victory Native Module](https://github.com/Fo
 The graph data is stored in `../data/exampledata.json` but it would be easy to pass in dynamically loaded data from Firebase. Functions in `../PAL/Report.js` were created to switch graph display data. 
 
 The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data.
->>>>>>> 
+
 Data requirements: An array with dictionary key values of 'x' and 'y'.
 ```
 "{ HRcannedData": [
@@ -184,7 +184,7 @@ We put down temporary random data for each date's schedule, but those can be eas
   ...
 />
 ```
-
+<a name = 'nextsteps'></a>
 ## Next Steps
 Below are several new features we could not implement because of time constraints of the class:
 * Social features - Message and share with community including family, doctors, friends, etc  
