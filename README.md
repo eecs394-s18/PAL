@@ -65,7 +65,10 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 ## Implementation Details
 
 ### Firebase
-The backend of this app (such as user accounts and the database) runs on Firebase. In order to implement this and continue development, you will have to set up your own Firebase account. This is a quick process and can be done here https://console.firebase.google.com/u/1/. Once set-up go to Authentication--> Sign-In Method and ENABLE "Email/Password" to setup the back end of the Firebase and Import our old database from the following JSON (https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json) 
+The backend of this app (such as user accounts and the database) runs on Firebase.
+In order to implement this and continue development, you will have to set up your own Firebase account.
+This is a quick process and can be done [here](https://console.firebase.google.com/u/1/).
+Once set-up is done, go to `Authentication` -> `Sign-In Method` and enable `Email/Password` to setup the back end of the Firebase and import our old database from the following [JSON](https://github.com/eecs394-s18/PAL/blob/master/DataBase_Backup.json).
 
 ### Home page
 
@@ -97,7 +100,6 @@ class HomeScreen extends React.Component {
     }
 }
 ```
-#### Login
 
 #### Status Circular Bar
 
@@ -105,7 +107,7 @@ class HomeScreen extends React.Component {
 We made a modal to pop up after clicking 'Record Meltdown' button, and we used React Native's Slider component to render a slider and choose a severity of meltdown ranging from 0 to 5.
 
 ### Report Page
-We used Victory Chart Component of [Victory Native Module] (https://github.com/FormidableLabs/victory-native). This was to display data in a graph form on the `../PAL/Report.js` page.
+We used Victory Chart Component of [Victory Native Module](https://github.com/FormidableLabs/victory-native). This was to display data in a graph form on the `../PAL/Report.js` page.
 ```
 <View style={{ alignItems: 'center', }}>
   <Text style={{marginTop: 10, marginBottom: -30, fontSize: 20, fontWeight: 'bold'}}>{chart_title}</Text>
@@ -124,9 +126,8 @@ We used Victory Chart Component of [Victory Native Module] (https://github.com/F
 </View>
 ```
 
-
 #### Biometrics Graphs
-The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data. 
+The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data.
 Data requirements: An array with dictionary key values of 'x' and 'y'.
 ```
 "{ HRcannedData": [
