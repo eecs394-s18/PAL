@@ -30,7 +30,7 @@ After going to PAL folder that is created after cloning, go to PAL folder or PAL
 Once you're at the right path, you will see `package.json` that tells you what to install to run it.
 Running `npm i --save` (within both the Pal and Pal_Child sub directory) will help you install all libraries and dependencies and `save` keyword will prevent you from repeating installation of same libraries. After this, you will see a new `package-lock.json` file.
 
-# Running
+## Running
 
 ### `npm start`
 
@@ -67,7 +67,7 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
 3. Make sure that you can run adb from your terminal.
 
-# Implementation Details
+## Implementation Details
 
 ### Firebase
 The backend of this app (such as user accounts and the database) runs on Firebase.
