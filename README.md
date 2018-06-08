@@ -13,10 +13,10 @@ This project was built in conjunction with Gaia LCC as Team Orange's Client Proj
 * Kevin Mui - [Github](https://github.com/kekamui), kevinmui2020@u.northwestern.edu
 
 
-##Pal Child App
+## Pal Child App
 The child app includes the most important information for children with ASD to have during their day, including their schedule, a map, and Pal's status. The mobile app will recieve data from wearable technology that detects a variety of biometric data from the child. Then, the app will send the data to a Firebase.
 
-##Pal Parent App 
+## Pal Parent App 
 The parent app provides the parent with all the tools to be aware of his or her child's wellbeing during her day. The dashboard is the primary landing pad, and the child's status, and biometric data can seen at a glance. Here, the parent can also report a meltdown. If the parent is interested in how a child's day really went, he or she navigate to the reports page, where all the biometric data is displayed is line graphs.
 
 Below you'll find information about installing, running app, troubleshooting and implementation details.
@@ -155,7 +155,7 @@ We used Victory Chart Component of [Victory Native Module](https://github.com/Fo
 The graph data is stored in `../data/exampledata.json` but it would be easy to pass in dynamically loaded data from Firebase. Functions in `../PAL/Report.js` were created to switch graph display data. 
 
 The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data.
->>>>>>> ccf839b87dd7cc94618d1f9c32ba0f09a70d6b94
+>>>>>>> 
 Data requirements: An array with dictionary key values of 'x' and 'y'.
 ```
 "{ HRcannedData": [
