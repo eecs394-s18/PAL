@@ -1,22 +1,12 @@
 # PAL
 
-PAL is a pair of React Native applications for parents with children with Autism Spectrum Disorder. 
+PAL is a pair of React Native applications for parents with children with Autism Spectrum Disorder.
 This project was built in conjunction with Gaia LCC as Team Orange's Client Project for EECS 394.
-
-## Contributors
-* Bruce Chen
-* Nick David - [Github](https://github.com/NickDavidNU), nicholasdavid2019@u.northwestern.edu
-* Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
-* Ben Kalish
-* Ben Krege - [Github](https://github.com/JBKrege), johnkrege2018@u.northwestern.edu
-* Yuze Li
-* Kevin Mui - [Github](https://github.com/kekamui), kevinmui2020@u.northwestern.edu
-
 
 ## Pal Child App
 The child app includes the most important information for children with ASD to have during their day, including their schedule, a map, and Pal's status. The mobile app will recieve data from wearable technology that detects a variety of biometric data from the child. Then, the app will send the data to a Firebase.
 
-## Pal Parent App 
+## Pal Parent App
 The parent app provides the parent with all the tools to be aware of his or her child's wellbeing during her day. The dashboard is the primary landing pad, and the child's status, and biometric data can seen at a glance. Here, the parent can also report a meltdown. If the parent is interested in how a child's day really went, he or she navigate to the reports page, where all the biometric data is displayed is line graphs.
 
 ## Table of Contents
@@ -24,6 +14,7 @@ The parent app provides the parent with all the tools to be aware of his or her 
 * [Running](#running)
 * [Implementation Details](#implementation)
 * [Next Steps](#nextsteps)
+* [Contributors](#contributors)
 
 ## Installing
 
@@ -76,7 +67,6 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
 3. Make sure that you can run adb from your terminal.
 
-<a name="implementation"></a>
 # Implementation Details
 
 ### Firebase
@@ -86,7 +76,7 @@ The backend of this app (such as user accounts and the database) runs on Firebas
 
 
   Finally, enter your credentials into FbApp.js in the PAL directory by replace our existing "const config" with the contents of your Firebase's Setup. This can be optained from the firebase homescreen by clicking "Add Firebase to your web app"/
-  
+
 
 ### Home page
 
@@ -117,7 +107,7 @@ class HomeScreen extends React.Component {
       temperature: 98.6
     }
 }
-``` 
+```
 
 #### Login
 
@@ -150,7 +140,7 @@ We used Victory Chart Component of [Victory Native Module](https://github.com/Fo
 ```
 
 #### Biometrics Graphs
-The graph data is stored in `../data/exampledata.json` but it would be easy to pass in dynamically loaded data from Firebase. Functions in `../PAL/Report.js` were created to switch graph display data. 
+The graph data is stored in `../data/exampledata.json` but it would be easy to pass in dynamically loaded data from Firebase. Functions in `../PAL/Report.js` were created to switch graph display data.
 
 The graph data is stored in `../data/exampledata.json` but it is possible to pass in dynamically loaded data. Functions in `../PAL/Report.js` were created to switch graph display data.
 
@@ -184,7 +174,6 @@ We put down temporary random data for each date's schedule, but those can be eas
   ...
 />
 ```
-<a name = 'nextsteps'></a>
 ## Next Steps
 Below are several new features we could not implement because of time constraints of the class:
 * Social features - Message and share with community including family, doctors, friends, etc  
@@ -193,3 +182,12 @@ Below are several new features we could not implement because of time constraint
 * Integrate with hardware
 * Send hardware data from child app to Firebase.
 * Deploy to app stores
+
+## Contributors
+* Nick David - [Github](https://github.com/NickDavidNU), nicholasdavid2019@u.northwestern.edu
+* Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
+* Ben Krege - [Github](https://github.com/JBKrege), johnkrege2018@u.northwestern.edu
+* Kevin Mui - [Github](https://github.com/kekamui), kevinmui2020@u.northwestern.edu
+* Bruce Chen
+* Ben Kalish
+* Yuze Li
