@@ -199,7 +199,7 @@ class Chart extends React.Component{
   changeMeltdown(new_data) {
       this.state.Chart_data = new_data
       data_color = "#551a8b"
-      chart_title = "Metldown"
+      chart_title = "Meltdown"
       this.changeChartCoord("time","value")
       this.forceUpdate()
   }
@@ -229,4 +229,3 @@ class Chart extends React.Component{
     );
   }
 }
-
