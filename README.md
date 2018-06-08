@@ -177,6 +177,7 @@ We put down temporary random data for each date's schedule, but those can be eas
 ## Next Steps
 Below are several new features we could not implement because of time constraints of the class:
 * Social features - Message and share with community including family, doctors, friends, etc  
+* Implement Login in the kids app (currently uploads to Jason not the user)
 * Push notifications for meltdowns
 * Integrate with Google Calendar
 * Integrate with hardware
