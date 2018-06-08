@@ -23,7 +23,6 @@ Below you'll find information about installing, running app, troubleshooting and
 ## Table of Contents
 * [Installing](#installing)
 * [Running](#running)
-* [Troubleshooting](#troubleshooting)
 * [Implementation Details](#implementation)
 * [Next Steps](#nextsteps)
 * [Contributors](#contributors)
