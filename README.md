@@ -78,7 +78,8 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
 3. Make sure that you can run adb from your terminal.
 
-#<a name="implementation"></a> Implementation Details
+<a name="implementation"></a>
+# Implementation Details
 
 ### Firebase
 The backend of this app (such as user accounts and the database) runs on Firebase.
