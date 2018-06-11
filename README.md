@@ -185,10 +185,10 @@ Below are several new features we could not implement because of time constraint
 * Deploy to app stores
 
 ## Contributors
-* Nick David - [Github](https://github.com/NickDavidNU), nicholasdavid2019@u.northwestern.edu
-* Dayeon Hwang - [Github](https://github.com/dayeonhwang), dahwang2018@u.northwestern.edu
-* Ben Krege - [Github](https://github.com/JBKrege), johnkrege2018@u.northwestern.edu
-* Kevin Mui - [Github](https://github.com/kekamui), kevinmui2020@u.northwestern.edu
-* Bruce Chen
-* Ben Kalish
-* Yuze Li
+* Bruce Chen   -  [Github](https://github.com/Bruce-Chan),  HuaijingChen2018@u.northwestern.edu
+* Nick David   -  [Github](https://github.com/NickDavidNU), NicholasDavid2019@u.northwestern.edu
+* Dayeon Hwang -  [Github](https://github.com/dayeonhwang), DaHwang2018@u.northwestern.edu
+* Ben Kalish   -  [Github](https://github.com/BenKalish42), BenjaminKalish2018@u.northwestern.edu
+* Ben Krege    -  [Github](https://github.com/JBKrege),     JohnKrege2018@u.northwestern.edu
+* Yuze Li      -  [Github](https://github.com/Liyuse),      o4y1j1@u.northwestern.edu
+* Kevin Mui    -  [Github](https://github.com/kekamui),     KevinMui2020@u.northwestern.edu
